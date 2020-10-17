@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "466591827233",
+    "firebase_url": "https://pes-proyecto-neveralone.firebaseio.com",
+    "project_id": "pes-proyecto-neveralone",
+    "storage_bucket": "pes-proyecto-neveralone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466591827233:android:8002c01ceb81eea5ad2a60",
+        "android_client_info": {
+          "package_name": "com.example.neveralone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466591827233-23lr7er1qbutgfabdshn0qq184g66skf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtt8s1lcik3L7a1j_4B2TprruHgpbkYuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466591827233-23lr7er1qbutgfabdshn0qq184g66skf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
