@@ -1,8 +1,10 @@
-package com.example.neveralone;
+package com.example.neveralone.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.neveralone.R;
 
 public class MainActivity extends AppCompatActivity {
 
