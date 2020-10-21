@@ -5,35 +5,39 @@
     android:layout_height="match_parent">
 
     <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
         android:padding="10sp">
+
         <EditText
             android:id="@+id/idRegistroNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"/>
+            android:hint="@string/user_name"
+            android:inputType="textPersonName" />
+
         <EditText
             android:id="@+id/idRegistroCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo"
-            android:inputType="textEmailAddress"/>
+            android:hint="@string/user_email"
+            android:inputType="textEmailAddress" />
+
         <EditText
             android:id="@+id/idRegistroContrasena"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
-            android:inputType="textPassword"/>
+            android:hint="@string/user_password"
+            android:inputType="textPassword" />
+
         <EditText
             android:id="@+id/idRegistroContrasenaRepetida"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repetir contraseña"
-            android:inputType="textPassword"/>
+            android:hint="@string/user_password2"
+            android:inputType="textPassword" />
         <RadioGroup
             android:id="@+id/tipo_usuario"
             android:layout_width="wrap_content"
@@ -41,19 +45,20 @@
             android:layout_marginBottom="24dp"
             android:checkedButton="@+id/idRadioButtonBeneficiario"
             android:orientation="vertical">
+
             <RadioButton
                 android:id="@+id/idRadioButtonBeneficiario"
-                android:onClick="onRadioButtonClicked"
-                android:text="Beneficiari"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="Beneficiario" />
 
             <RadioButton
                 android:id="@+id/idRadioButtonVoluntario"
-                android:onClick="onRadioButtonClicked"
-                android:text="Voluntari"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="Voluntario" />
         </RadioGroup>
 
         <LinearLayout
@@ -66,8 +71,8 @@
                 android:id="@+id/codigo_postal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Codigo postal"
-                android:inputType="textPersonName" />
+                android:hint="@string/user_postalcode"
+                android:inputType="number|textPostalAddress" />
 
             <EditText
                 android:id="@+id/vulnerabilidad"

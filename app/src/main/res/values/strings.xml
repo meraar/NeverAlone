@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">NeverAlone</string>
+    <string name="user_name">Nombre</string>
+    <string name="user_email">Correo Electrónico</string>
+    <string name="user_password">Contraseña</string>
+    <string name="user_password2">Repetir contraseña</string>
+    <string name="user_postalcode">Código Postal</string>
+    <string name="user_flatnum">Piso</string>
+    <string name="user_street">Calle</string>
+
 </resources>
