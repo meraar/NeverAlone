@@ -1,133 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="46dp" />
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10sp">
+        <EditText
+            android:id="@+id/idRegistroNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"/>
+        <EditText
+            android:id="@+id/idRegistroCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo"
+            android:inputType="textEmailAddress"/>
+        <EditText
+            android:id="@+id/idRegistroContrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"/>
+        <EditText
+            android:id="@+id/idRegistroContrasenaRepetida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Repetir contraseña"
+            android:inputType="textPassword"/>
+        <RadioGroup
+            android:id="@+id/tipo_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:checkedButton="@+id/idRadioButtonBeneficiario"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/idRadioButtonBeneficiario"
+                android:onClick="onRadioButtonClicked"
+                android:text="Beneficiari"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="115dp" />
+            <RadioButton
+                android:id="@+id/idRadioButtonVoluntario"
+                android:onClick="onRadioButtonClicked"
+                android:text="Voluntari"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="178dp" />
+        <LinearLayout
+            android:id="@+id/contenedor_Beneficiario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="208dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="257dp" />
+            <EditText
+                android:id="@+id/codigo_postal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Codigo postal"
+                android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="343dp" />
+            <EditText
+                android:id="@+id/vulnerabilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Motivo" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="96dp" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="231dp" />
+        <LinearLayout
+            android:id="@+id/contenedor_Voluntario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Contraseña"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="159dp" />
+            <EditText
+                android:id="@+id/ciudad_trabajo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ciudad"
+                android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Apellido"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="314dp" />
+        </LinearLayout>
 
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Voluntario"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="413dp" />
-
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Beneficiario"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="457dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dirección"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="523dp" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Dirección (codigo postal)"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="625dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPostalAddress2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="657dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPostalAddress3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        tools:layout_editor_absoluteX="58dp"
-        tools:layout_editor_absoluteY="562dp" />
+        <Button
+            android:id="@+id/idRegistroRegistrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Registrar"/>
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
