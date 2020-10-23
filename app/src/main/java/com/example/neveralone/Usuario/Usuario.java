@@ -1,10 +1,10 @@
 package com.example.neveralone.Usuario;
 
-public abstract class Usuario {
+public class Usuario {
     private String email;
     private String nombre;
     private String apellidos;
-    private String contrasena;
+    private String password;
 
     public String getEmail() {
         return email;
@@ -30,12 +30,12 @@ public abstract class Usuario {
         this.apellidos = apellidos;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 
