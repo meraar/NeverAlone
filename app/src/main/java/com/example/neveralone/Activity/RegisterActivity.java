@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import res.layout.*;
+//import res.layout.*;
 import com.example.neveralone.R;
 public class RegisterActivity extends AppCompatActivity {
     //private EditText idRegistroNombre, idRegistroCorreo, idRegistroContrasen, idRegistroContrasenaRepetida;

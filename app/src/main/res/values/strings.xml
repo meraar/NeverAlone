@@ -7,5 +7,16 @@
     <string name="user_postalcode">Código Postal</string>
     <string name="user_flatnum">Piso</string>
     <string name="user_street">Calle</string>
+    <string name="user_dni">DNI</string>
+
+    <string name="user_is_tutor">FALSE</string>
+    <string name="c_digo_postal_textView">Código postal</string>
+    <string name="hint_codigopostal_EditText">Código postal</string>
+    <string name="hint_dni">DNI</string>
+    <string name="label_quieres_ser_tutor">Quieres ser tutor?</string>
+    <string name="radiobutton_noTutor">No</string>
+    <string name="radiobutton_siTutor">Si</string>
+    <string name="registrar_text_button">Registrar</string>
+    <string name="atras_button">Atras</string>
 
 </resources>

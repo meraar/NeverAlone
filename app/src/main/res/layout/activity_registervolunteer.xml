@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="25sp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="@dimen/cardview_default_radius"
+            android:layout_marginBottom="55dp"
+            android:src="@drawable/logo_sin_fondo">
+
+        </ImageView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="5"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/user_postalcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_codigopostal_EditText"
+            android:inputType="number"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:counterEnabled="true"
+        app:counterMaxLength="9"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/idDNI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_dni" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <RadioGroup
+            android:id="@+id/want_tobe_tutor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:checkedButton="@+id/idRadioButtonNoTutor"
+            android:orientation="vertical"
+            android:layout_gravity="left"
+            tools:ignore="RtlHardcoded">
+
+            <RadioButton
+                android:id="@+id/idRadioButtonNoTutor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/radiobutton_noTutor"
+                />
+
+            <RadioButton
+                android:id="@+id/idRadioButtonSiTutor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/radiobutton_siTutor"/>
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/idRegistroRegistrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/registrar_text_button"
+            android:enabled="false"/>
+        <Button
+            android:id="@+id/idVolverAtras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/atras_button"/>
+
+    </LinearLayout>
