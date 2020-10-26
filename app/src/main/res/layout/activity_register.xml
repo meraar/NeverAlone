@@ -2,118 +2,221 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".UI.RegisterUI">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="376dp"
+        android:layout_height="59dp"
+        android:clickable="false"
+        android:onClick="onClickContinue"
+        android:text="@string/join_neveralone"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/idRegistroNombre"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="336dp"
+        android:layout_height="595dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.882">
+
+        <TextView
+            android:id="@+id/nombreRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/user_name" />
+
+        <EditText
+            android:id="@+id/registerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
             android:hint="@string/user_name"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="@string/user_name" />
 
-        <EditText
-            android:id="@+id/idRegistroCorreo"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/user_surname" />
+
+        <EditText
+            android:id="@+id/registerSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/user_surname"
+            android:inputType="textPersonName"
+            android:text="@string/user_surname" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/user_email"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/emailAddressRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
             android:hint="@string/user_email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:text="@string/user_email" />
 
-        <EditText
-            android:id="@+id/idRegistroContrasena"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/user_password"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/passRegister1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
             android:hint="@string/user_password"
-            android:inputType="textPassword" />
+            android:inputType="textPersonName"
+            android:text="@string/user_password" />
 
-        <EditText
-            android:id="@+id/idRegistroContrasenaRepetida"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/user_password2"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/passRegister2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
             android:hint="@string/user_password2"
-            android:inputType="textPassword" />
+            android:inputType="textPersonName"
+            android:text="@string/user_password2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_user_type"
+            android:textSize="18sp" />
 
         <RadioGroup
-            android:id="@+id/tipo_usuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:checkedButton="@+id/idRadioButtonBeneficiario"
-            android:orientation="vertical">
+            android:layout_width="125dp"
+            android:layout_height="wrap_content">
 
             <RadioButton
-                android:id="@+id/idRadioButtonBeneficiario"
-                android:layout_width="wrap_content"
+                android:id="@+id/radioButtonVolunteer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="Beneficiario" />
+                android:text="@string/volunteer" />
 
             <RadioButton
-                android:id="@+id/idRadioButtonVoluntario"
-                android:layout_width="wrap_content"
+                android:id="@+id/radioButtonBeneficiary"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="Voluntario" />
+                android:text="@string/beneficiary" />
+
+            <LinearLayout
+                android:layout_width="275dp"
+                android:layout_height="20dp"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
         </RadioGroup>
 
-        <LinearLayout
-            android:id="@+id/contenedor_Beneficiario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/codigo_postal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/user_postalcode"
-                android:inputType="number|textPostalAddress" />
-
-            <EditText
-                android:id="@+id/vulnerabilidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Motivo" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/contenedor_Voluntario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <EditText
-                android:id="@+id/ciudad_trabajo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Ciudad"
-                android:inputType="textPersonName" />
-
-        </LinearLayout>
-
         <Button
-            android:id="@+id/idRegistroRegistrar"
-            android:layout_width="wrap_content"
+            android:id="@+id/buttonRegisterContinue"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Registrar" />
-    </TableLayout>
+            android:text="@string/register_continue" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

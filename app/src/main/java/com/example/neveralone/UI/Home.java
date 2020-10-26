@@ -6,11 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.neveralone.R;
 
-public class PaginaPrincipalVoluntario extends AppCompatActivity {
-
+public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paginaprincipalvoluntario);
+        setContentView(R.layout.activity_home);
     }
 }

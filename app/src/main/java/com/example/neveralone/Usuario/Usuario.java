@@ -22,6 +22,15 @@ public class Usuario {
     private String apellidos;
     private String password;
 
+    public Usuario(String correo, String nombre, String apellidos){
+        setEmail(email);
+        setNombre(nombre);
+    }
+
+    public Usuario() {
+
+    }
+
     public String getEmail() {
         return email;
     }

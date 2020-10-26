@@ -1,14 +1,30 @@
 <resources>
     <string name="app_name">NeverAlone</string>
+
+    <string name="backgroundFirstPage">NABackground</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="forget_password">¿Olvidaste tu contraseña?</string>
+    <string name="sign_up_google">Continúa con Google</string>
+    <string name="login_continue">Continuar</string>
+    <string name="register_link">Regístrate</string>
+    <string name="o">O</string>
+
+    <string name="join_neveralone">ÚNETE A NEVERALONE</string>
     <string name="user_name">Nombre</string>
+    <string name="user_surname">Apellido</string>
     <string name="user_email">Correo Electrónico</string>
     <string name="user_password">Contraseña</string>
     <string name="user_password2">Repetir contraseña</string>
+    <string name="choose_user_type">Elige tipo de usuario</string>
+    <string name="volunteer">Voluntario</string>
+    <string name="beneficiary">Beneficiario</string>
+    <string name="register_continue">Continuar</string>
+
+
     <string name="user_postalcode">Código Postal</string>
     <string name="user_flatnum">Piso</string>
     <string name="user_street">Calle</string>
     <string name="user_dni">DNI</string>
-
     <string name="user_is_tutor">FALSE</string>
     <string name="c_digo_postal_textView">Código postal</string>
     <string name="hint_codigopostal_EditText">Código postal</string>
@@ -18,5 +34,7 @@
     <string name="radiobutton_siTutor">Si</string>
     <string name="registrar_text_button">Registrar</string>
     <string name="atras_button">Atras</string>
+    <string name="Logo">Logo</string>
+
 
 </resources>

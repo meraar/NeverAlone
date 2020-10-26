@@ -11,14 +11,15 @@
         android:padding="25sp"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="@dimen/cardview_default_radius"
-            android:layout_marginBottom="55dp"
-            android:src="@drawable/logo_sin_fondo">
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/cardview_default_radius"
+        android:layout_marginBottom="55dp"
+        android:contentDescription="@string/Logo"
+        android:src="@drawable/logo_sin_fondo">
 
-        </ImageView>
+    </ImageView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

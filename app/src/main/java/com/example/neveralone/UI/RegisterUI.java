@@ -1,5 +1,6 @@
 package com.example.neveralone.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.RadioButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.neveralone.Activity.FirebaseActivity;
 import com.example.neveralone.R;
 
 
@@ -24,44 +26,41 @@ public class RegisterUI extends AppCompatActivity {
      7. Beneficiario,opcional motivo vulnerable (persona mayor, enfermedades previa, otros). VIVIENDA (piso, calle, codigo postal y dirección).
     */
 
-    private View contenedorBeneficiario;
-    private View contenedorVoluntario;
-
-    private EditText txtNombre, txtCorreo, txtContrasena, txtContrasenaRepetida;
-    private Button btnRegistrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        contenedorBeneficiario = findViewById(R.id.contenedor_Beneficiario);
-        contenedorVoluntario = findViewById(R.id.contenedor_Voluntario);
     }
 
     public void onRadioButtonClicked(View view) {
-        // Acciones
-        boolean marcado = ((RadioButton) view).isChecked();
 
-        switch (view.getId()) {
-            case R.id.idRadioButtonBeneficiario:
-                if (marcado) {
-                    changeView(true);
-                }
-                break;
+    }
 
-            case R.id.idRadioButtonVoluntario:
-                if (marcado) {
-                    changeView(false);
-                }
-                break;
+    public void register(View view) {
+        Intent intent = new Intent(this, RegisterUI.class);
+        startActivity(intent);
+    }
+
+    public boolean correctPassword(String pass, String pass2){
+        //TODO comprovar que la contraseña sea correcta (1 simbolo, 1 mayuscula...)
+        if (pass.contentEquals(pass2)) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
-    private void changeView(boolean b) {
-        contenedorBeneficiario.setVisibility(b ? View.VISIBLE : View.GONE);
-        contenedorVoluntario.setVisibility(b ? View.GONE : View.VISIBLE);
+    public void onClickContinue(View v) {
+        EditText email = findViewById(R.id.emailAddressRegister);
+        EditText pass = findViewById(R.id.passRegister1);
+        EditText pass2 = findViewById(R.id.passRegister2);
+        FirebaseActivity fa = new FirebaseActivity();
+        if (fa.verifyRegister(email)) {
+            //register(email.getText(),pass.getText());
+        }
     }
-
 
 
 }
