@@ -1,6 +1,5 @@
-package com.example.neveralone.UI;
+package com.example.neveralone.Activity;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,10 +12,9 @@ import android.widget.RadioButton;
 import java.util.regex.Pattern;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.neveralone.Activity.RegisterActivity;
 import com.example.neveralone.R;
 
-public class RegisterVolunteer extends AppCompatActivity {
+public class RegisterVolunteerActivity extends AppCompatActivity {
 
     private EditText codigoPostal, dni;
     private Button register, back;
@@ -66,7 +64,7 @@ public class RegisterVolunteer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(RegisterVolunteer.this, RegisterUI.class);
+                Intent intent = new Intent(RegisterVolunteerActivity.this, RegisterActivity.class);
                 startActivity(intent);
 
             }
@@ -123,24 +121,6 @@ public class RegisterVolunteer extends AppCompatActivity {
         //Log.d("MyApp",dni.toString());
 
         return true;
-    }
-
-    public void onRadioButtonClicked(View view) {
-        // Acciones
-        boolean marcado = ((RadioButton) view).isChecked();
-
-        switch (view.getId()) {
-            case R.id.idRadioButtonNoTutor:
-                if (marcado) {
-
-                }
-                break;
-            case R.id.idRadioButtonSiTutor:
-                if (marcado) {
-
-                }
-                break;
-        }
     }
 
 }

@@ -1,9 +1,8 @@
-package com.example.neveralone.UI;
+package com.example.neveralone.Activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,12 +16,13 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
 
     public void login(View view) {
         Usuario u = new Usuario();
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        Intent intent = new Intent(this, RegisterUI.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 

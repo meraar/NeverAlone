@@ -3,8 +3,8 @@ package com.example.neveralone.Usuario;
 public class Beneficiario extends Usuario {
     private String direccion;
 
-    public Beneficiario(String correo, String nombre, String apellidos) {
-        super(correo, nombre, apellidos);
+    public Beneficiario(String correo, String nombre, String apellidos, String dni, String postalcode) {
+        super(correo, nombre, apellidos, dni, postalcode);
     }
 
 

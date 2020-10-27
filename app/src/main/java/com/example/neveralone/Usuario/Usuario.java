@@ -1,31 +1,25 @@
 package com.example.neveralone.Usuario;
 
 
-import android.content.Intent;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.example.neveralone.Activity.LoginActivity;
-import com.example.neveralone.Activity.RegisterActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 public class Usuario {
     private String email;
     private String nombre;
     private String apellidos;
     private String password;
+    private String dni;
+    private String codigopostal;
 
-    public Usuario(String correo, String nombre, String apellidos){
-        setEmail(email);
-        setNombre(nombre);
+    public Usuario(String correo, String nombre, String apellidos, String dni, String postalcode) {
     }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
 
     public Usuario() {
 
@@ -63,14 +57,15 @@ public class Usuario {
         this.password = password;
     }
 
-    public Usuario(String correo, String nombre, String apellidos){
-        this.setEmail(correo);
-        this.setNombre(nombre);
-        this.setApellidos(apellidos);
+    public String getCodigopostal() {
+        return codigopostal;
     }
 
+    public void setCodigopostal(String codigopostal) {
+        this.codigopostal = codigopostal;
+    }
 
-
-
-
+    protected Usuario getUsuario() {
+        return this;
+    }
 }

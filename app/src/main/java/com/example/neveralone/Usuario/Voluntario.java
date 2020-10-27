@@ -3,6 +3,10 @@ package com.example.neveralone.Usuario;
 public class Voluntario extends Usuario {
     private Double puntuacion_media;
 
+    public Voluntario(String correo, String nombre, String apellidos, String dni, String postalcode) {
+        super(correo, nombre, apellidos, dni, postalcode);
+    }
+
     public Double getPuntuacion_media() {
         return puntuacion_media;
     }
@@ -15,5 +19,7 @@ public class Voluntario extends Usuario {
 
     }
 
-
+    public Usuario getUsuario() {
+        return super.getUsuario();
+    }
 }

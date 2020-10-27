@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="25sp"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="25sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:layout_width="150dp"
@@ -53,44 +53,15 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Button
+        android:id="@+id/idRegistroRegistrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/registrar_text_button"/>
+    <Button
+        android:id="@+id/idVolverAtras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/atras_button"/>
 
-    <RadioGroup
-            android:id="@+id/want_tobe_tutor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:checkedButton="@+id/idRadioButtonNoTutor"
-            android:orientation="vertical"
-            android:layout_gravity="left"
-            tools:ignore="RtlHardcoded">
-
-            <RadioButton
-                android:id="@+id/idRadioButtonNoTutor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/radiobutton_noTutor"
-                />
-
-            <RadioButton
-                android:id="@+id/idRadioButtonSiTutor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/radiobutton_siTutor"/>
-
-        </RadioGroup>
-
-        <Button
-            android:id="@+id/idRegistroRegistrar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/registrar_text_button"
-            android:enabled="false"/>
-        <Button
-            android:id="@+id/idVolverAtras"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/atras_button"/>
-
-    </LinearLayout>
+</LinearLayout>

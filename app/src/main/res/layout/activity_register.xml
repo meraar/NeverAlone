@@ -5,14 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.RegisterUI">
+    tools:context=".Activity.RegisterActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="376dp"
         android:layout_height="59dp"
         android:clickable="false"
-        android:onClick="onClickContinue"
         android:text="@string/join_neveralone"
         android:textSize="35sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"

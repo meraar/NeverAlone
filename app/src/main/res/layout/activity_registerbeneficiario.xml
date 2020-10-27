@@ -42,7 +42,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Dirección" />
+            android:hint="DirecciÃ³n" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
@@ -97,7 +97,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="306dp"
             android:layout_height="53dp"
-            android:hint="Código Postal" />
+            android:hint="CÃ³digo Postal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -129,7 +129,7 @@
         android:text="Button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner2"
-        tools:text="Atrás" />
+        tools:text="AtrÃ¡s" />
 
     <Button
         android:id="@+id/button6"
