@@ -14,22 +14,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.neveralone.Usuario.Beneficiario;
 import com.example.neveralone.Usuario.Voluntario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import com.example.neveralone.Usuario.Usuario;
 import com.example.neveralone.R;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity{
 
     /*TODO
      1. Contraseña: min 10 caráct. 1 minús., 1 mayús. y 1 caráct. especial (!, @, #, $,%).
@@ -43,8 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText txtNombre, txtApellido, txtCorreo, txtContrasena, txtContrasenaRepetida, txtpostalcode, txtdni;
     private RadioButton voluntario, beneficiario;
     private Button btnRegistrar, btnFinalizarRegistro, btnAtras;
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,72 +53,34 @@ public class RegisterActivity extends AppCompatActivity {
         voluntario = findViewById(R.id.radioButtonVolunteer);
         beneficiario = findViewById(R.id.radioButtonBeneficiary);
         btnRegistrar = findViewById(R.id.buttonRegisterContinue);
-        btnFinalizarRegistro = null;
-        btnAtras = null;
-
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            private Voluntario volunteer;
+            private Beneficiario benefactor;
+            private String password;
             @Override
             public void onClick(View v) {
                 final String correo = txtCorreo.getText().toString();
                 final String nombre = txtNombre.getText().toString();
                 final String apellido = txtApellido.getText().toString();
+                password = txtContrasena.getText().toString();
                 final Boolean vol = voluntario.isChecked();
                 final Boolean ben = beneficiario.isChecked();
                 if (isValidEmail(correo) && validarContrasena() && validarNombre(nombre, apellido) && validarchecked(vol,ben)) {
+                    Intent intent = null;
                     if (vol) {
-                        setContentView(R.layout.activity_registervolunteer);
+                        volunteer = new Voluntario(correo, nombre, apellido, null, null);
+                        intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
+                        intent.putExtra("voluntario",(Serializable) this.volunteer);
                     } else if (ben) {
-                        setContentView(R.layout.activity_registerbeneficiario);
+                        benefactor = new Beneficiario(correo, nombre, apellido, null, null);
+                        intent = new Intent(RegisterActivity.this,RegisterBenefactorActivity.class);
+                        intent.putExtra("beneficiario",(Serializable) this.benefactor);
                     }
-                    btnAtras = findViewById(R.id.idVolverAtras);
-                    btnFinalizarRegistro = findViewById(R.id.idRegistroRegistrar);
-                    txtpostalcode = findViewById(R.id.user_postalcode);
-                    txtdni = findViewById(R.id.idDNI);
-
-                    btnFinalizarRegistro.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d("debug1", "botonfinalizar");
-
-                            final String postalcode = txtpostalcode.getText().toString();
-                            final String dni = txtdni.getText().toString();
-                            if(comprobarCampos(postalcode, dni)){
-                                mAuth.createUserWithEmailAndPassword(correo, txtContrasena.getText().toString())
-                                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                                // Hemos comprobado que si una sola linea de codigo falla, toda la tarea dentro del if no se ejecuta.
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(RegisterActivity.this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
-                                                    Voluntario voluntario = new Voluntario(correo, nombre, apellido, dni, postalcode);
-                                                    voluntario.setPuntuacion(0.0);
-                                                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                                                    DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
-                                                    reference.setValue(voluntario.getUsuario());
-                                                    reference = database.getReference("Voluntarios/" + currentUser.getUid());
-                                                    reference.setValue(voluntario);
-                                                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-                                                    finish();
-                                                } else {
-                                                    Toast.makeText(RegisterActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    });
-
-                    btnAtras.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.d("debug2", "botonatras");
-                            setContentView(R.layout.activity_register);
-                        }
-                    });
+                    //ENCRIPTAR CUANDO PUEDAS OKEY?
+                    intent.putExtra("password",(Serializable) this.password);
+                    startActivityForResult(intent, 0);
+                    finish();
                 }
             }
         });

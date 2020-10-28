@@ -57,7 +57,8 @@
         android:id="@+id/idRegistroRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/registrar_text_button"/>
+        android:hint="@string/registrar_text_button" />
+
     <Button
         android:id="@+id/idVolverAtras"
         android:layout_width="wrap_content"

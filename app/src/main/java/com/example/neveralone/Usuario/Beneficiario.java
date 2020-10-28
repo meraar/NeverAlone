@@ -7,6 +7,10 @@ public class Beneficiario extends Usuario {
         super(correo, nombre, apellidos, dni, postalcode);
     }
 
+    public void setPostalCodeyDNI(String postalcode, String dni){
+        super.setCodigopostal(postalcode);
+        super.setDni(dni);
+    }
 
     public String getDireccion() {
         return direccion;
