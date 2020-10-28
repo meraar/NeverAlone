@@ -2,12 +2,12 @@ package com.example.neveralone.Usuario;
 
 import java.io.Serializable;
 
-public class Voluntario extends Usuario implements Serializable {
+public class Voluntario extends Usuario{
     private Double puntuacion_media;
 
     public Voluntario(String correo, String nombre, String apellidos, String dni, String postalcode) {
         super(correo, nombre, apellidos, dni, postalcode);
-        puntuacion_media = null;
+        this.puntuacion_media = null;
     }
 
     public void setPostalCodeyDNI(String postalcode, String dni){

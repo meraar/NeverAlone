@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
+    /*
     public void login(View view) {
         Usuario u = new Usuario();
         EditText email = findViewById(R.id.emailAddressLogin);
@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+    */
 
     public void register(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);

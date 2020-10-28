@@ -5,11 +5,15 @@ public class Usuario {
     private String email;
     private String nombre;
     private String apellidos;
-    private String password;
     private String dni;
     private String codigopostal;
 
-    public Usuario(String correo, String nombre, String apellidos, String dni, String postalcode) {
+    public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal) {
+        this.email = email;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.dni = dni;
+        this.codigopostal = codigopostal;
     }
 
     public String getDni() {
@@ -47,14 +51,6 @@ public class Usuario {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getCodigopostal() {

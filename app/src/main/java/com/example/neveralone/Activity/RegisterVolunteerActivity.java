@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.neveralone.R;
+import com.example.neveralone.Usuario.Usuario;
 import com.example.neveralone.Usuario.Voluntario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,8 +32,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
 
     private EditText txtpostalcode, txtdni;
     private Button register, back, btnFinalizarRegistro, btnAtras;
-    private Voluntario voluntario;
-    private String password;
+    private String correo, nombre, apellido, password;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -61,17 +61,13 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registervolunteer);
-        Intent startingIntent = this.getIntent();
-        if (startingIntent != null) {
-            Log.d("Debug1","El intent no es nulo.");
-            Bundle b = startingIntent.getExtras();
-            this.voluntario = (Voluntario)b.getSerializable("Voluntario");
-            this.password = (String)b.getSerializable("password");
+        Bundle b = this.getIntent().getExtras();
+        if (b != null) {
+            correo = (String)b.getString("correo");
+            nombre = (String)b.getString("nombre");
+            apellido = (String)b.getString("apellido");
+            password = (String)b.getString("password");
         }
-        else Log.d("Debug1","El intent es nulo.");
-
-        if(password != null) System.out.println(password);
-        System.out.println(voluntario.getEmail());
 
         btnAtras = findViewById(R.id.idVolverAtras);
         btnFinalizarRegistro = findViewById(R.id.idRegistroRegistrar);
@@ -88,7 +84,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String postalcode = txtpostalcode.getText().toString();
                 final String dni = txtdni.getText().toString();
-                voluntario.setPostalCodeyDNI(postalcode,dni);
+                final Voluntario voluntario = new Voluntario(correo, nombre, apellido, dni, postalcode);
                 if(comprobarCampos(postalcode, dni)){
                     mAuth.createUserWithEmailAndPassword(voluntario.getEmail(), password)
                             .addOnCompleteListener(RegisterVolunteerActivity.this, new OnCompleteListener<AuthResult>() {
@@ -96,15 +92,18 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     // Hemos comprobado que si una sola linea de codigo falla, toda la tarea dentro del if no se ejecuta.
                                     if (task.isSuccessful()) {
+                                        System.out.println("Debug5: Se ha registrado");
                                         Toast.makeText(RegisterVolunteerActivity.this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
                                         FirebaseUser currentUser = mAuth.getCurrentUser();
                                         DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
-                                        reference.setValue(voluntario.getUsuario());
-                                        reference = database.getReference("Voluntarios/" + currentUser.getUid());
-                                        reference.setValue(voluntario);
+                                        Usuario usuario = voluntario.getUsuario();
+                                        reference.setValue(usuario);
+                                        //reference = database.getReference("Voluntarios/" + currentUser.getUid());
+                                        //reference.setValue(voluntario);
                                         startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
                                         finish();
                                     } else {
+                                        System.out.println("Debug5: No se ha registrado");
                                         Toast.makeText(RegisterVolunteerActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
                                     }
                                 }

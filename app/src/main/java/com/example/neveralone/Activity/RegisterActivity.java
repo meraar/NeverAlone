@@ -55,31 +55,33 @@ public class RegisterActivity extends AppCompatActivity{
         btnRegistrar = findViewById(R.id.buttonRegisterContinue);
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
-            private Voluntario volunteer;
-            private Beneficiario benefactor;
+            private String correo;
+            private String nombre;
+            private String apellido;
             private String password;
             @Override
             public void onClick(View v) {
-                final String correo = txtCorreo.getText().toString();
-                final String nombre = txtNombre.getText().toString();
-                final String apellido = txtApellido.getText().toString();
+                correo = txtCorreo.getText().toString();
+                nombre = txtNombre.getText().toString();
+                apellido = txtApellido.getText().toString();
                 password = txtContrasena.getText().toString();
                 final Boolean vol = voluntario.isChecked();
                 final Boolean ben = beneficiario.isChecked();
                 if (isValidEmail(correo) && validarContrasena() && validarNombre(nombre, apellido) && validarchecked(vol,ben)) {
                     Intent intent = null;
                     if (vol) {
-                        volunteer = new Voluntario(correo, nombre, apellido, null, null);
                         intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
-                        intent.putExtra("voluntario",(Serializable) this.volunteer);
                     } else if (ben) {
-                        benefactor = new Beneficiario(correo, nombre, apellido, null, null);
                         intent = new Intent(RegisterActivity.this,RegisterBenefactorActivity.class);
-                        intent.putExtra("beneficiario",(Serializable) this.benefactor);
                     }
                     //ENCRIPTAR CUANDO PUEDAS OKEY?
-                    intent.putExtra("password",(Serializable) this.password);
-                    startActivityForResult(intent, 0);
+                    Bundle b = new Bundle();
+                    b.putString("correo",correo);
+                    b.putString("nombre",nombre);
+                    b.putString("apellido",apellido);
+                    b.putString("password",this.password);
+                    intent.putExtras(b);
+                    startActivity(intent);
                     finish();
                 }
             }

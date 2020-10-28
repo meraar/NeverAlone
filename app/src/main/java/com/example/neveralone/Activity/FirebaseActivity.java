@@ -54,7 +54,7 @@ public class FirebaseActivity {
     }
 
     public void registerBeneficiario(Beneficiario b) { //aqui paso los datos
-        register(b.getEmail(), b.getPassword());
+        //register(b.getEmail(), b.getPassword());
         //TODO añadir los valores necesarios
     }
 
