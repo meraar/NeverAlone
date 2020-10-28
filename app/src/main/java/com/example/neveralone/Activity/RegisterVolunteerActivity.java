@@ -97,9 +97,13 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                         FirebaseUser currentUser = mAuth.getCurrentUser();
                                         DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
                                         Usuario usuario = voluntario.getUsuario();
-                                        reference.setValue(usuario);
-                                        //reference = database.getReference("Voluntarios/" + currentUser.getUid());
-                                        //reference.setValue(voluntario);
+                                        reference.setValue(usuario.getNombre());
+                                        reference.setValue(usuario.getApellidos());
+                                        reference.setValue(usuario.getEmail());
+                                        reference.setValue(usuario.getDni());
+                                        reference.setValue(usuario.getCodigopostal());
+                                        reference = database.getReference("Voluntarios/" + currentUser.getUid());
+                                        reference.setValue(voluntario.getPuntuacion_media());
                                         startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
                                         finish();
                                     } else {
