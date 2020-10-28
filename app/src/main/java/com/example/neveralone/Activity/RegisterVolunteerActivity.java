@@ -36,6 +36,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
+    private DatabaseReference database2;
 
     private TextWatcher campos = new TextWatcher() {
         @Override
@@ -76,6 +77,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        database2 = FirebaseDatabase.getInstance().getReference("Usuarios/prueba");
 
         configEditText();
 
@@ -84,9 +86,9 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String postalcode = txtpostalcode.getText().toString();
                 final String dni = txtdni.getText().toString();
-                final Voluntario voluntario = new Voluntario(correo, nombre, apellido, dni, postalcode);
+                //final Voluntario voluntario = new Voluntario(correo, nombre, apellido, dni, postalcode);
                 if(comprobarCampos(postalcode, dni)){
-                    mAuth.createUserWithEmailAndPassword(voluntario.getEmail(), password)
+                    mAuth.createUserWithEmailAndPassword(correo, password)
                             .addOnCompleteListener(RegisterVolunteerActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -96,14 +98,25 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                         Toast.makeText(RegisterVolunteerActivity.this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
                                         FirebaseUser currentUser = mAuth.getCurrentUser();
                                         DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
-                                        Usuario usuario = voluntario.getUsuario();
-                                        reference.setValue(usuario.getNombre());
+                                        Usuario usuario = new Usuario();
+                                        usuario.setEmail(correo);
+                                        usuario.setNombre(nombre);
+                                        usuario.setApellidos(apellido);
+                                        usuario.setDni(dni);
+                                        usuario.setCodigopostal(postalcode);
+                                        reference.setValue(usuario);
+                                        DatabaseReference reference_2 = database2.child("Voluntarios");
+                                        Voluntario voluntario = new Voluntario();
+                                        voluntario.setPuntuacion(0.0);
+                                        //database2.child("users").child(userId).setValue(user);
+                                        reference_2.setValue(voluntario);
+                                        /**reference.setValue(usuario.getNombre());
                                         reference.setValue(usuario.getApellidos());
                                         reference.setValue(usuario.getEmail());
                                         reference.setValue(usuario.getDni());
                                         reference.setValue(usuario.getCodigopostal());
                                         reference = database.getReference("Voluntarios/" + currentUser.getUid());
-                                        reference.setValue(voluntario.getPuntuacion_media());
+                                        reference.setValue(voluntario.getPuntuacion_media()); **/
                                         startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
                                         finish();
                                     } else {
