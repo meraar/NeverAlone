@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="327dp"
+        android:layout_height="143dp"
+        android:layout_marginBottom="352dp"
+        android:autoSizeMaxTextSize="70sp"
+        android:autoSizeMinTextSize="55sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/bree_serif"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textAllCaps="false"
+        android:textColor="#0A5345"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.413"
+        tools:targetApi="o"
+        tools:text="Welcome to NeverAlone" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
