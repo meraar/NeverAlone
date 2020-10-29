@@ -35,6 +35,7 @@
     <string name="registrar_text_button">Registrar</string>
     <string name="atras_button">Atras</string>
     <string name="Logo">Logo</string>
+    <string name="sign_out">Cerrar Sesión</string>
 
 
 </resources>
