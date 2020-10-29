@@ -1,16 +1,12 @@
 package com.example.neveralone.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.neveralone.R;
-import com.example.neveralone.Usuario.Usuario;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -20,11 +16,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
     }
 
-    /*
-    public void login(View view) {
+
+    public void login(View view) { /*
         Usuario u = new Usuario();
         EditText email = findViewById(R.id.emailAddressLogin);
         EditText pass = findViewById(R.id.passLogin);
@@ -42,16 +38,16 @@ public class LoginActivity extends AppCompatActivity {
             toast.show();
 
         }
-
+ */
     }
-    */
+
 
     public void register(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
-    public void registerWithGoogle() {
+    public void registerWithGoogle(View view) {
 
     }
 

@@ -13,23 +13,27 @@
         android:layout_height="59dp"
         android:clickable="false"
         android:text="@string/join_neveralone"
-        android:textSize="35sp"
+        android:autoSizeMaxTextSize="30sp"
+        android:autoSizeMinTextSize="15sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" tools:targetApi="o"/>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="336dp"
         android:layout_height="595dp"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.882">
+        app:layout_constraintVertical_bias="0.661">
 
         <TextView
             android:id="@+id/nombreRegister"
@@ -44,8 +48,7 @@
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/user_name"
-            android:inputType="textPersonName"
-            android:text="@string/user_name" />
+            android:inputType="textPersonName" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,8 +75,7 @@
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/user_surname"
-            android:inputType="textPersonName"
-            android:text="@string/user_surname" />
+            android:inputType="textPersonName" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,8 +103,7 @@
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/user_email"
-            android:inputType="textEmailAddress"
-            android:text="@string/user_email" />
+            android:inputType="textEmailAddress" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,8 +131,7 @@
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/user_password"
-            android:inputType="textPersonName"
-            android:text="@string/user_password" />
+            android:inputType="textWebPassword" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,8 +159,7 @@
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/user_password2"
-            android:inputType="textPersonName"
-            android:text="@string/user_password2" />
+            android:inputType="textWebPassword" />
 
         <LinearLayout
             android:layout_width="match_parent"
