@@ -16,14 +16,8 @@ import com.example.neveralone.R;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -58,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                                         txtCorreo.setText("");
                                         txtContrasena.setText("");
-                                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, Home.class));
                                     } else {
                                         Toast.makeText(LoginActivity.this, "Error, credenciales incorrectas.", Toast.LENGTH_SHORT).show();
                                     }
@@ -108,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void nextActivity(){
-        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        startActivity(new Intent(LoginActivity.this,Home.class));
         finish();
     }
 }
