@@ -10,7 +10,7 @@
         android:id="@+id/textView14"
         android:layout_width="327dp"
         android:layout_height="143dp"
-        android:layout_marginBottom="352dp"
+        android:layout_marginBottom="292dp"
         android:autoSizeMaxTextSize="70sp"
         android:autoSizeMinTextSize="55sp"
         android:autoSizeTextType="uniform"

@@ -2,28 +2,16 @@ package com.example.neveralone.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.neveralone.Usuario.Beneficiario;
-import com.example.neveralone.Usuario.Voluntario;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
-import com.example.neveralone.Usuario.Usuario;
 import com.example.neveralone.R;
-
-import java.io.Serializable;
-import java.util.regex.Pattern;
 
 
 public class RegisterActivity extends AppCompatActivity{
@@ -69,18 +57,20 @@ public class RegisterActivity extends AppCompatActivity{
                 final Boolean ben = beneficiario.isChecked();
                 if (isValidEmail(correo) && validarContrasena() && validarNombre(nombre, apellido) && validarchecked(vol,ben)) {
                     Intent intent = null;
-                    if (vol) {
-                        intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
-                    } else if (ben) {
-                        intent = new Intent(RegisterActivity.this,RegisterBenefactorActivity.class);
-                    }
-                    //ENCRIPTAR CUANDO PUEDAS OKEY?
                     Bundle b = new Bundle();
+                    if (vol) {
+                        b.putBoolean("volunario", true);
+                    } else if (ben) {
+                        b.putBoolean("volunario", false);
+                    }
+                    intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
                     b.putString("correo",correo);
                     b.putString("nombre",nombre);
                     b.putString("apellido",apellido);
                     b.putString("password",this.password);
                     intent.putExtras(b);
+                    //ENCRIPTAR CUANDO PUEDAS OKEY?
+
                     startActivity(intent);
                     finish();
                 }

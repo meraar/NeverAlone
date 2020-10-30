@@ -1,3 +1,4 @@
+
 package com.example.neveralone.Activity;
 
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.util.regex.Pattern;
@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
-import com.example.neveralone.Usuario.Voluntario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -33,6 +32,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
     private EditText txtpostalcode, txtdni;
     private Button register, back, btnFinalizarRegistro, btnAtras;
     private String correo, nombre, apellido, password;
+    private boolean voluntario;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -62,12 +62,14 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registervolunteer);
+        //sacamos los valores de la tuberia
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
             correo = (String)b.getString("correo");
             nombre = (String)b.getString("nombre");
             apellido = (String)b.getString("apellido");
             password = (String)b.getString("password");
+            voluntario = (boolean)b.getBoolean("voluntario");
         }
 
         btnAtras = findViewById(R.id.idVolverAtras);
@@ -77,9 +79,6 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        database2 = FirebaseDatabase.getInstance().getReference("Usuarios/prueba");
-
-        configEditText();
 
         btnFinalizarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +93,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     // Hemos comprobado que si una sola linea de codigo falla, toda la tarea dentro del if no se ejecuta.
                                     if (task.isSuccessful()) {
-                                        System.out.println("Debug5: Se ha registrado");
+                                        //System.out.println("Debug5: Se ha registrado");
                                         Toast.makeText(RegisterVolunteerActivity.this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
                                         FirebaseUser currentUser = mAuth.getCurrentUser();
                                         DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
@@ -104,19 +103,8 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                         usuario.setApellidos(apellido);
                                         usuario.setDni(dni);
                                         usuario.setCodigopostal(postalcode);
+                                        usuario.setVoluntario(voluntario);
                                         reference.setValue(usuario);
-                                        DatabaseReference reference_2 = database2.child("Voluntarios");
-                                        Voluntario voluntario = new Voluntario();
-                                        voluntario.setPuntuacion(0.0);
-                                        //database2.child("users").child(userId).setValue(user);
-                                        reference_2.setValue(voluntario);
-                                        /**reference.setValue(usuario.getNombre());
-                                        reference.setValue(usuario.getApellidos());
-                                        reference.setValue(usuario.getEmail());
-                                        reference.setValue(usuario.getDni());
-                                        reference.setValue(usuario.getCodigopostal());
-                                        reference = database.getReference("Voluntarios/" + currentUser.getUid());
-                                        reference.setValue(voluntario.getPuntuacion_media()); **/
                                         startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
                                         finish();
                                     } else {

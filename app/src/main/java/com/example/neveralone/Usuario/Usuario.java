@@ -7,13 +7,17 @@ public class Usuario {
     private String apellidos;
     private String dni;
     private String codigopostal;
+    private int puntuacioMedia;
+    private boolean voluntario;
 
-    public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal) {
+    public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal,boolean voluntario,int puntuacioMedia) {
         this.email = email;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
         this.codigopostal = codigopostal;
+        this.voluntario=voluntario;
+        this.puntuacioMedia=puntuacioMedia;
     }
 
     public String getDni() {
@@ -64,4 +68,21 @@ public class Usuario {
     protected Usuario getUsuario() {
         return this;
     }
+
+    public int getPuntuacioMedia() {
+        return puntuacioMedia;
+    }
+
+    public void setPuntuacioMedia(int puntuacioMedia) {
+        this.puntuacioMedia = puntuacioMedia;
+    }
+
+    public boolean isVoluntario() {
+        return voluntario;
+    }
+
+    public void setVoluntario(boolean voluntario) {
+        this.voluntario = voluntario;
+    }
 }
+

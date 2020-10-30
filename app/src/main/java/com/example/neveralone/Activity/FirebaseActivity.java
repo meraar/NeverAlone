@@ -2,8 +2,6 @@ package com.example.neveralone.Activity;
 
 import android.widget.EditText;
 
-import com.example.neveralone.Usuario.Beneficiario;
-import com.example.neveralone.Usuario.Voluntario;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -53,13 +51,6 @@ public class FirebaseActivity {
                 }); pesneveralone2020@gmail.com**/
     }
 
-    public void registerBeneficiario(Beneficiario b) { //aqui paso los datos
-        //register(b.getEmail(), b.getPassword());
-        //TODO añadir los valores necesarios
-    }
-
-    public void registerVoluntario(Voluntario v) { //aqui paso los datos
-    }
 
 
 
