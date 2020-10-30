@@ -185,7 +185,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
             txtdni.setError(null);
         }
         //Log.d("MyApp",dni.toString());
-
+/*
         boolean pispuert = false;
         int PisoPuertalength = PisoPuerta.length();
         if (PisoPuertalength == 3 || PisoPuertalength == 4) {
@@ -210,6 +210,8 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
         } else {
             txtPisoPuerta.setError(null);
         }
+
+ */
 
         return true;
     }
