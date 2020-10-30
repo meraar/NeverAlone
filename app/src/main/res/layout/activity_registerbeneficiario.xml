@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout4"
+        android:id="@+id/DNIText"
         android:layout_width="289dp"
         android:layout_height="62dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginLeft="59dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="63dp"
-        android:layout_marginRight="63dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/CodigoPostalText">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/DNITxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="DNI" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
+        android:id="@+id/DireccionText"
         android:layout_width="289dp"
         android:layout_height="62dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginLeft="59dp"
-        android:layout_marginEnd="63dp"
-        android:layout_marginRight="63dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        android:layout_marginStart="61dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginRight="61dp"
+        app:layout_constraintBottom_toTopOf="@+id/PisoPuertaText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+        app:layout_constraintTop_toBottomOf="@+id/DNIText">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/DireccionTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="DirecciÃ³n" />
+            android:hint="Direccion" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
@@ -54,100 +54,90 @@
         android:layout_marginTop="31dp"
         android:layout_marginEnd="131dp"
         android:layout_marginRight="131dp"
-        android:layout_marginBottom="29dp"
         android:src="@drawable/logo_sin_fondo"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </ImageView>
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="176dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="117dp"
-        android:layout_marginLeft="117dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="118dp"
-        android:layout_marginRight="118dp"
-        android:layout_marginBottom="17dp"
-        android:text="Editar imagen"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/CodigoPostalText"
         android:layout_width="287dp"
         android:layout_height="59dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginLeft="59dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginRight="65dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginRight="62dp"
+        android:layout_marginBottom="4dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/DNIText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4">
+        app:layout_constraintTop_toBottomOf="@+id/imageView5">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="306dp"
-            android:layout_height="53dp"
-            android:hint="CÃ³digo Postal" />
+            android:id="@+id/CodigoPostalTxt"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Codigo Postal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/PisoPuertaText"
         android:layout_width="289dp"
         android:layout_height="62dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginLeft="59dp"
-        android:layout_marginEnd="63dp"
-        android:layout_marginRight="63dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinner2"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/Spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/DireccionText">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/PisoPuertaTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Piso, Puerta" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="59dp"
-        android:layout_marginLeft="59dp"
-        android:layout_marginTop="79dp"
+        android:id="@+id/AtrasBut"
+        android:layout_width="99dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginLeft="156dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:layout_marginBottom="65dp"
         android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2"
-        tools:text="AtrÃ¡s" />
+        app:layout_constraintTop_toBottomOf="@+id/RegistrarBut"
+        tools:text="Atras" />
 
     <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
+        android:id="@+id/RegistrarBut"
+        android:layout_width="99dp"
         android:layout_height="48dp"
-        android:layout_marginStart="101dp"
-        android:layout_marginLeft="101dp"
-        android:layout_marginTop="79dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginRight="65dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginLeft="156dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
         android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/AtrasBut"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Spinner"
         tools:text="Registrar" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/Spinner"
         android:layout_width="298dp"
         android:layout_height="43dp"
         android:layout_marginStart="59dp"
@@ -155,9 +145,11 @@
         android:layout_marginEnd="54dp"
         android:layout_marginRight="54dp"
         android:layout_marginBottom="79dp"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/AtrasBut"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/PisoPuertaText"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
