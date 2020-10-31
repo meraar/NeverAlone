@@ -1,4 +1,7 @@
 package com.example.neveralone.Activity;
 
-public class RegisterBenefactorActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class RegisterBenefactorActivity extends AppCompatActivity {
+
 }

@@ -37,7 +37,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference database2;
-
+/**
     private TextWatcher campos = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -57,11 +57,11 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
 
         }
     };
-
+**/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registervolunteer);
+
         //sacamos los valores de la tuberia
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
@@ -71,6 +71,9 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
             password = (String)b.getString("password");
             voluntario = (boolean)b.getBoolean("voluntario");
         }
+        if (voluntario) setContentView(R.layout.activity_registervolunteer); // FUnciona
+        else setContentView(R.layout.activity_registerbeneficiario); // Funciona
+
 
         btnAtras = findViewById(R.id.idVolverAtras);
         btnFinalizarRegistro = findViewById(R.id.idRegistroRegistrar);
@@ -125,7 +128,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
             }
         });
     }
-
+/**
     private void configEditText() {
         txtpostalcode = findViewById(R.id.user_postalcode);
         txtdni = findViewById(R.id.idDNI);
@@ -134,7 +137,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
         txtpostalcode.addTextChangedListener(campos);
         txtdni.addTextChangedListener(campos);
     }
-
+**/
     private boolean comprobarCampos(String cpEntero, String dniEntero) {
 
         boolean cP = !(cpEntero.length() != 5); //true
