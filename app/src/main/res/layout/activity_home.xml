@@ -8,26 +8,47 @@
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="327dp"
-        android:layout_height="143dp"
-        android:layout_marginBottom="292dp"
+        android:layout_width="397dp"
+        android:layout_height="373dp"
+        android:layout_marginBottom="313dp"
         android:autoSizeMaxTextSize="70sp"
         android:autoSizeMinTextSize="55sp"
         android:autoSizeTextType="uniform"
-        android:fontFamily="@font/bree_serif"
+        android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:text="@string/app_name"
         android:textAllCaps="false"
-        android:textColor="#0A5345"
+        android:textColor="#0C8871"
+        android:textSize="12sp"
         android:textStyle="bold"
         android:typeface="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.413"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:targetApi="o"
-        tools:text="Welcome to NeverAlone" />
+        tools:text="Bienvenido a la pantalla principal de NeverAlone" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="147dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginRight="132dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="signOut"
+        android:text="@string/sign_out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.777" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,6 +1,5 @@
 package com.example.neveralone.Activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,14 +16,8 @@ import com.example.neveralone.R;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -33,17 +26,15 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegistro;
     private FirebaseAuth mAuth;
 
-    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        System.out.println("Debug4: entra login");
 
         txtCorreo = findViewById(R.id.emailAddressLogin);
         txtContrasena = findViewById(R.id.editTextTextPassword);
         btnLogin = findViewById(R.id.button);
-        btnRegistro = findViewById(R.id.register);
+        //btnRegistro = findViewById(R.id.idLoginRegistro);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -61,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                                         txtCorreo.setText("");
                                         txtContrasena.setText("");
-                                        startActivity(new Intent(LoginActivity.this,Home_Activity.class));
+                                        startActivity(new Intent(LoginActivity.this, Home.class));
                                     } else {
                                         Toast.makeText(LoginActivity.this, "Error, credenciales incorrectas.", Toast.LENGTH_SHORT).show();
                                     }
@@ -73,14 +64,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         //ESTO FALTA HACER
-
+        /**
          btnRegistro.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-        startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+        startActivity(new Intent(LoginActivity.this,RegistroActivity.class));
         finish();
         }
-        });
+        });**/
     }
     private boolean isValidEmail(String email) {
         boolean valid = !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
@@ -98,8 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     }
-}
-    /*
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -112,8 +102,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void nextActivity(){
-        System.out.println("Debug4: entra next");
-        startActivity(new Intent(LoginActivity.this,Home_Activity.class));
+        startActivity(new Intent(LoginActivity.this,Home.class));
         finish();
     }
 }
