@@ -59,10 +59,14 @@ public class RegisterActivity extends AppCompatActivity{
                     Intent intent = null;
                     Bundle b = new Bundle();
                     if (vol) {
+                        intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
                         b.putBoolean("volunario", true);
                     } else if (ben) {
+                        intent = new Intent(RegisterActivity.this,RegisterBenefactorActivity.class);
                         b.putBoolean("volunario", false);
                     }
+                    //ENCRIPTAR CUANDO PUEDAS OKEY?
+
                     intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
                     b.putString("correo",correo);
                     b.putString("nombre",nombre);

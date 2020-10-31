@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         txtCorreo = findViewById(R.id.emailAddressLogin);
         txtContrasena = findViewById(R.id.editTextTextPassword);
         btnLogin = findViewById(R.id.button);
-        //btnRegistro = findViewById(R.id.idLoginRegistro);
+        btnRegistro = findViewById(R.id.register);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -64,14 +64,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         //ESTO FALTA HACER
-        /**
+
          btnRegistro.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-        startActivity(new Intent(LoginActivity.this,RegistroActivity.class));
-        finish();
-        }
-        });**/
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                finish();
+            }
+        });
     }
     private boolean isValidEmail(String email) {
         boolean valid = !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
