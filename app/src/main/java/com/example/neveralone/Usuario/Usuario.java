@@ -9,7 +9,6 @@ public class Usuario {
     private String codigopostal;
     private int puntuacioMedia;
     private boolean voluntario;
-    private boolean beneficiario;
 
     public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal,boolean voluntario,int puntuacioMedia) {
         this.email = email;
@@ -84,10 +83,6 @@ public class Usuario {
 
     public void setVoluntario(boolean voluntario) {
         this.voluntario = voluntario;
-    }
-
-    public void setBeneficiario(boolean beneficiario) {
-        this.beneficiario = beneficiario;
     }
 }
 

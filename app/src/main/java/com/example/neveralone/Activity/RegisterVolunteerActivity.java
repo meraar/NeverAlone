@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RegisterVolunteerActivity extends AppCompatActivity {
 
     private EditText txtpostalcode, txtdni;
@@ -150,7 +152,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
         txtdni.addTextChangedListener(campos);
     }
 **/
-    private boolean comprobarCampos(String cpEntero, String dniEntero) {
+    private boolean comprobarCampos(@NotNull String cpEntero, String dniEntero) {
 
         boolean cP = !(cpEntero.length() != 5); //true
         if(!cP){

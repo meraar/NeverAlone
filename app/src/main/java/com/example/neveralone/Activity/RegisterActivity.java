@@ -59,11 +59,12 @@ public class RegisterActivity extends AppCompatActivity{
                 if (isValidEmail(correo) && validarContrasena() && validarNombre(nombre, apellido) && validarchecked(vol,ben)) {
                     Intent intent = null;
                     Bundle b = new Bundle();
-                    intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
                     if (vol) {
                         volun = true;
+                        intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
                     } else if (ben) {
                         volun = false;
+                        intent = new Intent(RegisterActivity.this,RegisterBenefactorActivity.class);
                     }
                     //ENCRIPTAR CUANDO PUEDAS OKEY?
 

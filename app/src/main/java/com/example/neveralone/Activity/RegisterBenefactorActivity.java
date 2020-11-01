@@ -34,6 +34,8 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
     private EditText txtpostalcode, txtdni, txtDireccion, txtPisoPuerta;
     private Button btnFinalizarRegistro, btnAtras;
     private String correo, nombre, apellido, password;
+    private Boolean voluntario;
+
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -62,7 +64,6 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registerbeneficiario);
 
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
@@ -70,81 +71,85 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
             nombre = (String)b.getString("nombre");
             apellido = (String)b.getString("apellido");
             password = (String)b.getString("password");
+            voluntario = (Boolean)b.getBoolean("voluntario");
         }
 
-        btnAtras = findViewById(R.id.AtrasBut);
-        btnFinalizarRegistro = findViewById(R.id.RegistrarBut);
-        txtpostalcode = findViewById(R.id.CodigoPostalTxt);
-        txtdni = findViewById(R.id.DNITxt);
-        txtDireccion = findViewById(R.id.DireccionTxt);
-        txtPisoPuerta = findViewById(R.id.PisoPuertaTxt);
+        if(!voluntario) {
+            setContentView(R.layout.activity_registerbeneficiario);
+            btnAtras = findViewById(R.id.AtrasBut);
+            btnFinalizarRegistro = findViewById(R.id.RegistrarBut);
+            txtpostalcode = findViewById(R.id.CodigoPostalTxt);
+            txtdni = findViewById(R.id.DNITxt);
+            txtDireccion = findViewById(R.id.DireccionTxt);
+            txtPisoPuerta = findViewById(R.id.PisoPuertaTxt);
 
-        Spinner spinner = (Spinner) findViewById(R.id.Spinner);
-        String[] valores = {"Soy una persona mayor", "Problemas inmunológicos", "Otros"};
-        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
+            Spinner spinner = (Spinner) findViewById(R.id.Spinner);
+            String[] valores = {"Soy una persona mayor", "Problemas inmunológicos", "Otros"};
+            spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
 
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        database2 = FirebaseDatabase.getInstance().getReference("Usuarios/prueba");
+            mAuth = FirebaseAuth.getInstance();
+            database = FirebaseDatabase.getInstance();
+            database2 = FirebaseDatabase.getInstance().getReference("Usuarios/prueba");
 
-        //configEditText();
+            //configEditText();
 
-        btnFinalizarRegistro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String postalcode = txtpostalcode.getText().toString();
-                final String dni = txtdni.getText().toString();
-                final String direccion = txtDireccion.getText().toString();
-                final String PisoPuerta = txtPisoPuerta.getText().toString();
+            btnFinalizarRegistro.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final String postalcode = txtpostalcode.getText().toString();
+                    final String dni = txtdni.getText().toString();
+                    final String direccion = txtDireccion.getText().toString();
+                    final String PisoPuerta = txtPisoPuerta.getText().toString();
 
-                //final Voluntario voluntario = new Voluntario(correo, nombre, apellido, dni, postalcode);
-                if(comprobarCampos(postalcode, dni, direccion, PisoPuerta)){
-                    mAuth.createUserWithEmailAndPassword(correo, password)
-                            .addOnCompleteListener(RegisterBenefactorActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    // Hemos comprobado que si una sola linea de codigo falla, toda la tarea dentro del if no se ejecuta.
-                                    if (task.isSuccessful()) {
-                                        System.out.println("Debug5: Se ha registrado");
-                                        Toast.makeText(RegisterBenefactorActivity.this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
-                                        FirebaseUser currentUser = mAuth.getCurrentUser();
-                                        DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
-                                        Usuario usuario = new Usuario();
-                                        usuario.setEmail(correo);
-                                        usuario.setNombre(nombre);
-                                        usuario.setApellidos(apellido);
-                                        usuario.setDni(dni);
-                                        usuario.setCodigopostal(postalcode);
+                    if (comprobarCampos(postalcode, dni, direccion, PisoPuerta)) {
+                        mAuth.createUserWithEmailAndPassword(correo, password)
+                                .addOnCompleteListener(RegisterBenefactorActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(RegisterBenefactorActivity.this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
+                                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                                            DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
+                                            Usuario usuario = new Usuario();
+                                            usuario.setEmail(correo);
+                                            usuario.setNombre(nombre);
+                                            usuario.setApellidos(apellido);
+                                            usuario.setDni(dni);
+                                            usuario.setCodigopostal(postalcode);
 
-                                        usuario.setBeneficiario(true);
-                                        reference.setValue(usuario);
-                                        startActivity(new Intent(RegisterBenefactorActivity.this,LoginActivity.class));
-                                        finish();
+                                            usuario.setVoluntario(false);
+                                            reference.setValue(usuario);
+                                            startActivity(new Intent(RegisterBenefactorActivity.this, LoginActivity.class));
+                                            finish();
 
-                                        /**reference.setValue(usuario.getNombre());
-                                         reference.setValue(usuario.getApellidos());
-                                         reference.setValue(usuario.getEmail());
-                                         reference.setValue(usuario.getDni());
-                                         reference.setValue(usuario.getCodigopostal());
-                                         reference = database.getReference("Beneficiarios/" + currentUser.getUid());
-                                         reference.setValue(beneficiario.getDireccion());
-                                         **/
-                                    } else {
-                                        System.out.println("Debug5: No se ha registrado");
-                                        Toast.makeText(RegisterBenefactorActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
+                                            /**reference.setValue(usuario.getNombre());
+                                             reference.setValue(usuario.getApellidos());
+                                             reference.setValue(usuario.getEmail());
+                                             reference.setValue(usuario.getDni());
+                                             reference.setValue(usuario.getCodigopostal());
+                                             reference = database.getReference("Beneficiarios/" + currentUser.getUid());
+                                             reference.setValue(beneficiario.getDireccion());
+                                             **/
+                                        } else {
+                                            System.out.println("Debug5: No se ha registrado");
+                                            Toast.makeText(RegisterBenefactorActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
+                                });
+                    }
                 }
-            }
-        });
+            });
+        }
 
-
+        else {
+            setContentView(R.layout.activity_registervolunteer); // Funciona
+            btnAtras = findViewById(R.id.AtrasBut);
+        }
 
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterBenefactorActivity.this,RegisterVolunteerActivity.class));
+                startActivity(new Intent(RegisterBenefactorActivity.this,LoginActivity.class));
                 finish();
             }
         });
