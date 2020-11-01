@@ -19,6 +19,8 @@
         <activity android:name=".Activity.LoginActivity"></activity>
         <activity android:name=".Activity.RegisterActivity"></activity>
         <activity android:name=".Activity.RegisterVolunteerActivity"></activity>
+        <activity android:name=".Activity.Home"></activity>
+
 
 
         <meta-data

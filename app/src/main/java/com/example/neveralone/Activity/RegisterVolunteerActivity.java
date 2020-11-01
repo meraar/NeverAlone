@@ -32,7 +32,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
     private EditText txtpostalcode, txtdni;
     private Button register, back, btnFinalizarRegistro, btnAtras;
     private String correo, nombre, apellido, password;
-    private boolean voluntario;
+    private Boolean voluntario;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -69,56 +69,65 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
             nombre = (String)b.getString("nombre");
             apellido = (String)b.getString("apellido");
             password = (String)b.getString("password");
-            voluntario = (boolean)b.getBoolean("voluntario");
+            voluntario = (Boolean)b.getBoolean("voluntario");
         }
-        if (voluntario) setContentView(R.layout.activity_registervolunteer); // FUnciona
-        else setContentView(R.layout.activity_registerbeneficiario); // Funciona
+        System.out.println("VOlunrrio =  "+ voluntario );
+        if (voluntario){
+            setContentView(R.layout.activity_registervolunteer); // FUnciona
+            btnAtras = findViewById(R.id.idVolverAtras);
+            btnFinalizarRegistro = findViewById(R.id.idRegistroRegistrar);
+            txtpostalcode = findViewById(R.id.user_postalcode);
+            txtdni = findViewById(R.id.idDNI);
 
+            mAuth = FirebaseAuth.getInstance();
+            database = FirebaseDatabase.getInstance();
 
-        btnAtras = findViewById(R.id.idVolverAtras);
-        btnFinalizarRegistro = findViewById(R.id.idRegistroRegistrar);
-        txtpostalcode = findViewById(R.id.user_postalcode);
-        txtdni = findViewById(R.id.idDNI);
-
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
-        btnFinalizarRegistro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String postalcode = txtpostalcode.getText().toString();
-                final String dni = txtdni.getText().toString();
-                //final Voluntario voluntario = new Voluntario(correo, nombre, apellido, dni, postalcode);
-                if(comprobarCampos(postalcode, dni)){
-                    mAuth.createUserWithEmailAndPassword(correo, password)
-                            .addOnCompleteListener(RegisterVolunteerActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    // Hemos comprobado que si una sola linea de codigo falla, toda la tarea dentro del if no se ejecuta.
-                                    if (task.isSuccessful()) {
-                                        //System.out.println("Debug5: Se ha registrado");
-                                        Toast.makeText(RegisterVolunteerActivity.this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
-                                        FirebaseUser currentUser = mAuth.getCurrentUser();
-                                        DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
-                                        Usuario usuario = new Usuario();
-                                        usuario.setEmail(correo);
-                                        usuario.setNombre(nombre);
-                                        usuario.setApellidos(apellido);
-                                        usuario.setDni(dni);
-                                        usuario.setCodigopostal(postalcode);
-                                        usuario.setVoluntario(voluntario);
-                                        reference.setValue(usuario);
-                                        startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
-                                        finish();
-                                    } else {
-                                        System.out.println("Debug5: No se ha registrado");
-                                        Toast.makeText(RegisterVolunteerActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
+            btnFinalizarRegistro.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final String postalcode = txtpostalcode.getText().toString();
+                    final String dni = txtdni.getText().toString();
+                    //final Voluntario voluntario = new Voluntario(correo, nombre, apellido, dni, postalcode);
+                    if(comprobarCampos(postalcode, dni)){
+                        mAuth.createUserWithEmailAndPassword(correo, password)
+                                .addOnCompleteListener(RegisterVolunteerActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        // Hemos comprobado que si una sola linea de codigo falla, toda la tarea dentro del if no se ejecuta.
+                                        if (task.isSuccessful()) {
+                                            //System.out.println("Debug5: Se ha registrado");
+                                            Toast.makeText(RegisterVolunteerActivity.this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
+                                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                                            DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
+                                            Usuario usuario = new Usuario();
+                                            usuario.setEmail(correo);
+                                            usuario.setNombre(nombre);
+                                            usuario.setApellidos(apellido);
+                                            usuario.setDni(dni);
+                                            usuario.setCodigopostal(postalcode);
+                                            usuario.setVoluntario(true);
+                                            reference.setValue(usuario);
+                                            startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
+                                            finish();
+                                        } else {
+                                            System.out.println("Debug5: No se ha registrado");
+                                            Toast.makeText(RegisterVolunteerActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
+                                });
+                    }
                 }
-            }
-        });
+            });
+
+
+        }
+        else {
+            setContentView(R.layout.activity_registerbeneficiario); // Funciona
+            btnAtras = findViewById(R.id.AtrasBut);
+
+
+
+        }
 
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +136,9 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
     }
 /**
     private void configEditText() {

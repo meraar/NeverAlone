@@ -47,27 +47,27 @@ public class RegisterActivity extends AppCompatActivity{
             private String nombre;
             private String apellido;
             private String password;
+            private Boolean volun;
             @Override
             public void onClick(View v) {
                 correo = txtCorreo.getText().toString();
                 nombre = txtNombre.getText().toString();
                 apellido = txtApellido.getText().toString();
                 password = txtContrasena.getText().toString();
-                final Boolean vol = voluntario.isChecked();
-                final Boolean ben = beneficiario.isChecked();
+                Boolean vol = voluntario.isChecked();
+                Boolean ben = beneficiario.isChecked();
                 if (isValidEmail(correo) && validarContrasena() && validarNombre(nombre, apellido) && validarchecked(vol,ben)) {
                     Intent intent = null;
                     Bundle b = new Bundle();
+                    intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
                     if (vol) {
-                        //intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
-                        b.putBoolean("volunario", true);
+                        volun = true;
                     } else if (ben) {
-                        //intent = new Intent(RegisterActivity.this,RegisterBenefactorActivity.class);
-                        b.putBoolean("volunario", false);
+                        volun = false;
                     }
                     //ENCRIPTAR CUANDO PUEDAS OKEY?
 
-                    intent = new Intent(RegisterActivity.this,RegisterVolunteerActivity.class);
+                    b.putBoolean("voluntario", volun);
                     b.putString("correo",correo);
                     b.putString("nombre",nombre);
                     b.putString("apellido",apellido);
