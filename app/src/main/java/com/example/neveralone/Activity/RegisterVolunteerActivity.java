@@ -89,6 +89,10 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     final String postalcode = txtpostalcode.getText().toString();
                     final String dni = txtdni.getText().toString();
+                    final String motivo, direccion, piso;
+                    motivo = "null"; // Guardamos las siguientes variables como null ya que el voluntario no tiene estos atributos.
+                    direccion = "null";
+                    piso = "null";
                     //final Voluntario voluntario = new Voluntario(correo, nombre, apellido, dni, postalcode);
                     if(comprobarCampos(postalcode, dni)){
                         mAuth.createUserWithEmailAndPassword(correo, password)
@@ -107,6 +111,9 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                             usuario.setApellidos(apellido);
                                             usuario.setDni(dni);
                                             usuario.setCodigopostal(postalcode);
+                                            usuario.setMotivo(motivo);
+                                            usuario.setDireccion(direccion);
+                                            usuario.setPiso_puerta(piso);
                                             usuario.setVoluntario(true);
                                             reference.setValue(usuario);
                                             startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));

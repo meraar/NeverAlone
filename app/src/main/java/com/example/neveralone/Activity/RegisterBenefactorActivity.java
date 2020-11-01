@@ -37,6 +37,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
     private Boolean voluntario;
 
 
+
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference database2;
@@ -100,6 +101,8 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                     final String dni = txtdni.getText().toString();
                     final String direccion = txtDireccion.getText().toString();
                     final String PisoPuerta = txtPisoPuerta.getText().toString();
+                    Spinner spinner = (Spinner)findViewById(R.id.Spinner);
+                    final String motivo = spinner.getSelectedItem().toString();
 
                     if (comprobarCampos(postalcode, dni, direccion, PisoPuerta)) {
                         mAuth.createUserWithEmailAndPassword(correo, password)
@@ -116,7 +119,9 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             usuario.setApellidos(apellido);
                                             usuario.setDni(dni);
                                             usuario.setCodigopostal(postalcode);
-
+                                            usuario.setMotivo(motivo);
+                                            usuario.setDireccion(direccion);
+                                            usuario.setPiso_puerta(PisoPuerta);
                                             usuario.setVoluntario(false);
                                             reference.setValue(usuario);
                                             startActivity(new Intent(RegisterBenefactorActivity.this, LoginActivity.class));

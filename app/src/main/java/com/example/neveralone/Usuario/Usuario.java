@@ -9,6 +9,9 @@ public class Usuario {
     private String codigopostal;
     private int puntuacioMedia;
     private boolean voluntario;
+    private String direccion;
+    private String piso_puerta;
+    private String motivo;
 
     public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal,boolean voluntario,int puntuacioMedia) {
         this.email = email;
@@ -18,6 +21,30 @@ public class Usuario {
         this.codigopostal = codigopostal;
         this.voluntario=voluntario;
         this.puntuacioMedia=puntuacioMedia;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getPiso_puerta() {
+        return piso_puerta;
+    }
+
+    public void setPiso_puerta(String piso_puerta) {
+        this.piso_puerta = piso_puerta;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
     }
 
     public String getDni() {
