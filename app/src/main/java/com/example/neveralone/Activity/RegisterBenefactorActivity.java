@@ -33,7 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterBenefactorActivity extends AppCompatActivity {
 
     private EditText txtpostalcode, txtdni, txtDireccion, txtPisoPuerta;
-    private Button register, back, btnFinalizarRegistro, btnAtras;
+    private Button btnFinalizarRegistro, btnAtras;
     private String correo, nombre, apellido, password;
 
     private FirebaseAuth mAuth;
@@ -145,7 +145,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterBenefactorActivity.this,RegisterActivity.class));
+                startActivity(new Intent(RegisterBenefactorActivity.this,RegisterVolunteerActivity.class));
                 finish();
             }
         });
