@@ -39,27 +39,22 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference database2;
-/**
-    private TextWatcher campos = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String codigopostal = txtpostalcode.getText().toString().trim();
-            String dniText = txtdni.getText().toString().trim();
-
-            //register.setEnabled(!codigopostal.isEmpty() && !dniText.isEmpty());
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
+    /**
+     private TextWatcher campos = new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    String codigopostal = txtpostalcode.getText().toString().trim();
+    String dniText = txtdni.getText().toString().trim();
+    //register.setEnabled(!codigopostal.isEmpty() && !dniText.isEmpty());
+    }
+    @Override
+    public void afterTextChanged(Editable s) {
+    }
     };
-**/
+     **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +111,9 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                             usuario.setPiso_puerta(piso);
                                             usuario.setVoluntario(true);
                                             reference.setValue(usuario);
+                                            // verficar el mail
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            user.sendEmailVerification();
                                             startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
                                             finish();
                                         } else {
@@ -149,16 +147,14 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
 
 
     }
-/**
-    private void configEditText() {
-        txtpostalcode = findViewById(R.id.user_postalcode);
-        txtdni = findViewById(R.id.idDNI);
-
-
-        txtpostalcode.addTextChangedListener(campos);
-        txtdni.addTextChangedListener(campos);
-    }
-**/
+    /**
+     private void configEditText() {
+     txtpostalcode = findViewById(R.id.user_postalcode);
+     txtdni = findViewById(R.id.idDNI);
+     txtpostalcode.addTextChangedListener(campos);
+     txtdni.addTextChangedListener(campos);
+     }
+     **/
     private boolean comprobarCampos(@NotNull String cpEntero, String dniEntero) {
 
         boolean cP = !(cpEntero.length() != 5); //true

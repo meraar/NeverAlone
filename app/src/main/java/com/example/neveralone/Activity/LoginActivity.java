@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtCorreo, txtContrasena;
     private Button btnLogin, btnRegistro;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,35 +38,39 @@ public class LoginActivity extends AppCompatActivity {
         btnRegistro = findViewById(R.id.register);
 
         mAuth = FirebaseAuth.getInstance();
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String correo =  txtCorreo.getText().toString();
-                if(isValidEmail(correo) && validarContrasena()){
-                    String contrasena = txtContrasena.getText().toString();
-                    mAuth.signInWithEmailAndPassword(correo, contrasena)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
+                //if(isValidEmail(correo) && validarContrasena()){
+                String contrasena = txtContrasena.getText().toString();
+                mAuth.signInWithEmailAndPassword(correo, contrasena)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    if(!mAuth.getCurrentUser().isEmailVerified()){
+                                        Toast.makeText(LoginActivity.this, "El email no esta verificado.", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
                                         Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                                         txtCorreo.setText("");
                                         txtContrasena.setText("");
                                         startActivity(new Intent(LoginActivity.this, Home.class));
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, "Error, credenciales incorrectas.", Toast.LENGTH_SHORT).show();
                                     }
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                } else {
-                    Toast.makeText(LoginActivity.this, "Error de Log in.", Toast.LENGTH_SHORT).show();
-                }
+                            }
+                        });
+                // } else {
+                // Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
+                //}
             }
         });
         //ESTO FALTA HACER
 
-         btnRegistro.setOnClickListener(new View.OnClickListener() {
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
@@ -73,22 +78,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private boolean isValidEmail(String email) {
-        boolean valid = !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-        if(!valid) Toast.makeText(this, "Introduce un correo valido.", Toast.LENGTH_SHORT).show();
-        return valid;
-    }
-
-    public boolean validarContrasena(){
-        String contrasena, contrasenaRepetida;
-        contrasena = txtContrasena.getText().toString();
-        if(contrasena.length()>=6 && contrasena.length() <16){
-            return true;
-        } else{
-            Toast.makeText(this, "La contraseña ha de contener entre 6 y 15 carácteres.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    }
+    /**
+     private boolean isValidEmail(String email) {
+     boolean valid = !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+     if(!valid) Toast.makeText(this, "Introduce un correo valido.", Toast.LENGTH_SHORT).show();
+     return valid;
+     }
+     public boolean validarContrasena(){
+     String contrasena, contrasenaRepetida;
+     contrasena = txtContrasena.getText().toString();
+     if(contrasena.length()>=6 && contrasena.length() <16){
+     return true;
+     } else{
+     Toast.makeText(this, "La contraseña ha de contener entre 6 y 15 carácteres.", Toast.LENGTH_SHORT).show();
+     return false;
+     }
+     }**/
 
     @Override
     protected void onResume() {
@@ -125,28 +130,19 @@ public class LoginActivity extends AppCompatActivity {
  Context context = getApplicationContext();
  CharSequence text = "Correo electrónico no válido!";
  int duration = Toast.LENGTH_SHORT;
-
  Toast toast = Toast.makeText(context, text, duration);
  toast.show();
-
  }
-
  }
-
-
  public void register(View view) {
  Intent intent = new Intent(this, RegisterActivity.class);
  startActivity(intent);
  }
-
  public void registerWithGoogle(View view) {
-
  }
-
  private boolean verifyEmail(String email) {
  return (email.contains("@hotmail.com") || email.contains("@gmail.com") || email.contains("@hotmail.es") || email.contains("@yahoo.com"));
  }
-
  private String hashSha256(String passw) {
  try {
  MessageDigest sha256 = MessageDigest.getInstance( "SHA-256" );
@@ -157,22 +153,16 @@ public class LoginActivity extends AppCompatActivity {
  }
  return passw;
  }
-
-
  public static String toHexString(byte[] hash)
  {
  // Convert byte array into signum representation
  BigInteger number = new BigInteger(1, hash);
-
  // Convert message digest into hex value
  StringBuilder hexString = new StringBuilder(number.toString(16));
-
  // Pad with leading zeros
  while (hexString.length() < 32) {
  hexString.insert(0, '0');
  }
  return hexString.toString();
  }*/
-
-
 

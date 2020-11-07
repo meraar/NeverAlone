@@ -131,18 +131,32 @@ public class RegisterActivity extends AppCompatActivity{
         String contrasena, contrasenaRepetida;
         contrasena = txtContrasena.getText().toString();
         contrasenaRepetida = txtContrasenaRepetida.getText().toString();
-        if (contrasena.equals(contrasenaRepetida)) {
-            if (contrasena.length() >= 6 && contrasena.length() < 16) {
+        String valid_contra = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{10,}$";
+        if (contrasena.matches(valid_contra)) {
+            if (contrasena.equals(contrasenaRepetida)) {
                 return true;
             } else {
-                Toast.makeText(this, "La contraseña ha de contener entre 6 y 15 carácteres.", Toast.LENGTH_SHORT).show();
+                txtContrasenaRepetida.setError("La contraseña no coincide");
                 return false;
             }
         } else {
-            Toast.makeText(this, "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show();
+            txtContrasena.setError("La contraseña debe tener minimo 10 carateres, una letra en minúscula, una mayúscula y un carácter especial (!, @, #, $,%)");
             return false;
         }
     }
+    /**
+     if (contrasena.equals(contrasenaRepetida)) {
+     if (contrasena.length() >= 6 && contrasena.length() < 16) {
+     return true;
+     } else {
+     Toast.makeText(this, "La contraseña ha de contener entre 6 y 15 carácteres.", Toast.LENGTH_SHORT).show();
+     return false;
+     }
+     } else {
+     Toast.makeText(this, "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show();
+     return false;
+     }
+     }**/
 
     public boolean validarNombre(String nombre, String Apellido) {
         if (nombre.isEmpty()) {

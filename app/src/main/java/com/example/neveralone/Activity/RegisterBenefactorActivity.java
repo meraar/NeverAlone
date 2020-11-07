@@ -124,6 +124,9 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             usuario.setPiso_puerta(PisoPuerta);
                                             usuario.setVoluntario(false);
                                             reference.setValue(usuario);
+                                            //verficar el mail
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            user.sendEmailVerification();
                                             startActivity(new Intent(RegisterBenefactorActivity.this, LoginActivity.class));
                                             finish();
 
