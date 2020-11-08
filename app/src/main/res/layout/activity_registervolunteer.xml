@@ -9,7 +9,8 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="25sp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activity.RegisterVolunteerActivity">
 
     <ImageView
         android:layout_width="150dp"
