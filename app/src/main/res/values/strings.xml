@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">NeverAlone</string>
 
     <string name="backgroundFirstPage">NABackground</string>
@@ -47,6 +48,10 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="label_categoria_petición">Seleccione la categoria de su petición:</string>
+    <string name="fecha_para_la_peticion">Seleccione una fecha:</string>
+    <string name="input_fecha_peticion">dd/mm/yyyy</string>
+    <string name="input_hora_peticion">hh:mm</string>
 
 
 </resources>
