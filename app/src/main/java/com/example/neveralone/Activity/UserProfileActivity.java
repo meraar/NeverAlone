@@ -3,13 +3,15 @@ package com.example.neveralone.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.neveralone.R;
+import com.example.neveralone.Usuario.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,69 +23,63 @@ import com.google.firebase.database.ValueEventListener;
 public class UserProfileActivity extends AppCompatActivity {
     private EditText nombretxt, apellidotxt, dnitxt, codigo_postaltxt, direcciontxt, emailtxt;
     private ImageView profile_image;
-    FirebaseUser useer;
-    DatabaseReference DataRef;
-    String nombre, apellido, codigopostal, direccion, dni, piso_puerta, email;
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String nombre, apellido, codigopostal, dni;
+    String  direccion, piso_puerta, email;
     Double puntuacion_media;
     Boolean voluntario;
+    Usuario usuario;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nombretxt = (EditText)findViewById(R.id.Nombre);
-        String text = "here put the text that you want";
-        nombretxt.setText(text);
         setContentView(R.layout.activity_user_profile);
-
-
-
-
-    }
-
-    private void initialize(){
+        nombretxt = findViewById(R.id.Nombre);
         apellidotxt = findViewById(R.id.Apellido);
         dnitxt = findViewById(R.id.dni);
         emailtxt = findViewById(R.id.email);
         codigo_postaltxt = findViewById(R.id.codigo_postal);
+        initialize();
+    }
 
+    private void initialize(){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        final String id = firebaseUser.getUid();
-        DataRef = FirebaseDatabase.getInstance().getReference().child("Usuarios");
-        DataRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+        user = firebaseAuth.getCurrentUser();
+        String id = user.getUid();
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Usuarios").child(id).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            usuario = snapshot.getValue(Usuario.class);
+                            nombretxt.setText(usuario.getNombre());
+                            apellidotxt.setText(usuario.getApellidos());
+                            dnitxt.setText(usuario.getDni());
+                            emailtxt.setText(usuario.getEmail());
+                            codigo_postaltxt.setText(usuario.getCodigopostal());
+                            //TODO diferenciar entre voluntario y beneficiario
 
-                    nombre = snapshot.child(id).child("nombre").getValue().toString();
-                    apellido = snapshot.child(id).child("apellidos").getValue().toString();
-                    codigopostal = snapshot.child(id).child("codigopostal").getValue().toString();
-                    direccion = snapshot.child(id).child("direccion").getValue().toString();
-                    dni = snapshot.child(id).child("dni").getValue().toString();
-                    email = snapshot.child(id).child("email").getValue().toString();
-                    piso_puerta = snapshot.child(id).child("motivo").getValue().toString();
-                    puntuacion_media = snapshot.child(id).child("puntuacionMedia").getValue(Double.class);
-                    voluntario = snapshot.child(id).child("voluntario").getValue(Boolean.class);
-                }
-                else{
-                    Log.d("MyApa","ERRRRRRRRRROR");
-                }
-            }
+                        } else {
+                            Log.d("MyApa", "ERRRRRRRRRROR");
+                        }
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        Log.i("Nombre", "nombre"+ nombre);
-        nombretxt.setText(nombre);
-        apellidotxt.setText(apellido);
-        dnitxt.setText(dni);
-        emailtxt.setText(email);
-        codigo_postaltxt.setText(codigopostal);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Failed to read value
+                    }
+                });
+    }
 
 
+    public void cerrarSesion(View view) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
+        finish();
     }
 
 }

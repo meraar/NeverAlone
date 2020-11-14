@@ -42,8 +42,8 @@
                 android:id="@+id/Nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                >
+                android:hint="@string/user_name"
+                android:padding="10dp">
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
@@ -57,8 +57,7 @@
                 android:id="@+id/Apellido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Mi Apellido">
+                android:padding="10dp">
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
@@ -72,8 +71,8 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Mi email">
+                android:hint="@string/user_email"
+                android:padding="10dp">
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
@@ -87,8 +86,7 @@
                 android:id="@+id/dni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Mi DNI">
+                android:padding="10dp">
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
@@ -106,8 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:padding="10dp"
-                android:text="XXXXX">
+                android:padding="10dp">
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
@@ -184,6 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:onClick="cerrarSesion"
             android:text="Actualizar Perfil" />
 
 
