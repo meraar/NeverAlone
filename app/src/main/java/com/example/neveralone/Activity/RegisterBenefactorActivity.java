@@ -101,7 +101,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                     final String dni = txtdni.getText().toString();
                     final String direccion = txtDireccion.getText().toString();
                     final String PisoPuerta = txtPisoPuerta.getText().toString();
-                    final Double puntuacion = 0.0;
+                    final Float puntuacion = 0.0f;
                     Spinner spinner = (Spinner)findViewById(R.id.Spinner);
                     final String motivo = spinner.getSelectedItem().toString();
 

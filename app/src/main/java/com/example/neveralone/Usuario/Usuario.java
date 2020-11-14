@@ -7,13 +7,13 @@ public class Usuario {
     private String apellidos;
     private String dni;
     private String codigopostal;
-    private Double puntuacioMedia;
+    private Float puntuacioMedia;
     private Boolean voluntario;
     private String direccion;
     private String piso_puerta;
     private String motivo;
 
-    public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal,Boolean voluntario, Double puntuacioMedia) {
+    public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal,Boolean voluntario, Float puntuacioMedia) {
         this.email = email;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -55,10 +55,9 @@ public class Usuario {
         this.dni = dni;
     }
 
+    public Boolean getVoluntario() { return voluntario; }
 
-    public Usuario() {
-
-    }
+    public Usuario() { }
 
     public String getEmail() {
         return email;
@@ -96,17 +95,15 @@ public class Usuario {
         return this;
     }
 
-    public Double getPuntuacioMedia() {
+    public float getPuntuacioMedia() {
         return puntuacioMedia;
     }
 
-    public void setPuntuacioMedia(Double puntuacioMedia) {
+    public void setPuntuacioMedia(Float puntuacioMedia) {
         this.puntuacioMedia = puntuacioMedia;
     }
 
-    public boolean isVoluntario() {
-        return voluntario;
-    }
+
 
     public void setVoluntario(Boolean voluntario) {
         this.voluntario = voluntario;

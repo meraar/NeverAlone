@@ -85,7 +85,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                     final String postalcode = txtpostalcode.getText().toString();
                     final String dni = txtdni.getText().toString();
                     final String motivo, direccion, piso;
-                    final Double puntuacion = 0.0;
+                    final Float puntuacion = 0.0f;
                     motivo = "null"; // Guardamos las siguientes variables como null ya que el voluntario no tiene estos atributos.
                     direccion = "null";
                     piso = "null";
