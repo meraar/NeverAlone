@@ -85,6 +85,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                     final String postalcode = txtpostalcode.getText().toString();
                     final String dni = txtdni.getText().toString();
                     final String motivo, direccion, piso;
+                    final Double puntuacion = 0.0;
                     motivo = "null"; // Guardamos las siguientes variables como null ya que el voluntario no tiene estos atributos.
                     direccion = "null";
                     piso = "null";
@@ -109,6 +110,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                             usuario.setMotivo(motivo);
                                             usuario.setDireccion(direccion);
                                             usuario.setPiso_puerta(piso);
+                                            usuario.setPuntuacioMedia(puntuacion);
                                             usuario.setVoluntario(true);
                                             reference.setValue(usuario);
                                             // verficar el mail

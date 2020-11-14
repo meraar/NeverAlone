@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegistro;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    DatabaseReference DataRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                                         txtCorreo.setText("");
                                         txtContrasena.setText("");
-                                        startActivity(new Intent(LoginActivity.this, Home.class));
+                                        startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
                                     }
                                 } else {
                                     Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
@@ -78,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     /**
      private boolean isValidEmail(String email) {
      boolean valid = !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
