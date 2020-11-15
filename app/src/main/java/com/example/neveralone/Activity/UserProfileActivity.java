@@ -72,10 +72,13 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
                             nombretxt.setText(usuario.getNombre());
                             apellidotxt.setText(usuario.getApellidos());
                             dnitxt.setText(usuario.getDni());
+                            dnitxt.setEnabled(false);
                             emailtxt.setText(usuario.getEmail());
                             codigo_postaltxt.setText(usuario.getCodigopostal());
 
                             if (!usuario.getVoluntario()){
+                                first_direccion.setVisibility(View.VISIBLE);
+                                first_piso_puerta.setVisibility(View.VISIBLE);
                                 first_motivo.setVisibility(View.VISIBLE);
 
                                 motivotxt.setText(usuario.getMotivo());
@@ -83,11 +86,11 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
                                 motivotxt.setEnabled(false); // El motivo no se podra actualizar.
                                 motivotxt.setVisibility(View.VISIBLE);
 
-                                first_direccion.setVisibility(View.VISIBLE);
+
                                 direcciontxt.setText(usuario.getDireccion());
                                 direcciontxt.setVisibility(View.VISIBLE);
 
-                                first_piso_puerta.setVisibility(View.VISIBLE);
+
                                 piso_puertatxt.setText(usuario.getPiso_puerta());
                                 piso_puertatxt.setVisibility(View.VISIBLE);
 
@@ -100,7 +103,7 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
 
                             }
                         } else {
-                            Log.d("MyApa", "ERRRRRRRRRROR");
+                            //Log.d("MyApa", "Hay un error");
                         }
                     }
 
