@@ -71,9 +71,8 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.fecha_peticion)).perform(click());
         onView(withId(R.id.fecha_peticion)).perform(click());
 
-        String name = DatePicker.class.getName();
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 11, 12));
-        onView(withText("D'ACORD")).perform(click());
+        onView(withText("OK")).perform(click());
 
         onView(withId(R.id.idCrearPeticion)).perform(click());
         onView(withId(R.id.result))
@@ -90,19 +89,42 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.fecha_peticion)).perform(click());
         onView(withId(R.id.fecha_peticion)).perform(click());
 
-        String name = DatePicker.class.getName();
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 11, 12));
-        onView(withText("D'ACORD")).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 11, 16));
+        onView(withText("OK")).perform(click());
 
         onView(withId(R.id.hora_peticion)).perform(click());
         onView(withId(R.id.hora_peticion)).perform(click());
 
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(07, 11));
-        onView(withText("D'acord")).perform(click());
+        onView(withText("OK")).perform(click());
 
         onView(withId(R.id.idCrearPeticion)).perform(click());
         onView(withId(R.id.result))
                 .check(matches(withText("Something went wrong")));
+
+    }
+
+    @Test
+    public void succes() throws InterruptedException {
+
+        onView(withId(R.id.SpinnerCategoriaPeticion)).perform(click());
+        onData(is(valores[1])).perform(click());
+
+        onView(withId(R.id.fecha_peticion)).perform(click());
+        onView(withId(R.id.fecha_peticion)).perform(click());
+
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 11, 29));
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.hora_peticion)).perform(click());
+        onView(withId(R.id.hora_peticion)).perform(click());
+
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(07, 11));
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.idCrearPeticion)).perform(click());
+        onView(withId(R.id.result))
+                .check(matches(withText("SUCCES")));
 
     }
 

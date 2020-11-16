@@ -118,6 +118,7 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
             public void onClick(View v) {
                 try {
                     if(compruebaFecha()){
+                        result.setText("SUCCES");
                         Log.d("MyApp", "CREADO");
                         rootNode = FirebaseDatabase.getInstance();
                         reference = rootNode.getReference();
