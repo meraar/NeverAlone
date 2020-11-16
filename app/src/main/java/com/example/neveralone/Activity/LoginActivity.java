@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         String contrasena = txtContrasena.getText().toString();
         boolean comprovacion_correo = correo.isEmpty();
         boolean comprovacion_contrasena = contrasena.isEmpty();
-        if(comprovacion_correo && comprovacion_contrasena){
+        if(comprovacion_correo || comprovacion_contrasena){
             if (comprovacion_correo){
                 txtCorreo.setError("Añade el correo para iniciar sesión");
             }
