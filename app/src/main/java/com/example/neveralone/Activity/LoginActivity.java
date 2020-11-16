@@ -67,24 +67,34 @@ public class LoginActivity extends AppCompatActivity {
         txtContrasena = findViewById(R.id.editTextTextPassword);
         String correo =  txtCorreo.getText().toString();
         String contrasena = txtContrasena.getText().toString();
-        mAuth.signInWithEmailAndPassword(correo, contrasena).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    if(!mAuth.getCurrentUser().isEmailVerified()){
-                        Toast.makeText(LoginActivity.this, "El email no esta verificado.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
-                        txtCorreo.setText("");
-                        txtContrasena.setText("");
-                        startActivity(new Intent(LoginActivity.this, Home.class));
-                    }
-                } else {
-                    Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
-                }
+        boolean comprovacion_correo = correo.isEmpty();
+        boolean comprovacion_contrasena = contrasena.isEmpty();
+        if(comprovacion_correo && comprovacion_contrasena){
+            if (comprovacion_correo){
+                txtCorreo.setError("Añade el correo para iniciar sesión");
             }
-        });
+            if (comprovacion_contrasena){
+                txtContrasena.setError("Añade la contraseña para iniciar sesión");
+            }
+        } else {
+            mAuth.signInWithEmailAndPassword(correo, contrasena).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        if (!mAuth.getCurrentUser().isEmailVerified()) {
+                            Toast.makeText(LoginActivity.this, "El email no esta verificado.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
+                            txtCorreo.setText("");
+                            txtContrasena.setText("");
+                            startActivity(new Intent(LoginActivity.this, Home.class));
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
     public void register(View view) {
