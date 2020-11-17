@@ -38,7 +38,7 @@ public class Peticion {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", uid);
-        result.put("usuario", user);
+        result.put("user", user);
         result.put("categoria", categoria);
         result.put("fecha", fecha);
         result.put("hora", hora);

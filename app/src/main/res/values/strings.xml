@@ -52,6 +52,10 @@
     <string name="fecha_para_la_peticion">Seleccione una fecha:</string>
     <string name="input_fecha_peticion">dd/mm/yyyy</string>
     <string name="input_hora_peticion">hh:mm</string>
+    <string name="Mis_peticiones_title">Mis Peticiones</string>
+    <string name="TituloPeticion">Comprar Mercadona</string>
+    <string name="usuarioPeticion">Setch</string>
+    <string name="estadoPeticion">Pendiente</string>
 
 
 </resources>

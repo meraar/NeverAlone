@@ -131,10 +131,14 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String name = null,uid = null;
                         if (user != null) {
-                            uid = user.getUid();
-                            name = user.getDisplayName();
+                            uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
+                            name = "Sufang";
                         }
 
+                        uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
+                        name = "Sufang";
+                        uid = "4gGXfo84A6aKnNF6NgO1jqMTLpI3";
+                        name = "Antoniete";
                         Peticion p = new Peticion(name,uid,categoria,fecha,hora,descripcion);
                         String key = reference.child("Peticiones").push().getKey();
 
