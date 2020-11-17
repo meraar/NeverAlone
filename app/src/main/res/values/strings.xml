@@ -50,5 +50,6 @@
 
 
     <string name="perfil_name">Mi perfil</string>
+    <string name="title_activity_first_home">FirstHomeActivity</string>
 
 </resources>
