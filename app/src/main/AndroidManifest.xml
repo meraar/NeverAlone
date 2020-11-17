@@ -21,6 +21,7 @@
         <activity android:name=".Activity.RegisterVolunteerActivity" />
         <activity android:name=".Activity.RegisterBenefactorActivity" />
         <activity android:name=".Activity.Home" />
+        <activity android:name=".Activity.AutotestActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
