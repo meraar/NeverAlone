@@ -3,7 +3,9 @@ package com.example.neveralone.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -26,6 +29,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.Arrays;
 
@@ -35,10 +41,13 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
     private TextInputLayout first_puntuacion, first_piso_puerta, first_direccion, first_motivo;
     private ImageView profile_image;
     private FirebaseUser user;
-    private DatabaseReference reference;
+    private DatabaseReference reference, reference_image;
     private Usuario usuario;
     private String id;
-
+    private DatabaseReference user_foto_reference;
+    private ProgressDialog cargando;
+    private StorageReference storageReference;
+    private Bitmap bitmap = null;
 
 
     @Override
@@ -60,6 +69,15 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
         first_puntuacion = findViewById(R.id.firstpuntuacion_media);
         first_motivo = findViewById(R.id.firstmotivo);
         initialize();
+        initialize2();
+    }
+
+    private void initialize2() {
+        profile_image = findViewById(R.id.profile_image);
+        reference_image = FirebaseDatabase.getInstance().getReference().child("Fotos");
+        storageReference = FirebaseStorage.getInstance().getReference().child("user_image");
+        cargando = new ProgressDialog(this);
+
     }
 
     private void initialize(){
@@ -173,6 +191,10 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
 
         return (name || surname || piso || direction || postal_code);
 
+    }
+
+    public void UpdateFoto(View view){
+        CropImage.startPickImageActivity(UserProfileActivity.this);
     }
 
 

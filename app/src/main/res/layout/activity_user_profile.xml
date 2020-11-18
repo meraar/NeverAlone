@@ -37,6 +37,7 @@
             android:layout_height="149dp"
             android:clickable="true"
             android:gravity="center"
+            android:onClick="UpdateFoto"
             android:src="@drawable/logo_sin_fondo" />
     </RelativeLayout>
 
