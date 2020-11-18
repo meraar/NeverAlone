@@ -22,7 +22,8 @@
             android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_centerInParent="true" />
     </FrameLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,12 +34,13 @@
 
         <ImageView
             android:id="@+id/profile_image"
-            android:layout_width="200dp"
-            android:layout_height="149dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:clickable="true"
             android:gravity="center"
             android:onClick="UpdateFoto"
-            android:src="@drawable/logo_sin_fondo" />
+            android:src="@drawable/logo_sin_fondo"
+            android:scaleType="centerCrop"/>
     </RelativeLayout>
 
     <ScrollView
