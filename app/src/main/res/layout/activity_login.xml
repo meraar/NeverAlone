@@ -197,10 +197,11 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:drawableStart="@drawable/googleg_standard_color_18"
+            android:drawableLeft="@drawable/googleg_standard_color_18"
+            android:onClick="registerWithGoogle"
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
-            android:text="@string/sign_up_google"
-            android:drawableLeft="@drawable/googleg_standard_color_18" />
+            android:text="@string/sign_up_google" />
 
 
     </LinearLayout>
