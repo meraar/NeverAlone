@@ -77,6 +77,8 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 List<Address> foundGeocode = null;
                 try {
                     foundGeocode = x.getFromLocationName(codigoPostal+" España", 1);
+                    Log.i("myInfoTag10eeeee", String.valueOf(foundGeocode));
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -108,32 +110,45 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
+
                     //String codigo_raro = snapshot.child("null").getValue().toString();
                     Iterable<DataSnapshot> Usuarios_con_peticiones = snapshot.child("User-Peticiones").getChildren();
                     for (DataSnapshot Usuario_con_peticiones : Usuarios_con_peticiones) {
-                        List<Address> foundGeocodePeticion = null;
-                        String codigo_usuario_con_pet = Usuario_con_peticiones.getValue(String.class);
+                        Log.i("myInfoTag10 marcador1", "entra");
+
+                        String codigo_usuario_con_pet = Usuario_con_peticiones.getKey().toString();
                         String CP = null;
                         Iterable<DataSnapshot> Usuarios = snapshot.child("Usuarios").getChildren();
                         for (DataSnapshot User : Usuarios) {
-                            String código_usuario = User.getValue().toString();
-                            if(código_usuario ==codigo_usuario_con_pet){
-                                CP = User.child("codigoposta").getValue().toString();
+
+                            Log.i("myInfoTag10 marcador2", "entra");
+
+                            String código_usuario = User.getKey().toString();
+                            Log.i("myInfoTag10 usuario:", código_usuario);
+                            Log.i("myInfoTag10pet", codigo_usuario_con_pet);
+                            if (código_usuario.equals(codigo_usuario_con_pet)) {
+                                Log.i("myInfoTag10 marcador2", "entra if");
+
+                                CP = User.child("codigopostal").getValue().toString();
+                                Log.i("myInfoTag10", CP);
+                                List<Address> foundGeocode = null;
+                                try {
+                                    //Quizas llamando aqui a una funcion pasando como parametro Usuario_con_peticiones consiga el codigo postal
+                                    foundGeocode = geocoder.getFromLocationName(CP + " España", 1);
+
+                                    Log.i("myInfoTag10este", String.valueOf(foundGeocode));
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                LatLng ubi_peticion = new LatLng(foundGeocode.get(0).getLatitude(), foundGeocode.get(0).getLongitude());
+
+                                Marker MarkerEjemplo1 = mMap.addMarker(new MarkerOptions()
+                                        .position(ubi_peticion)
+                                        .title("Ejemplo1")
+                                        .snippet("Distancia: 10M KM")); //de momento, habria que mirar como calcular la distancia
                             }
                         }
-                        //get_CP_by_Usr(codigo_usuario, CP);
-                        try {
-                            //Quizas llamando aqui a una funcion pasando como parametro Usuario_con_peticiones consiga el codigo postal
-                            foundGeocodePeticion = geocoder.getFromLocationName(CP + "España", 1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        LatLng ubi_peticion = new LatLng( foundGeocodePeticion.get(0).getLatitude(), foundGeocodePeticion.get(0).getLongitude());
-                        Marker MarkerEjemplo1 = mMap.addMarker(new MarkerOptions()
-                                .position(ubi_peticion)
-                                .title("Ejemplo1")
-                                .snippet("Distancia: 10M KM")); //de momento, habria que mirar como calcular la distancia
-                        //MarkerEjemplo1.showInfoWindow();
                     }
                 }
             }
@@ -144,14 +159,14 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
             }
         });
     }
-/*
+
     private void get_CP_by_Usr(final String codigo_usuario, String codigoUsuario) {
         mDatabase2 = FirebaseDatabase.getInstance().getReference();
         final String[] a = {null};
         final String b =null;
         mDatabase2.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     Iterable<DataSnapshot> Usuarios = snapshot.getChildren();
                     for (DataSnapshot usr : Usuarios) {
@@ -163,10 +178,10 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError error) {
             }
         });
         codigoUsuario = a[0];
     }
- */
+
 }
