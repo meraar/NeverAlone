@@ -14,7 +14,7 @@
         android:id="@+id/result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Error or what"
+        android:text=""
         android:padding="15dp"
         android:textSize="18dp" />
 

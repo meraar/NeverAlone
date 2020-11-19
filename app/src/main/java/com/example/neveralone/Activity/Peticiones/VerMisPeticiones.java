@@ -68,11 +68,6 @@ public class VerMisPeticiones extends AppCompatActivity {
             }
         });
 
-        //elements.add(new Peticion("user", "xd", "mercadona", "e", "e", "String descripcion"));
-
-
-
-        //pedir peticiones i cargarlas
 
     }
 }

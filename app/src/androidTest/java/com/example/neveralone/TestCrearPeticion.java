@@ -43,7 +43,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ExampleInstrumentedTest {
+public class TestCrearPeticion {
 
     String[] valores = {"Compras", "Asesoramiento", "Acompañamiento", "Otros"};
 
