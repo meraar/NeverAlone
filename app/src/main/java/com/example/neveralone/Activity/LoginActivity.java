@@ -2,22 +2,20 @@ package com.example.neveralone.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.neveralone.MapsActivity2;
 import com.example.neveralone.R;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -56,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                                         txtCorreo.setText("");
                                         txtContrasena.setText("");
-                                        startActivity(new Intent(LoginActivity.this, Home.class));
+                                        startActivity(new Intent(LoginActivity.this, MapsActivity2.class));
                                     }
                                 } else {
                                     Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
@@ -107,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void nextActivity(){
-        startActivity(new Intent(LoginActivity.this,Home.class));
+        startActivity(new Intent(LoginActivity.this, MapsActivity2.class));
         finish();
     }
 }
