@@ -165,7 +165,7 @@ public class MapsActivity2 extends FragmentActivity implements
 
             }
         });
-        googleMap.setOnInfoWindowClickListener(this);
+        googleM.setOnInfoWindowClickListener(this);
     }
 
     @Override
