@@ -4,12 +4,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.neveralone.Activity.Home;
+import com.example.neveralone.Activity.LoginActivity;
+import com.example.neveralone.Activity.RegisterVolunteerActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -28,7 +32,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.util.List;
 
-public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity2 extends FragmentActivity implements
+        OnMapReadyCallback,
+        GoogleMap.OnInfoWindowClickListener
+{
 
     private GoogleMap mMap;
     private FirebaseAuth mAuth;
@@ -145,7 +152,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
                                 Marker MarkerEjemplo1 = mMap.addMarker(new MarkerOptions()
                                         .position(ubi_peticion)
-                                        .title("Ejemplo1")
+                                        .title(codigo_usuario_con_pet)
                                         .snippet("Distancia: 10M KM")); //de momento, habria que mirar como calcular la distancia
                             }
                         }
@@ -158,30 +165,12 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
             }
         });
+        googleMap.setOnInfoWindowClickListener(this);
     }
 
-    private void get_CP_by_Usr(final String codigo_usuario, String codigoUsuario) {
-        mDatabase2 = FirebaseDatabase.getInstance().getReference();
-        final String[] a = {null};
-        final String b =null;
-        mDatabase2.child("Usuarios").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    Iterable<DataSnapshot> Usuarios = snapshot.getChildren();
-                    for (DataSnapshot usr : Usuarios) {
-                        String cod_usr = usr.getValue().toString();
-                        if (cod_usr==codigo_usuario){
-                             a[1] = usr.child("codigopostal").getValue().toString();
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
-        codigoUsuario = a[0];
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        startActivity(new Intent(MapsActivity2.this, Home.class)); //sustituir home por el perfil del Usuario. Estará guardado en el this.title, seguramente(marcador)
+        finish();
     }
-
 }
