@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Vector;
 
 public class MapsActivity2 extends FragmentActivity implements
         OnMapReadyCallback,
@@ -117,20 +118,41 @@ public class MapsActivity2 extends FragmentActivity implements
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-
-                    //String codigo_raro = snapshot.child("null").getValue().toString();
                     Iterable<DataSnapshot> Usuarios_con_peticiones = snapshot.child("User-Peticiones").getChildren();
                     for (DataSnapshot Usuario_con_peticiones : Usuarios_con_peticiones) {
                         Log.i("myInfoTag10 marcador1", "entra");
-
-                        String codigo_usuario_con_pet = Usuario_con_peticiones.getKey().toString();
+                        //AÑADIDO DE AQUI...
+                        Vector<String> tipos_de_peticiones_del_usr = new Vector<String>();
+                        Iterable<DataSnapshot> peticiones = Usuario_con_peticiones.getChildren();
+                        boolean Asesoriamiento = false, Compra = false, Acompañamiento = false, Otro = false;
+                        for(DataSnapshot peticion : peticiones){
+                            //CUIDADO CON COMO SE GUARDAN EN FIREBASE, A VECES CON "" A VECES NO...
+                            String tipo_de_peticion = peticion.child("categoria").getValue().toString();
+                            if(tipo_de_peticion== "Compras" && !Compra){
+                                Compra = true;
+                                tipos_de_peticiones_del_usr.add("Compras");
+                            }
+                            else if(tipo_de_peticion == "Asesoramiento" && !Asesoriamiento){
+                                Asesoriamiento = true;
+                                tipos_de_peticiones_del_usr.add("Asesoramiento");
+                            }
+                            else if(tipo_de_peticion == "Acompañamiento" && !Acompañamiento) {
+                                Acompañamiento = true;
+                                tipos_de_peticiones_del_usr.add("Acompañamiento");
+                            }
+                            else if(tipo_de_peticion == "Otro" && !Otro) {
+                                Otro = true;
+                                tipos_de_peticiones_del_usr.add("Otro");
+                            }
+                        }
+                        //...A AQUI
+                        String codigo_usuario_con_pet = Usuario_con_peticiones.getKey();
                         String CP = null;
                         Iterable<DataSnapshot> Usuarios = snapshot.child("Usuarios").getChildren();
                         for (DataSnapshot User : Usuarios) {
-
                             Log.i("myInfoTag10 marcador2", "entra");
 
-                            String código_usuario = User.getKey().toString();
+                            String código_usuario = User.getKey();
                             Log.i("myInfoTag10 usuario:", código_usuario);
                             Log.i("myInfoTag10pet", codigo_usuario_con_pet);
                             if (código_usuario.equals(codigo_usuario_con_pet)) {
@@ -140,7 +162,6 @@ public class MapsActivity2 extends FragmentActivity implements
                                 Log.i("myInfoTag10", CP);
                                 List<Address> foundGeocode = null;
                                 try {
-                                    //Quizas llamando aqui a una funcion pasando como parametro Usuario_con_peticiones consiga el codigo postal
                                     foundGeocode = geocoder.getFromLocationName(CP + " España", 1);
 
                                     Log.i("myInfoTag10este", String.valueOf(foundGeocode));
@@ -148,12 +169,14 @@ public class MapsActivity2 extends FragmentActivity implements
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+
                                 LatLng ubi_peticion = new LatLng(foundGeocode.get(0).getLatitude(), foundGeocode.get(0).getLongitude());
 
                                 Marker MarkerEjemplo1 = mMap.addMarker(new MarkerOptions()
                                         .position(ubi_peticion)
-                                        .title(codigo_usuario_con_pet)
-                                        .snippet("Distancia: 10M KM")); //de momento, habria que mirar como calcular la distancia
+                                        .title("hola")
+                                        .title(User.child("nombre").getValue().toString() + " " + User.child("apellidos").getValue().toString())
+                                        .snippet(String.valueOf(tipos_de_peticiones_del_usr))); //de momento, habria que mirar como calcular la distancia
                             }
                         }
                     }
