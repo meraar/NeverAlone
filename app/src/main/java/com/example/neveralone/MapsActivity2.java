@@ -81,7 +81,7 @@ public class MapsActivity2 extends FragmentActivity implements
                 Log.i("myInfoTag2.2", String.valueOf(codigoPostal));
                 mMap = googleM;
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
+/*
                 List<Address> foundGeocode = null;
                 try {
                     foundGeocode = x.getFromLocationName(codigoPostal+" España", 1);
@@ -91,7 +91,8 @@ public class MapsActivity2 extends FragmentActivity implements
                     e.printStackTrace();
                 }
                 LatLng sydney = new LatLng( foundGeocode.get(0).getLatitude(), foundGeocode.get(0).getLongitude());
-
+*/
+                LatLng sydney = new LatLng( 2, 40);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
 
             }
@@ -128,24 +129,30 @@ public class MapsActivity2 extends FragmentActivity implements
                         for(DataSnapshot peticion : peticiones){
                             //CUIDADO CON COMO SE GUARDAN EN FIREBASE, A VECES CON "" A VECES NO...
                             String tipo_de_peticion = peticion.child("categoria").getValue().toString();
-                            if(tipo_de_peticion== "Compras" && !Compra){
+
+                            if(tipo_de_peticion.equals("Compras")  && !Compra){
                                 Compra = true;
                                 tipos_de_peticiones_del_usr.add("Compras");
                             }
-                            else if(tipo_de_peticion == "Asesoramiento" && !Asesoriamiento){
+                            else if(tipo_de_peticion.equals("Asesoramiento") && !Asesoriamiento){
                                 Asesoriamiento = true;
                                 tipos_de_peticiones_del_usr.add("Asesoramiento");
+
                             }
-                            else if(tipo_de_peticion == "Acompañamiento" && !Acompañamiento) {
+                            else if(tipo_de_peticion.equals("Acompañamiento") && !Acompañamiento) {
                                 Acompañamiento = true;
                                 tipos_de_peticiones_del_usr.add("Acompañamiento");
+
                             }
-                            else if(tipo_de_peticion == "Otro" && !Otro) {
+                            else if(tipo_de_peticion.equals("Otro") && !Otro) {
                                 Otro = true;
                                 tipos_de_peticiones_del_usr.add("Otro");
+
                             }
                         }
                         //...A AQUI
+                        Log.i("myInfoTag10 vector", tipos_de_peticiones_del_usr.toString());
+
                         String codigo_usuario_con_pet = Usuario_con_peticiones.getKey();
                         String CP = null;
                         Iterable<DataSnapshot> Usuarios = snapshot.child("Usuarios").getChildren();
@@ -159,7 +166,7 @@ public class MapsActivity2 extends FragmentActivity implements
                                 Log.i("myInfoTag10 marcador2", "entra if");
 
                                 CP = User.child("codigopostal").getValue().toString();
-                                Log.i("myInfoTag10", CP);
+                                Log.i("myInfoTag10", CP);/*
                                 List<Address> foundGeocode = null;
                                 try {
                                     foundGeocode = geocoder.getFromLocationName(CP + " España", 1);
@@ -171,6 +178,8 @@ public class MapsActivity2 extends FragmentActivity implements
                                 }
 
                                 LatLng ubi_peticion = new LatLng(foundGeocode.get(0).getLatitude(), foundGeocode.get(0).getLongitude());
+*/
+                                LatLng ubi_peticion = new LatLng(2,40);
 
                                 Marker MarkerEjemplo1 = mMap.addMarker(new MarkerOptions()
                                         .position(ubi_peticion)
