@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neveralone.Peticion.Peticion;
@@ -25,11 +25,17 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
     private List<Peticion> mData;
     private LayoutInflater mInflater;
     private Context context;
+    final Adaptador.OnItemClickListener listener;
 
-    public Adaptador(List<Peticion> mData, Context context) {
+    public interface OnItemClickListener {
+        void onItemClick(Peticion p);
+    }
+
+    public Adaptador(List<Peticion> mData, Context context, Adaptador.OnItemClickListener listener) {
         this.mData = mData;
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
+        this.listener = listener;
     }
 
 
@@ -60,12 +66,14 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
         ImageView iconImage;
         TextView name, titulo, estado;
 
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             iconImage = itemView.findViewById(R.id.fotoTipoPeticion);
             name = itemView.findViewById(R.id.usuarioPeticion);
             titulo = itemView.findViewById(R.id.tituloPeticion);
             estado = itemView.findViewById(R.id.estado);
+
         }
 
         void bindData(final Peticion item){
@@ -73,6 +81,12 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
             name.setText(item.getUser());
             titulo.setText(item.getCategoria());
             estado.setText(item.getEstado().toString());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(item);
+                }
+            });
 
             if(item.getCategoria().equals("Compras")){
                 iconImage.setImageResource(R.drawable.compras);

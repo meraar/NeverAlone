@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="15dp"
+    >
 
 
     <TextView
@@ -19,6 +20,20 @@
         android:textSize="50sp"
         android:textStyle="bold"
         />
+
+    <ImageView
+        android:id="@+id/fotoTipoPeticion"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/CategoriaPeticion"
+        android:layout_toEndOf="@+id/CategoriaPeticion"
+        android:src="@drawable/otros"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,7 +62,19 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:layout_below="@+id/CreadorPeticion" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fechaAct"
+        android:text="18/09/2020"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/fecha_peticion"
+        android:layout_marginLeft="16dp"
+        android:layout_alignTop="@+id/fecha_peticion"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +88,19 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:layout_below="@+id/fecha_peticion" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/horaAct"
+        android:text="15:02"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/fecha_peticion"
+        android:layout_marginLeft="16dp"
+        android:layout_alignTop="@+id/hora_peticion"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,6 +114,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:layout_below="@+id/hora_peticion" />
 
     <TextView

@@ -2,6 +2,7 @@ package com.example.neveralone.Activity.Peticiones;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.widget.ListAdapter;
@@ -48,14 +49,19 @@ public class VerMisPeticiones extends AppCompatActivity {
        // uid = user.getUid();
 
         reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("User-Peticiones").child("1PyehrVEgSZfzxZfPf7cYY2wWK52").addValueEventListener(new ValueEventListener() {
+        reference.child("User-Peticiones").child("4gGXfo84A6aKnNF6NgO1jqMTLpI3").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
                     Peticion p = ds.getValue(Peticion.class);
                     elements.add(p);
                 }
-                Adaptador listAdapter = new Adaptador(elements,context);
+                Adaptador listAdapter = new Adaptador(elements,context, new Adaptador.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(Peticion p) {
+                        moveToDescription(p);
+                    }
+                });
                 RecyclerView recyclerView = findViewById(R.id.listRecycleView);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -69,5 +75,11 @@ public class VerMisPeticiones extends AppCompatActivity {
         });
 
 
+    }
+
+    private void moveToDescription(Peticion p) {
+        Intent i = new Intent(context,PeticionDetail.class);
+        i.putExtra("Peticion",p);
+        startActivity(i);
     }
 }

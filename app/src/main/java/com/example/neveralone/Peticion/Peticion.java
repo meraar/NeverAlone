@@ -2,10 +2,11 @@ package com.example.neveralone.Peticion;
 
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Peticion {
+public class Peticion implements Serializable {
 
     private String user;
     private String uid;
