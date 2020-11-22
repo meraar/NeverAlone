@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="25sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:padding="15dp"
+        android:textSize="18dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_categoria_petición"
+        android:padding="15dp"
+        android:textSize="18dp"
+        />
+
+
+    <Spinner
+        android:id="@+id/SpinnerCategoriaPeticion"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="15dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fecha_para_la_peticion"
+        android:padding="15dp"
+        android:textSize="18sp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fecha_peticion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_fecha_peticion"
+                android:inputType="number"
+                android:onClick="showDatePickerDialog"
+                android:layout_marginLeft="14sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/escogerFecha"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
+            android:background="@null"
+            android:layout_marginTop="7dp"
+            android:layout_alignParentRight="true"
+            android:onClick="showDatePickerDialog"
+            android:src="@drawable/calendar" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/hora_peticion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_hora_peticion"
+                android:inputType="number"
+                android:onClick="showTimePickerDialog"
+                android:layout_marginLeft="14sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/escogerHora"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
+            android:background="@null"
+            android:layout_marginTop="7dp"
+            android:layout_alignParentRight="true"
+            android:onClick="showTimePickerDialog"
+            android:src="@drawable/clock" />
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripcion de la petición(opcional)"
+        android:padding="15dp"
+        android:textSize="18sp"
+        />
+    <EditText
+        android:id="@+id/descripcion"
+        android:inputType="textMultiLine"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:lines="8"
+        android:minLines="6"
+        android:gravity="top|left"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/idCrearPeticion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Crear" />
+
+    <Button
+        android:id="@+id/idVolverAtras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/atras_button"/>
+
+</LinearLayout>
