@@ -81,7 +81,7 @@ public class MapsActivity2 extends FragmentActivity implements
                 Log.i("myInfoTag2.2", String.valueOf(codigoPostal));
                 mMap = googleM;
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-/*
+
                 List<Address> foundGeocode = null;
                 try {
                     foundGeocode = x.getFromLocationName(codigoPostal+" España", 1);
@@ -91,8 +91,7 @@ public class MapsActivity2 extends FragmentActivity implements
                     e.printStackTrace();
                 }
                 LatLng sydney = new LatLng( foundGeocode.get(0).getLatitude(), foundGeocode.get(0).getLongitude());
-*/
-                LatLng sydney = new LatLng( 2, 40);
+
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
 
             }
@@ -166,7 +165,7 @@ public class MapsActivity2 extends FragmentActivity implements
                                 Log.i("myInfoTag10 marcador2", "entra if");
 
                                 CP = User.child("codigopostal").getValue().toString();
-                                Log.i("myInfoTag10", CP);/*
+                                Log.i("myInfoTag10", CP);
                                 List<Address> foundGeocode = null;
                                 try {
                                     foundGeocode = geocoder.getFromLocationName(CP + " España", 1);
@@ -178,8 +177,8 @@ public class MapsActivity2 extends FragmentActivity implements
                                 }
 
                                 LatLng ubi_peticion = new LatLng(foundGeocode.get(0).getLatitude(), foundGeocode.get(0).getLongitude());
-*/
-                                LatLng ubi_peticion = new LatLng(2,40);
+
+
 
                                 Marker MarkerEjemplo1 = mMap.addMarker(new MarkerOptions()
                                         .position(ubi_peticion)
