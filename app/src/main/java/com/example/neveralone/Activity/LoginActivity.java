@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                                         txtCorreo.setText("");
                                         txtContrasena.setText("");
-                                        startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                                        nextActivity();
                                     }
                                 } else {
                                     Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void nextActivity(){
-        startActivity(new Intent(LoginActivity.this,UserProfileActivity.class));
+        startActivity(new Intent(LoginActivity.this,FirstHomeActivity.class));
         finish();
     }
 }

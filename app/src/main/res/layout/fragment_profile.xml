@@ -4,36 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment">
-<!--
-    <TextView
-        android:id="@+id/text_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center_horizontal" /> -->
+    tools:context=".ui.profile.ProfileFragment">
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorCian"
-        android:text="MI Perfil"
+        android:text="Mi Perfil"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="74dp"
+            android:layout_width="397dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:singleLine="true"
             android:text="Mi Perfil"
@@ -44,38 +32,43 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="29dp"
+        android:layout_width="415dp"
+        android:layout_height="127dp"
         android:background="@color/cardview_light_background"
         android:gravity="center"
         android:padding="20dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
-            android:layout_width="200dp"
-            android:layout_height="149dp"
+            android:layout_width="149dp"
+            android:layout_height="94dp"
             android:clickable="true"
             android:gravity="center"
-            android:src="@drawable/logo_sin_fondo" />
+            android:onClick="UpdateFoto"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo_sin_fondo"
+            app:civ_border_color="@color/colorCian"
+            app:civ_border_width="4dp"
+            tools:ignore="MissingClass" />
     </RelativeLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="410dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="17dp"
+        android:layout_width="400dp"
+        android:layout_height="513dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -245,7 +238,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:onClick="UpdateProfile"
-                android:text="Actualizar Perfil" />
+                android:text="Actualizar perfil" />
 
 
         </LinearLayout>
