@@ -32,15 +32,18 @@
         android:gravity="center"
         android:padding="20dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            app:civ_border_width="4dp"
+            app:civ_border_color="@color/colorCian"
             android:clickable="true"
             android:gravity="center"
             android:onClick="UpdateFoto"
             android:src="@drawable/logo_sin_fondo"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            tools:ignore="MissingClass" />
     </RelativeLayout>
 
     <ScrollView

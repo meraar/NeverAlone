@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -108,7 +109,6 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-                Toast.makeText(UserProfileActivity.this, "Estoy dentro", Toast.LENGTH_SHORT).show();
                 File url = new File(resultUri.getPath());
 
                 Picasso.with(this).load(url).into(profile_image);
@@ -126,24 +126,6 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
                 final StorageReference ref = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
                 UploadTask uploadTask = ref.putBytes(bitmap_byte);
 
-                //Aqui se sube la imgen
-                /**Task<Uri> uniTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(UserProfileActivity.this, "Error al subir la foto", Toast.LENGTH_SHORT).show();
-                        }
-                        return ref.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        Uri descargar_uri = task.getResult();
-                        reference_image.push().child("Fotos").child(id).setValue(descargar_uri.toString());
-                        cargando.dismiss();
-                        Toast.makeText(UserProfileActivity.this, "Imagen cargada correctamente", Toast.LENGTH_SHORT).show();
-                    }
-                });**/
                 ref.putBytes(bitmap_byte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -170,33 +152,17 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(UserProfileActivity.this, "ERRROR: Foto no cargado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserProfileActivity.this, "ERRROR: Foto no cargada", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
     }
 
-    private void initialize2() {
-        profile_image = findViewById(R.id.profile_image);
-        reference_image = FirebaseDatabase.getInstance().getReference().child("Usuarios").child(id);
-        storageReference = FirebaseStorage.getInstance().getReference().child("user_image");
-        cargando = new ProgressDialog(this);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-
-
-    }
-
     private void initialize(){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         String h = user.getEmail().toString();
-        Toast.makeText(UserProfileActivity.this, "HOLA "+ user.getPhotoUrl().toString()+" ", Toast.LENGTH_SHORT).show();
-        /**if (!user.getPhotoUrl().toString().isEmpty()){
-            Glide.with(this).load(user.getPhotoUrl().toString()).into(profile_image); // NO ESTA FUNCIONANDO
-        }**/
         id = user.getUid();
         reference = FirebaseDatabase.getInstance().getReference();
         reference.child("Usuarios").child(id).addListenerForSingleValueEvent(
@@ -251,6 +217,19 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
                 });
     }
 
+    private void initialize2() {
+        profile_image = findViewById(R.id.profile_image);
+        String foto_name = id + ".jpg";
+        storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
+        storageReference.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                profile_image.setImageBitmap(bitmap);
+            }
+        });
+
+    }
     public void UpdateProfile(View view) {
         if(isAnyUpdate()){
             Toast.makeText(UserProfileActivity.this, "Se ha actualizado el perfil correctamente.", Toast.LENGTH_SHORT).show();
@@ -269,7 +248,6 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
         if(!usuario.getNombre().equals(nombre)){
             reference.child("Usuarios").child(id).child("nombre").setValue(nombre);
             usuario.setNombre(nombre); // Utilizo la variable global para tener constancia del cambio, y por si el usuario vuelve a intentar cambiarlo.
-            Toast.makeText(UserProfileActivity.this, "Nombre = "+ usuario.getNombre() +" .", Toast.LENGTH_SHORT).show();
             name = true;
         }
 
