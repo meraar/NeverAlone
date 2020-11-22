@@ -85,10 +85,5 @@ public class VerMisPeticiones extends AppCompatActivity {
         i.putExtra("Peticion",p);
         startActivity(i);
     }
-    public void signOut(View view) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(VerMisPeticiones.this, LoginActivity.class));
-        finish();
 
-    }
 }
