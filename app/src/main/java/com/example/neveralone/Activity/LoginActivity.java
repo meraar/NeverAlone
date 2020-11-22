@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.neveralone.Activity.Peticiones.VerMisPeticiones;
+import com.example.neveralone.MapsActivity;
 import com.example.neveralone.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -24,6 +26,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity{
@@ -31,6 +38,7 @@ public class LoginActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +68,20 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void nextActivity(){
-        startActivity(new Intent(LoginActivity.this,Home.class));
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        reference = FirebaseDatabase.getInstance().getReference("Usuarios/" + userID + "/voluntario");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean volunatario = (boolean) dataSnapshot.getValue();
+                if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+                else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
         finish();
     }
 
@@ -89,7 +110,21 @@ public class LoginActivity extends AppCompatActivity{
                             Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                             txtCorreo.setText("");
                             txtContrasena.setText("");
-                            startActivity(new Intent(LoginActivity.this, Home.class));
+
+                            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            reference = FirebaseDatabase.getInstance().getReference("Usuarios/" + userID + "/voluntario");
+                            reference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    boolean volunatario = (boolean) dataSnapshot.getValue();
+                                    if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+                                    else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                }
+                            });
                         }
                     } else {
                         Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();

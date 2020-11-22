@@ -59,6 +59,7 @@
     <string name="fechaDetailViewContribution">Fecha:</string>
     <string name="horadetailViewContribucion">"Hora: "</string>
     <string name="descriptionDetailViewpeticion">Descripción</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.View;
 import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.neveralone.Activity.Home;
+import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,5 +84,11 @@ public class VerMisPeticiones extends AppCompatActivity {
         Intent i = new Intent(context,PeticionDetail.class);
         i.putExtra("Peticion",p);
         startActivity(i);
+    }
+    public void signOut(View view) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(VerMisPeticiones.this, LoginActivity.class));
+        finish();
+
     }
 }
