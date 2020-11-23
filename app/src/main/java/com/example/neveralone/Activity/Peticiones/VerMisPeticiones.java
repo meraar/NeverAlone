@@ -37,8 +37,8 @@ public class VerMisPeticiones extends AppCompatActivity implements View.OnClickL
     private String uid;
     private Button crear;
     private Adaptador listAdapter;
-    DatabaseReference reference;
-    FirebaseUser user;
+    private DatabaseReference reference;
+    private FirebaseUser user;
     private Context context;
 
     @Override
@@ -58,7 +58,12 @@ public class VerMisPeticiones extends AppCompatActivity implements View.OnClickL
         elements = new ArrayList<>();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        uid = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
+
+        Intent i = getIntent();
+        //SUFANG: DESCOMENTAR ESTO Y COMENTAR LINEA 65 PARA QUE TE FUNCIONE
+       // final String userID = i.getStringExtra("UserId");
+        final String userID = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
+
 
         reference = FirebaseDatabase.getInstance().getReference();
         reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
@@ -66,7 +71,7 @@ public class VerMisPeticiones extends AppCompatActivity implements View.OnClickL
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 elements.clear();
                 if(snapshot.exists()) {
-                    snapshot = snapshot.child("4IS1tZ6IrGbEqE2h6jXR05EeXCj1");
+                    snapshot = snapshot.child(userID);
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         Peticion p = ds.getValue(Peticion.class);
                         elements.add(p);
