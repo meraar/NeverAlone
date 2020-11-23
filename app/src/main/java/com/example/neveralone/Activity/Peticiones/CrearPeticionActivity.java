@@ -130,7 +130,7 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
 
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String name = null,uid = null;
-                        if (user != null) {
+                       /* if (user != null) {
                             uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
                             name = "Sufang";
                         }
@@ -138,8 +138,10 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                         uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
                         name = "Sufang";
                         uid = "4gGXfo84A6aKnNF6NgO1jqMTLpI3";
-                        name = "Antoniete";
-                        Peticion p = new Peticion(name,uid,categoria,fecha,hora,descripcion);
+                        name = "Antoniete";*/
+
+
+                        Peticion p = new Peticion(user.getDisplayName(),user.getUid(),categoria,fecha,hora,descripcion);
                         String key = reference.child("Peticiones").push().getKey();
 
                         Map<String, Object> postValues = p.toMap();

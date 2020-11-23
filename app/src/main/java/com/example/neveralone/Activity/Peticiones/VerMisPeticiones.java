@@ -52,7 +52,14 @@ public class VerMisPeticiones extends AppCompatActivity {
        // uid = user.getUid();
 
         reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("User-Peticiones").child("4gGXfo84A6aKnNF6NgO1jqMTLpI3").addValueEventListener(new ValueEventListener() {
+        Intent i = getIntent();
+        String p = (String) i.getSerializableExtra("UserId");
+        String userID;
+
+        if(p.equals(null)) userID = "4gGXfo84A6aKnNF6NgO1jqMTLpI3";
+        else userID=p;
+
+        reference.child("User-Peticiones").child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
@@ -84,6 +91,14 @@ public class VerMisPeticiones extends AppCompatActivity {
         Intent i = new Intent(context,PeticionDetail.class);
         i.putExtra("Peticion",p);
         startActivity(i);
+        finish();
+    }
+    public void signOut(View view) {
+        //boton de crear peticiones
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(VerMisPeticiones.this, CrearPeticionActivity.class));
+        finish();
+
     }
 
 }

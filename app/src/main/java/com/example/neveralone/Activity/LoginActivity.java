@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity{
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     boolean volunatario = (boolean) dataSnapshot.getValue();
                                     if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                                    else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+                                    else startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError error) {

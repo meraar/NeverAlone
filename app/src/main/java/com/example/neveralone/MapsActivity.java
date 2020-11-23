@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.neveralone.Activity.Home;
+import com.example.neveralone.Activity.Peticiones.PeticionDetail;
+import com.example.neveralone.Activity.Peticiones.VerMisPeticiones;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -82,6 +84,8 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
+        Log.i("mensaje","entra2");
+
         googleM = googleMap;
         x= new Geocoder(this);
         obtenerAdresaUsuario();
@@ -130,6 +134,7 @@ public class MapsActivity extends FragmentActivity implements
                         for (DataSnapshot User : Usuarios) {
                             String código_usuario = User.getKey();
 
+                            Marker MarkerEjemplo1 = null;
                             if (código_usuario.equals(codigo_usuario_con_pet)) {
                                 CP = User.child("codigopostal").getValue().toString();
                                 List<Address> foundGeocode = null;
@@ -141,14 +146,19 @@ public class MapsActivity extends FragmentActivity implements
 
                                 LatLng ubi_peticion = new LatLng(foundGeocode.get(0).getLatitude(), foundGeocode.get(0).getLongitude());
 
-
-
-                                Marker MarkerEjemplo1 = mMap.addMarker(new MarkerOptions()
+                                Log.i("mensaje2",codigo_usuario_con_pet);
+                                MarkerEjemplo1 = mMap.addMarker(new MarkerOptions()
                                         .position(ubi_peticion)
-                                        .title("hola")
+                                        .title(codigo_usuario_con_pet)
                                         .title(User.child("nombre").getValue().toString() + " " + User.child("apellidos").getValue().toString())
-                                        .snippet(String.valueOf(tipos_de_peticiones_del_usr))); //de momento, habria que mirar como calcular la distancia
+
+                                        .snippet(String.valueOf(tipos_de_peticiones_del_usr)));
+
+                                MarkerEjemplo1.setTag(codigo_usuario_con_pet);
+
                             }
+                          //  MarkerEjemplo1.setSnippet(codigo_usuario_con_pet);
+
                         }
                     }
                 }
@@ -159,12 +169,16 @@ public class MapsActivity extends FragmentActivity implements
 
             }
         });
+        startActivity(new Intent(MapsActivity.this, Home.class));
         googleM.setOnInfoWindowClickListener(this);
+
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        startActivity(new Intent(MapsActivity.this, Home.class)); //sustituir home por el perfil del Usuario. Estará guardado en el this.title, seguramente(marcador)
-        finish();
+        /*Intent i = new Intent(this, VerMisPeticiones.class);
+        i.putExtra("UserId",marker.getTag().toString());
+        startActivity(i);
+        finish();*/
     }
 }
