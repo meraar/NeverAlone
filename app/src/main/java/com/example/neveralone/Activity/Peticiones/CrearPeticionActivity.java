@@ -2,6 +2,7 @@ package com.example.neveralone.Activity.Peticiones;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -130,18 +131,17 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
 
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String name = null,uid = null;
-                       /* if (user != null) {
+                        if (user != null) {
                             uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
                             name = "Sufang";
                         }
 
-                        uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
-                        name = "Sufang";
-                        uid = "4gGXfo84A6aKnNF6NgO1jqMTLpI3";
-                        name = "Antoniete";*/
+
+                        uid = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
+                        name = "Eric";
 
 
-                        Peticion p = new Peticion(user.getDisplayName(),user.getUid(),categoria,fecha,hora,descripcion);
+                        Peticion p = new Peticion("Eric","4IS1tZ6IrGbEqE2h6jXR05EeXCj1",categoria,fecha,hora,descripcion);
                         String key = reference.child("Peticiones").push().getKey();
 
                         Map<String, Object> postValues = p.toMap();
@@ -156,6 +156,16 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                                 // Write was successful!
                                 // ...
                                 result.setText("SUCCES");
+                                try {
+                                    Thread.sleep(4);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Intent returnIntent = new Intent();
+                                returnIntent.putExtra("result", "your message");
+                                setResult(RESULT_OK, returnIntent);
+                                finish();
+
                             }
                         })
                                 .addOnFailureListener(new OnFailureListener() {

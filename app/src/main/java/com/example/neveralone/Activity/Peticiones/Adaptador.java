@@ -95,6 +95,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
             }else if(item.getCategoria().equals("Acompañamiento")){
                 iconImage.setImageResource(R.drawable.acompanamiento);
             }else iconImage.setImageResource(R.drawable.otros);
+
+
         }
     }
 }
