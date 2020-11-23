@@ -110,6 +110,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this,Home.class));
         finish();
     }
+    public void forgetpass(View view){
+        startActivity(new Intent(LoginActivity.this,RecoverPasswordActivity.class));
+        finish();
+    }
 }
 
 
