@@ -56,6 +56,19 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-database'
 
+    // Declare the dependency for the Cloud Storage library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-storage'
+    //Foto Perfil
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
+    implementation 'com.squareup.picasso:picasso:2.5.0'
+    implementation 'id.zelory:compressor:2.1.0'
+    //Foto
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //Foto de perfil circular
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     //style UI
     implementation 'com.google.android.material:material:1.2.1'
     //noinspection GradleCompatible

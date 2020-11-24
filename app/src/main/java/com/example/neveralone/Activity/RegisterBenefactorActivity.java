@@ -101,6 +101,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                     final String dni = txtdni.getText().toString();
                     final String direccion = txtDireccion.getText().toString();
                     final String PisoPuerta = txtPisoPuerta.getText().toString();
+                    final Float puntuacion = 0.0f;
                     Spinner spinner = (Spinner)findViewById(R.id.Spinner);
                     final String motivo = spinner.getSelectedItem().toString();
 
@@ -122,6 +123,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             usuario.setMotivo(motivo);
                                             usuario.setDireccion(direccion);
                                             usuario.setPiso_puerta(PisoPuerta);
+                                            usuario.setPuntuacioMedia(puntuacion);
                                             usuario.setVoluntario(false);
                                             reference.setValue(usuario);
                                             //verficar el mail
@@ -130,14 +132,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             startActivity(new Intent(RegisterBenefactorActivity.this, LoginActivity.class));
                                             finish();
 
-                                            /**reference.setValue(usuario.getNombre());
-                                             reference.setValue(usuario.getApellidos());
-                                             reference.setValue(usuario.getEmail());
-                                             reference.setValue(usuario.getDni());
-                                             reference.setValue(usuario.getCodigopostal());
-                                             reference = database.getReference("Beneficiarios/" + currentUser.getUid());
-                                             reference.setValue(beneficiario.getDireccion());
-                                             **/
+
                                         } else {
                                             System.out.println("Debug5: No se ha registrado");
                                             Toast.makeText(RegisterBenefactorActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
