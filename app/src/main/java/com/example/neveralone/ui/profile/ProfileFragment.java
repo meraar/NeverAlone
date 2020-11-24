@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -101,46 +100,49 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if(requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+                Uri imagen_uri = CropImage.getPickImageResultUri(getActivity(),data);
 
-        if(requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            Uri imagen_uri = CropImage.getPickImageResultUri(getActivity(),data);
-
-            CropImage.activity(imagen_uri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setRequestedSize(640, 480)
-                    .setAspectRatio(2, 2).start(getActivity());
-        }
-
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == Activity.RESULT_OK) {
-                Uri resultUri = result.getUri();
-                File url = new File(resultUri.getPath());
-
-                Picasso.with(getActivity()).load(url).into(profile_image);
-                //Comprimir la imagen
-                try{
-                    bitmap = new Compressor(getActivity()).setMaxWidth(640).setMaxHeight(480).setQuality(90).compressToBitmap(url);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                final byte [] bitmap_byte = byteArrayOutputStream.toByteArray();
-                final String foto_name = id + ".jpg";
-
-                final StorageReference ref = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
-                UploadTask uploadTask = ref.putBytes(bitmap_byte);
-
-                ref.putBytes(bitmap_byte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        getDownloadUrl(ref);
-                    }
-                });
+                CropImage.activity(imagen_uri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setRequestedSize(640, 480)
+                        .setAspectRatio(2, 2).start(getActivity());
             }
+
+            if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri resultUri = result.getUri();
+                    File url = new File(resultUri.getPath());
+
+                    Picasso.with(getActivity()).load(url).into(profile_image);
+                    //Comprimir la imagen
+                    try{
+                        bitmap = new Compressor(getActivity()).setMaxWidth(640).setMaxHeight(480).setQuality(90).compressToBitmap(url);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                    final byte [] bitmap_byte = byteArrayOutputStream.toByteArray();
+                    final String foto_name = id + ".jpg";
+
+                    final StorageReference ref = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
+                    UploadTask uploadTask = ref.putBytes(bitmap_byte);
+
+                    ref.putBytes(bitmap_byte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            getDownloadUrl(ref);
+                        }
+                    });
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -292,6 +294,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     public void UpdateFoto(){
         CropImage.startPickImageActivity(getActivity());
+        Intent intent = CropImage.activity()
+                .setAspectRatio(16,9)
+                .getIntent(getContext());
+
+        startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     public void UpdateProfile() {
