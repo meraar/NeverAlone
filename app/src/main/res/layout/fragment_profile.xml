@@ -50,7 +50,7 @@
             android:layout_height="94dp"
             android:clickable="true"
             android:gravity="center"
-            android:onClick="UpdateFoto"
+            android:onClick="onClick"
             android:scaleType="centerCrop"
             android:src="@drawable/logo_sin_fondo"
             app:civ_border_color="@color/colorCian"
@@ -237,7 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:onClick="UpdateProfile"
+                android:onClick="onClick"
                 android:text="Actualizar perfil" />
 
 

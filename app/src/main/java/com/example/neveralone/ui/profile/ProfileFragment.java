@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -42,9 +43,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private ProfileViewModel profileViewModel;
     private EditText nombretxt, apellidotxt, dnitxt, codigo_postaltxt, direcciontxt, emailtxt;
@@ -85,6 +87,11 @@ public class ProfileFragment extends Fragment {
             }
         });*/
 
+        Button updateButton = root.findViewById(R.id.ActualizarPerfil);
+        updateButton.setOnClickListener(this);
+
+        CircleImageView imageButton = root.findViewById(R.id.profile_image);
+        imageButton.setOnClickListener(this);
         initialize();
         initialize2();
 
@@ -98,7 +105,7 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            Uri imagen_uri = CropImage.getPickImageResultUri(getContext(),data);
+            Uri imagen_uri = CropImage.getPickImageResultUri(getActivity(),data);
 
             CropImage.activity(imagen_uri)
                     .setGuidelines(CropImageView.Guidelines.ON)
@@ -112,10 +119,10 @@ public class ProfileFragment extends Fragment {
                 Uri resultUri = result.getUri();
                 File url = new File(resultUri.getPath());
 
-                Picasso.with(getContext()).load(url).into(profile_image);
+                Picasso.with(getActivity()).load(url).into(profile_image);
                 //Comprimir la imagen
                 try{
-                    bitmap = new Compressor(getContext()).setMaxWidth(640).setMaxHeight(480).setQuality(90).compressToBitmap(url);
+                    bitmap = new Compressor(getActivity()).setMaxWidth(640).setMaxHeight(480).setQuality(90).compressToBitmap(url);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -148,12 +155,12 @@ public class ProfileFragment extends Fragment {
                 user.updateProfile(request).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(getContext(), "Foto cargada correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Foto cargada correctamente", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), "ERRROR: Foto no cargada", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "ERRROR: Foto no cargada", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -207,7 +214,7 @@ public class ProfileFragment extends Fragment {
 
                             }
                         } else {
-                            Toast.makeText(getContext(), "No hay información del usuario", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "No hay información del usuario", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -283,13 +290,26 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    public void UpdateFoto(View view){
+    public void UpdateFoto(){
         CropImage.startPickImageActivity(getActivity());
     }
 
-    public void UpdateProfile(View view) {
+    public void UpdateProfile() {
         if(isAnyUpdate()){
             Toast.makeText(getActivity(), "Se ha actualizado el perfil correctamente.", Toast.LENGTH_SHORT).show();
         }else Toast.makeText(getActivity(), "No hay ninguna modificación en los datos, por tanto no se puede actualizar el perfil", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ActualizarPerfil:
+                UpdateProfile();
+                break;
+            case R.id.profile_image:
+                UpdateFoto();
+                break;
+        }
+    }
+
 }
