@@ -602,8 +602,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Confirmar"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="25dp"/>
+                android:textColor="@android:color/black"
+                android:layout_marginTop="25dp"
+                android:background="#DEF4FF"/>
         </LinearLayout>
         </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView

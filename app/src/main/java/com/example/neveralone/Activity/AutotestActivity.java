@@ -76,7 +76,6 @@ public class AutotestActivity extends AppCompatActivity {
             }
             if (a < 7) {
                 reset(card7, title7, q7, btntest7Si, btntest7No, defbtn);
-                btnconf.setBackground(defbtn.getBackground());
 
                 if (q71.getVisibility() == View.VISIBLE) q71.setVisibility(View.GONE);
                 if (subal.contains("test7Si")) subal.remove("test7Si");
@@ -103,7 +102,6 @@ public class AutotestActivity extends AppCompatActivity {
                 else if (al.contains("test12No")) al.remove("test12No");
             }
             if (a < 13) {
-                if (btnconf.getBackground() != defbtn.getBackground()) btnconf.setBackground(defbtn.getBackground());
                 if (card13.getVisibility() == View.VISIBLE) card13.setVisibility(View.GONE);
                 if (title13.getVisibility() == View.VISIBLE) title13.setVisibility(View.GONE);
                 if (q13.getVisibility() == View.VISIBLE) q13.setVisibility(View.GONE);
@@ -613,7 +611,6 @@ public class AutotestActivity extends AppCompatActivity {
         btnconf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnconf.setBackgroundColor(Color.parseColor("#448afd"));
                 // miramos si el usuario ha pulsado todas las opciones antes de aceptar (suma del array con respuestas si + array respuestas no)
                 if (subal.size() + (al.size() - 6) != 6) {
                     title13.setTextColor(Color.parseColor("#FFFFFF"));
