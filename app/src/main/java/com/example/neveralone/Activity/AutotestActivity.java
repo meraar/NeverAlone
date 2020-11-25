@@ -436,6 +436,7 @@ public class AutotestActivity extends AppCompatActivity {
                     title7.setText("ATENCIÓN");
                     q7.setText("Sus síntomas parecen indicar gravedad. Llame al 061 indicando los síntomas que presenta.");
                     visibility(card7, title7, q7, btntest7Si, btntest7No);
+                    if (btnconf.getVisibility() == View.VISIBLE) btnconf.setVisibility(View.GONE);
                     if(btntest7No.getVisibility() == View.VISIBLE) btntest7No.setVisibility(View.GONE);
                     if(btntest7Si.getVisibility() == View.VISIBLE) btntest7Si.setVisibility(View.GONE);
                 }
@@ -450,6 +451,7 @@ public class AutotestActivity extends AppCompatActivity {
                     title7.setText("7. OTROS SÍNTOMAS");
                     q7.setText("Por favor especifique qué otros síntomas está usted experimentando:");
                     visibility(card7, title7, q7, btntest7Si, btntest7No);
+                    if (btnconf.getVisibility() == View.GONE) btnconf.setVisibility(View.VISIBLE);
                     if (q71.getVisibility() == View.GONE) q71.setVisibility(View.VISIBLE);
                     visibility(card7, title7, q8, btntest8Si, btntest8No);
                     visibility(card7, title7, q9, btntest9Si, btntest9No);
@@ -478,6 +480,7 @@ public class AutotestActivity extends AppCompatActivity {
                 q7.setText("Por favor especifique qué otros síntomas está usted experimentando:");
                 visibility(card7, title7, q7, btntest7Si, btntest7No);
                 if (q71.getVisibility() == View.GONE) q71.setVisibility(View.VISIBLE);
+                if (btnconf.getVisibility() == View.GONE) btnconf.setVisibility(View.VISIBLE);
                 visibility(card7, title7, q8, btntest8Si, btntest8No);
                 visibility(card7, title7, q9, btntest9Si, btntest9No);
                 visibility(card7, title7, q10, btntest10Si, btntest10No);
