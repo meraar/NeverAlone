@@ -1,6 +1,5 @@
 package com.example.neveralone.Usuario;
 
-
 public class Usuario {
     private String email;
     private String nombre;
@@ -54,7 +53,6 @@ public class Usuario {
     public void setDni(String dni) {
         this.dni = dni;
     }
-
 
     public Usuario() {
 

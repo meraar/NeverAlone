@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.neveralone" >
+    package="com.example.neveralone">
 
     <application
         android:allowBackup="true"
@@ -10,9 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan|adjustResize">
-        <activity android:name=".Activity.Peticiones.VerMisPeticiones" >
+        <activity android:name=".Activity.Peticiones.VerListaPeticionesDisponibles"></activity>
+        <activity android:name=".Activity.Peticiones.Accept_Refuse_Peticion" />
+        <activity android:name=".Activity.Peticiones.VerMisPeticiones">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

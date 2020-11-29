@@ -29,6 +29,7 @@ import java.util.List;
 
 public class VerMisPeticiones extends AppCompatActivity {
 
+    private boolean voluntario = false;
     private List<Peticion> elements;
     private String uid;
     DatabaseReference reference;
@@ -46,26 +47,18 @@ public class VerMisPeticiones extends AppCompatActivity {
         elements = new ArrayList<>();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-       // uid = user.getUid();
-
+        uid = user.getUid();
         reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("User-Peticiones").child("4gGXfo84A6aKnNF6NgO1jqMTLpI3").addValueEventListener(new ValueEventListener() {
+        //Ver si es voluntario o beneficiario
+        reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
-                    Peticion p = ds.getValue(Peticion.class);
-                    elements.add(p);
-                }
-                Adaptador listAdapter = new Adaptador(elements,context, new Adaptador.OnItemClickListener(){
-                    @Override
-                    public void onItemClick(Peticion p) {
-                        moveToDescription(p);
+                    if (ds.getValue().toString().equals(uid)) {
+                        String Vol_or_Ben = ds.child("voluntario").getValue().toString();
+                        if (Vol_or_Ben.equals("true")) voluntario = true;
                     }
-                });
-                RecyclerView recyclerView = findViewById(R.id.listRecycleView);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                recyclerView.setAdapter(listAdapter);
+                }
             }
 
             @Override
@@ -74,7 +67,59 @@ public class VerMisPeticiones extends AppCompatActivity {
             }
         });
 
+        //Si es voluntario desplegamos peticiones hechas por el
+        if (voluntario) {
+            reference.child("User-Peticiones").child("4gGXfo84A6aKnNF6NgO1jqMTLpI3").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Peticion p = ds.getValue(Peticion.class);
+                        elements.add(p);
+                    }
+                    Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Peticion p) {
+                            moveToDescription(p);
+                        }
+                    });
+                    RecyclerView recyclerView = findViewById(R.id.listRecycleView);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setAdapter(listAdapter);
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        //Si es beneficiario desplegamos todas las peticiones existentes
+        else {
+            reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Peticion p = ds.getValue(Peticion.class);
+                        elements.add(p);
+                    }
+                    Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Peticion p) {
+                            moveToDescription(p);
+                        }
+                    });
+                    RecyclerView recyclerView = findViewById(R.id.listRecycleView);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setAdapter(listAdapter);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     private void moveToDescription(Peticion p) {

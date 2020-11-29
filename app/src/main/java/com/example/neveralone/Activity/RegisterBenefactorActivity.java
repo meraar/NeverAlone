@@ -129,15 +129,6 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             user.sendEmailVerification();
                                             startActivity(new Intent(RegisterBenefactorActivity.this, LoginActivity.class));
                                             finish();
-
-                                            /**reference.setValue(usuario.getNombre());
-                                             reference.setValue(usuario.getApellidos());
-                                             reference.setValue(usuario.getEmail());
-                                             reference.setValue(usuario.getDni());
-                                             reference.setValue(usuario.getCodigopostal());
-                                             reference = database.getReference("Beneficiarios/" + currentUser.getUid());
-                                             reference.setValue(beneficiario.getDireccion());
-                                             **/
                                         } else {
                                             System.out.println("Debug5: No se ha registrado");
                                             Toast.makeText(RegisterBenefactorActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
