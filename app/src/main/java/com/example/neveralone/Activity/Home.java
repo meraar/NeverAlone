@@ -6,7 +6,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.neveralone.Activity.Peticiones.VerListaPeticionesDisponibles;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -21,7 +20,7 @@ public class Home extends AppCompatActivity {
     public void signOut(View view) {
         FirebaseAuth.getInstance().signOut();
 
-        startActivity(new Intent(Home.this, VerListaPeticionesDisponibles.class));
+        startActivity(new Intent(Home.this, LoginActivity.class));
         finish();
 
     }

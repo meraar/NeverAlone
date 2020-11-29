@@ -79,7 +79,7 @@ public class VerMisPeticiones extends AppCompatActivity {
                     Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
                         @Override
                         public void onItemClick(Peticion p) {
-                            moveToDescription(p);
+                            AcceptOrNot(p);
                         }
                     });
                     RecyclerView recyclerView = findViewById(R.id.listRecycleView);
@@ -127,4 +127,11 @@ public class VerMisPeticiones extends AppCompatActivity {
         i.putExtra("Peticion",p);
         startActivity(i);
     }
+
+    private void AcceptOrNot(Peticion p) {
+        Intent i = new Intent(context,Accept_Refuse_Peticion.class);
+        i.putExtra("Peticion",p);
+        startActivity(i);
+    }
+
 }
