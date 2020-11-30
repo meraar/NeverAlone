@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class CrearPeticionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private Button crear, atras;
+    private Button crear;
     private Spinner categorias;
     private EditText fechaEt,horaEt, descripcionEt;
     private TextView result;
@@ -76,7 +76,6 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
         fechaEt       = findViewById(R.id.fecha_peticion);
         horaEt        = findViewById(R.id.hora_peticion);
         crear         = findViewById(R.id.idCrearPeticion);
-        atras         = findViewById(R.id.idVolverAtras);
         descripcionEt = findViewById(R.id.descripcion);
         result        = findViewById(R.id.result);
 
@@ -141,7 +140,7 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                         name = "Eric";
 
 
-                        Peticion p = new Peticion("Eric","4IS1tZ6IrGbEqE2h6jXR05EeXCj1",categoria,fecha,hora,descripcion);
+                        Peticion p = new Peticion(name,uid,categoria,fecha,hora,descripcion);
                         String key = reference.child("Peticiones").push().getKey();
 
                         Map<String, Object> postValues = p.toMap();
