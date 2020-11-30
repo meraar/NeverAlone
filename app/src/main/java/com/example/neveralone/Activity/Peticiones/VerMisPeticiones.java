@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
@@ -15,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.neveralone.Activity.Home;
-import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,22 +27,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VerMisPeticiones extends AppCompatActivity implements View.OnClickListener {
+public class VerMisPeticiones extends AppCompatActivity {
 
+    private boolean voluntario = false;
     private List<Peticion> elements;
-    private Button crear;
-    private Adaptador listAdapter;
-    private DatabaseReference reference;
-    private FirebaseUser user;
+    private String uid;
+    DatabaseReference reference;
+    FirebaseUser user;
     private Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vermispeticiones);
         context = this;
-        crear = findViewById(R.id.crearButton);
-        crear.setOnClickListener(this);
         init();
     }
 
@@ -54,37 +47,18 @@ public class VerMisPeticiones extends AppCompatActivity implements View.OnClickL
         elements = new ArrayList<>();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-
-        Intent i = getIntent();
-        //SUFANG: DESCOMENTAR ESTO Y COMENTAR LINEA 65 PARA QUE TE FUNCIONE
-       // final String userID = i.getStringExtra("UserId");
-        final String userID = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
-
-
+        uid = user.getUid();
         reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
+        //Ver si es voluntario o beneficiario
+        reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                elements.clear();
-                if(snapshot.exists()) {
-                    snapshot = snapshot.child(userID);
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Peticion p = ds.getValue(Peticion.class);
-                        elements.add(p);
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    if (ds.getValue().toString().equals(uid)) {
+                        String Vol_or_Ben = ds.child("voluntario").getValue().toString();
+                        if (Vol_or_Ben.equals("true")) voluntario = true;
                     }
-                    listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Peticion p) {
-                            moveToDescription(p);
-                        }
-                    });
-
-                    RecyclerView recyclerView = findViewById(R.id.listRecycleView);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    recyclerView.setAdapter(listAdapter);
-
-                } else return;
+                }
             }
 
             @Override
@@ -92,42 +66,72 @@ public class VerMisPeticiones extends AppCompatActivity implements View.OnClickL
 
             }
         });
+
+        //Si es voluntario desplegamos peticiones hechas por el
+        if (voluntario) {
+            reference.child("User-Peticiones").child("4gGXfo84A6aKnNF6NgO1jqMTLpI3").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Peticion p = ds.getValue(Peticion.class);
+                        elements.add(p);
+                    }
+                    Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Peticion p) {
+                            AcceptOrNot(p);
+                        }
+                    });
+                    RecyclerView recyclerView = findViewById(R.id.listRecycleView);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setAdapter(listAdapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        //Si es beneficiario desplegamos todas las peticiones existentes
+        else {
+            reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Peticion p = ds.getValue(Peticion.class);
+                        elements.add(p);
+                    }
+                    Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Peticion p) {
+                            moveToDescription(p);
+                        }
+                    });
+                    RecyclerView recyclerView = findViewById(R.id.listRecycleView);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setAdapter(listAdapter);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     private void moveToDescription(Peticion p) {
         Intent i = new Intent(context,PeticionDetail.class);
         i.putExtra("Peticion",p);
         startActivity(i);
-
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent i = new Intent(context,CrearPeticionActivity.class);
-
-        startActivityForResult(i,1);
-
-
+    private void AcceptOrNot(Peticion p) {
+        Intent i = new Intent(context,Accept_Refuse_Peticion.class);
+        i.putExtra("Peticion",p);
+        startActivity(i);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-
-            if (resultCode == RESULT_OK) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        listAdapter.notifyDataSetChanged();
-                    }
-                });
-                //your code
-
-            }
-            if (resultCode == RESULT_CANCELED) {
-                // Write your code if there's no result
-            }
-        }
-    }
 }
