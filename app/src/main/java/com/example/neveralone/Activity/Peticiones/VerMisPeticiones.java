@@ -34,7 +34,6 @@ import java.util.List;
 public class VerMisPeticiones extends AppCompatActivity implements View.OnClickListener {
 
     private List<Peticion> elements;
-    private String uid;
     private Button crear;
     private Adaptador listAdapter;
     private DatabaseReference reference;
@@ -50,9 +49,6 @@ public class VerMisPeticiones extends AppCompatActivity implements View.OnClickL
         crear.setOnClickListener(this);
         init();
     }
-
-
-
 
     private void init() {
         elements = new ArrayList<>();

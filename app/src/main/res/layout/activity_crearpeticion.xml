@@ -139,10 +139,4 @@
         android:layout_height="wrap_content"
         android:hint="Crear" />
 
-    <Button
-        android:id="@+id/idVolverAtras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/atras_button"/>
-
 </LinearLayout>
