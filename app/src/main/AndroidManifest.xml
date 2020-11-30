@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan|adjustResize">
         <activity android:name=".Activity.Peticiones.Accept_Refuse_Peticion" />
-        <activity android:name=".Activity.Peticiones.VerMisPeticiones">
+        <activity android:name=".Activity.Peticiones.PeticionDetail">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,10 +22,11 @@
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.RegisterVolunteerActivity" />
         <activity android:name=".Activity.RegisterBenefactorActivity" />
-        <activity android:name=".Activity.Peticiones.PeticionDetail" />
+        <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
         <activity android:name=".Activity.Home" />
         <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
+        <activity android:name=".Activity.Peticiones.VerMisPeticiones" />
+        <activity android:name=".Activity.Peticiones.EditarPeticion" />
 
         <meta-data
             android:name="preloaded_fonts"

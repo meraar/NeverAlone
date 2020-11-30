@@ -3,9 +3,7 @@ package com.example.neveralone.Activity.Peticiones;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -16,13 +14,11 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -64,7 +60,6 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_crearpeticion);
-
 
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         initComponents();
@@ -143,8 +138,9 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                         name = "Eric";
 
 
-                        Peticion p = new Peticion("Eric","4IS1tZ6IrGbEqE2h6jXR05EeXCj1",categoria,fecha,hora,descripcion);
                         String key = reference.child("Peticiones").push().getKey();
+
+                        Peticion p = new Peticion(key,name, uid,categoria,fecha,hora,descripcion);
 
                         Map<String, Object> postValues = p.toMap();
 

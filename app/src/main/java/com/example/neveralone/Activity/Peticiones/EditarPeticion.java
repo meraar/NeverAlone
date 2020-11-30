@@ -53,6 +53,7 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
     private FirebaseUser user;
     private FirebaseDatabase rootNode;
 
+    private String peticionID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,11 +140,11 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
                             peticionUId = "-MMMmSBRnZ-_8Q5Gm67t";
                         }
 
-                        uid  = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
-                        name = "Sufang";
-                        peticionUId = "-MMMmSBRnZ-_8Q5Gm67t";
+                        uid  = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
+                        name = "Eric";
+                        peticionUId = "-MNOlUcIUGjHJPHn6WCX";
 
-                        Peticion p = new Peticion(name,uid,categoria,fecha,hora,descripcion);
+                        Peticion p = new Peticion(peticionUId,name, uid,categoria,fecha,hora,descripcion);
 
                         DatabaseReference ref = reference.child("Peticiones").child(peticionUId);
 
@@ -203,8 +204,8 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
 
         Intent i = getIntent();
         //SUFANG: DESCOMENTAR ESTO Y COMENTAR LINEA 65 PARA QUE TE FUNCIONE
-        // final String peticionID = i.getStringExtra("peticionId");
-        final String peticionID = "-MMMmSBRnZ-_8Q5Gm67t";
+        peticionID = i.getStringExtra("Peticion");
+        //final String peticionID = "-MMMmSBRnZ-_8Q5Gm67t";
 
 
         reference = FirebaseDatabase.getInstance().getReference();
