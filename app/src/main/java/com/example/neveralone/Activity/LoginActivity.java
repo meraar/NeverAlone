@@ -68,20 +68,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void nextActivity(){
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        reference = FirebaseDatabase.getInstance().getReference("Usuarios/" + userID + "/voluntario");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean volunatario = (boolean) dataSnapshot.getValue();
-                if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
+        startActivity(new Intent(LoginActivity.this,FirstHomeActivity.class));
         finish();
     }
 
@@ -110,21 +97,7 @@ public class LoginActivity extends AppCompatActivity{
                             Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                             txtCorreo.setText("");
                             txtContrasena.setText("");
-
-                            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                            reference = FirebaseDatabase.getInstance().getReference("Usuarios/" + userID + "/voluntario");
-                            reference.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    boolean volunatario = (boolean) dataSnapshot.getValue();
-                                    if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                                    else startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
-                                }
-                                @Override
-                                public void onCancelled(DatabaseError error) {
-                                }
-                            });
+                            nextActivity();
                         }
                     } else {
                         Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();

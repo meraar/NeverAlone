@@ -3,9 +3,7 @@ package com.example.neveralone.Activity.Peticiones;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -16,13 +14,11 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -130,7 +126,7 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                         final String descripcion = descripcionEt.getText().toString();
 
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String name = null,uid = null;
+                        String name = null, uid = null;
                         if (user != null) {
                             uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
                             name = "Sufang";
@@ -165,17 +161,13 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                                 returnIntent.putExtra("result", "your message");
                                 setResult(RESULT_OK, returnIntent);
                                 finish();
-
                             }
                         })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-
                                     }
                                 });
-
-
                     }else result.setText("Something went wrong");
                 } catch (ParseException e) {
                     e.printStackTrace();

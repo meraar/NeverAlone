@@ -9,8 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.neveralone.Activity.Home;
-import com.example.neveralone.Activity.Peticiones.PeticionDetail;
-import com.example.neveralone.Activity.Peticiones.VerMisPeticiones;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,7 +18,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -113,17 +111,14 @@ public class MapsActivity extends FragmentActivity implements
                             else if(tipo_de_peticion.equals("Asesoramiento") && !Asesoriamiento){
                                 Asesoriamiento = true;
                                 tipos_de_peticiones_del_usr.add("Asesoramiento");
-
                             }
                             else if(tipo_de_peticion.equals("Acompañamiento") && !Acompañamiento) {
                                 Acompañamiento = true;
                                 tipos_de_peticiones_del_usr.add("Acompañamiento");
-
                             }
                             else if(tipo_de_peticion.equals("Otro") && !Otro) {
                                 Otro = true;
                                 tipos_de_peticiones_del_usr.add("Otro");
-
                             }
                         }
                         //...A AQUI
@@ -166,7 +161,6 @@ public class MapsActivity extends FragmentActivity implements
 
             @Override
             public void onCancelled( DatabaseError error) {
-
             }
         });
         startActivity(new Intent(MapsActivity.this, Home.class));

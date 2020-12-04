@@ -6,30 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorCian"
-        android:text="Mi Perfil"
-        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:layout_width="397dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="Mi Perfil"
-            android:textColor="@color/colorBlack"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-    </FrameLayout>
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="415dp"
