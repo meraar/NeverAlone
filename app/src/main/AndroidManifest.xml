@@ -44,7 +44,6 @@
         <activity android:name=".Activity.RegisterVolunteerActivity" />
         <activity android:name=".Activity.RegisterBenefactorActivity" />
         <activity android:name=".Activity.Peticiones.PeticionDetail" />
-        <activity android:name=".Activity.Home" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
         <activity

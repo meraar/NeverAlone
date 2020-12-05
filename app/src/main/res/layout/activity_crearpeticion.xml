@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="25sp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="25sp">
 
     <TextView
         android:id="@+id/result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
         android:padding="15dp"
+        android:text=""
         android:textSize="18dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/label_categoria_petición"
         android:padding="15dp"
-        android:textSize="18dp"
-        />
+        android:text="@string/label_categoria_petición"
+        android:textSize="18dp" />
 
 
     <Spinner
@@ -38,10 +35,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/fecha_para_la_peticion"
         android:padding="15dp"
-        android:textSize="18sp"
-        />
+        android:text="@string/fecha_para_la_peticion"
+        android:textSize="18sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -58,11 +54,10 @@
                 android:id="@+id/fecha_peticion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="14sp"
                 android:hint="@string/input_fecha_peticion"
                 android:inputType="number"
-                android:onClick="showDatePickerDialog"
-                android:layout_marginLeft="14sp"
-                />
+                android:onClick="showDatePickerDialog" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,9 +65,9 @@
             android:id="@+id/escogerFecha"
             android:layout_width="45dp"
             android:layout_height="46dp"
-            android:background="@null"
-            android:layout_marginTop="7dp"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="7dp"
+            android:background="@null"
             android:onClick="showDatePickerDialog"
             android:src="@drawable/calendar" />
 
@@ -84,18 +79,16 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/hora_peticion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="14sp"
                 android:hint="@string/input_hora_peticion"
                 android:inputType="number"
-                android:onClick="showTimePickerDialog"
-                android:layout_marginLeft="14sp"
-                />
+                android:onClick="showTimePickerDialog" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,33 +96,33 @@
             android:id="@+id/escogerHora"
             android:layout_width="45dp"
             android:layout_height="46dp"
-            android:background="@null"
-            android:layout_marginTop="7dp"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="7dp"
+            android:background="@null"
             android:onClick="showTimePickerDialog"
             android:src="@drawable/clock" />
 
     </RelativeLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripcion de la petición(opcional)"
         android:padding="15dp"
-        android:textSize="18sp"
-        />
+        android:text="Descripcion de la petición(opcional)"
+        android:textSize="18sp" />
+
     <EditText
         android:id="@+id/descripcion"
-        android:inputType="textMultiLine"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        android:layout_width="341dp"
+        android:layout_height="137dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:lines="8"
-        android:minLines="6"
         android:gravity="top|left"
+        android:inputType="textMultiLine"
+        android:lines="8"
         android:maxLines="10"
-        android:scrollbars="vertical"
-        >
+        android:minLines="6"
+        android:scrollbars="vertical">
 
     </EditText>
 
@@ -143,6 +136,7 @@
         android:id="@+id/idVolverAtras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/atras_button"/>
+        android:hint="@string/atras_button"
+        android:onClick="back_button" />
 
 </LinearLayout>

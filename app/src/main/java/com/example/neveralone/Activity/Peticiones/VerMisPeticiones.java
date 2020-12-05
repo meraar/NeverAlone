@@ -15,8 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.neveralone.Activity.Home;
-import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;

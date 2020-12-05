@@ -88,8 +88,8 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
         first_direccion = findViewById(R.id.firstdireccion);
         first_puntuacion = findViewById(R.id.firstpuntuacion_media);
         first_motivo = findViewById(R.id.firstmotivo);
-        initialize();
-        initialize2();
+        initialize_data();
+        initialize_photo();
     }
 
     @Override
@@ -159,10 +159,9 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
         });
     }
 
-    private void initialize(){
+    private void initialize_data(){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
-        String h = user.getEmail().toString();
         id = user.getUid();
         reference = FirebaseDatabase.getInstance().getReference();
         reference.child("Usuarios").child(id).addListenerForSingleValueEvent(
@@ -217,7 +216,7 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
                 });
     }
 
-    private void initialize2() {
+    private void initialize_photo() {
         profile_image = findViewById(R.id.profile_image);
         String foto_name = id + ".jpg";
         storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);

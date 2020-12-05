@@ -8,8 +8,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.neveralone.Activity.Home;
-
+import com.example.neveralone.Activity.FirstHomeActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -163,7 +162,7 @@ public class MapsActivity extends FragmentActivity implements
             public void onCancelled( DatabaseError error) {
             }
         });
-        startActivity(new Intent(MapsActivity.this, Home.class));
+        startActivity(new Intent(MapsActivity.this, FirstHomeActivity.class));
         googleM.setOnInfoWindowClickListener(this);
 
     }
