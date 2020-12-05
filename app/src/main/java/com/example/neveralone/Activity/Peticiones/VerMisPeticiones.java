@@ -32,8 +32,8 @@ public class VerMisPeticiones extends AppCompatActivity {
     private boolean voluntario = false;
     private List<Peticion> elements;
     private String uid;
-    DatabaseReference reference;
-    FirebaseUser user;
+    private DatabaseReference reference;
+    private FirebaseUser user;
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
