@@ -41,6 +41,7 @@ public class CrearChatActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
+
         btnFinalizarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

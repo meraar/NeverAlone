@@ -84,8 +84,6 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        Log.i("mensaje","entra2");
-
         googleM = googleMap;
         x= new Geocoder(this);
         obtenerAdresaUsuario();
@@ -98,12 +96,14 @@ public class MapsActivity extends FragmentActivity implements
                 if(snapshot.exists()) {
                     Iterable<DataSnapshot> Usuarios_con_peticiones = snapshot.child("User-Peticiones").getChildren();
                     for (DataSnapshot Usuario_con_peticiones : Usuarios_con_peticiones) {
-                        //AÑADIDO DE AQUI...
                         Vector<String> tipos_de_peticiones_del_usr = new Vector<String>();
                         Iterable<DataSnapshot> peticiones = Usuario_con_peticiones.getChildren();
                         boolean Asesoriamiento = false, Compra = false, Acompañamiento = false, Otro = false;
+                        Log.i("mensaje", Usuario_con_peticiones.toString());
                         for(DataSnapshot peticion : peticiones){
                             //CUIDADO CON COMO SE GUARDAN EN FIREBASE, A VECES CON "" A VECES NO...
+
+
                             String tipo_de_peticion = peticion.child("categoria").getValue().toString();
 
                             if(tipo_de_peticion.equals("Compras")  && !Compra){
@@ -126,7 +126,6 @@ public class MapsActivity extends FragmentActivity implements
 
                             }
                         }
-                        //...A AQUI
 
                         String codigo_usuario_con_pet = Usuario_con_peticiones.getKey();
                         String CP = null;
@@ -169,16 +168,16 @@ public class MapsActivity extends FragmentActivity implements
 
             }
         });
-        startActivity(new Intent(MapsActivity.this, Home.class));
+        //startActivity(new Intent(MapsActivity.this, Home.class));
         googleM.setOnInfoWindowClickListener(this);
 
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        /*Intent i = new Intent(this, VerMisPeticiones.class);
+        Intent i = new Intent(this, VerMisPeticiones.class);
         i.putExtra("UserId",marker.getTag().toString());
         startActivity(i);
-        finish();*/
+        finish();
     }
 }

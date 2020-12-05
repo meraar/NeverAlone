@@ -19,7 +19,7 @@ public class Home extends AppCompatActivity {
     /*TODO he añadido la función que está asociada al botón, cuando le das a cerrar sesión. Está será la pagina de inicio tras iniciar sesión.*/
     public void signOut(View view) {
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(Home.this, CrearChatActivity.class));
+        startActivity(new Intent(Home.this, LoginActivity.class));
         finish();
 
     }
