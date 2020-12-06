@@ -29,8 +29,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,15 +43,17 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class CrearPeticionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-
-    private Button crear;
+public class EditarPeticion extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+    private Button editar;
     private Spinner categorias;
     private EditText fechaEt,horaEt, descripcionEt;
     private TextView result;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    private DatabaseReference reference;
+    private FirebaseUser user;
+    private FirebaseDatabase rootNode;
+
+    private String peticionID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,12 +74,13 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
         categorias    = findViewById(R.id.SpinnerCategoriaPeticion);
         fechaEt       = findViewById(R.id.fecha_peticion);
         horaEt        = findViewById(R.id.hora_peticion);
-        crear         = findViewById(R.id.idCrearPeticion);
+        editar        = findViewById(R.id.idCrearPeticion);
         descripcionEt = findViewById(R.id.descripcion);
         result        = findViewById(R.id.result);
 
+        editar.setText("Guardar");
 
-
+        carregarPeticio();
 
         fechaEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -110,7 +116,7 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
             }
         });
 
-        crear.setOnClickListener(new View.OnClickListener() {
+        editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -126,26 +132,29 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                         final String descripcion = descripcionEt.getText().toString();
 
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String name = null,uid = null;
+                        String name = null,uid = null, peticionUId = null;
 
                         if (user != null) {
                             uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
                             name = "Sufang";
+                            peticionUId = "-MMMmSBRnZ-_8Q5Gm67t";
                         }
 
-                        uid = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
+                        uid  = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
                         name = "Eric";
+                        peticionUId = "-MNOlUcIUGjHJPHn6WCX";
 
+                        Peticion p = new Peticion(peticionUId,name, uid,categoria,fecha,hora,descripcion);
 
-                        String key = reference.child("Peticiones").push().getKey();
-
-                        Peticion p = new Peticion(key,name, uid,categoria,fecha,hora,descripcion);
+                        DatabaseReference ref = reference.child("Peticiones").child(peticionUId);
 
                         Map<String, Object> postValues = p.toMap();
 
                         Map<String, Object> childUpdates = new HashMap<>();
-                        childUpdates.put("/Peticiones/" + key, postValues);
-                        childUpdates.put("/User-Peticiones/" + uid + "/" + key, postValues);
+
+                        ref.setValue(postValues);
+                        reference.child("User-Peticiones").child(uid).setValue(postValues);
+
 
                         reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -181,10 +190,57 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
         });
 
         String[] valores = {"Compras", "Asesoramiento", "Acompañamiento", "Otros"};
+
         categorias.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
 
         fechaEt.setInputType(InputType.TYPE_NULL);
         horaEt.setInputType(InputType.TYPE_NULL);
+
+    }
+
+    private void carregarPeticio() {
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        Intent i = getIntent();
+        //SUFANG: DESCOMENTAR ESTO Y COMENTAR LINEA 65 PARA QUE TE FUNCIONE
+        peticionID = i.getStringExtra("Peticion");
+        //final String peticionID = "-MMMmSBRnZ-_8Q5Gm67t";
+
+
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    snapshot = snapshot.child(peticionID);
+                    Peticion p = snapshot.getValue(Peticion.class);
+                    if (p.getCategoria() != null) {
+                        categorias.setSelection(getIndex(p.getCategoria()));
+                    }
+
+                    fechaEt.setText(p.getFecha());
+                    horaEt.setText(p.getHora());
+                    descripcionEt.setText(p.getDescripcion());
+
+                } else return;
+            }
+
+            private int getIndex(String categoria) {
+                for (int i=0;i<categorias.getCount();i++){
+                    if (categorias.getItemAtPosition(i).toString().equalsIgnoreCase(categoria)){
+                        return i;
+                    }
+                }
+                return 0;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 
@@ -230,7 +286,6 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
-
     @Override
     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
         Calendar mCalender = Calendar.getInstance();
@@ -257,4 +312,5 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
 
         horaEt.setText(time);
     }
+
 }

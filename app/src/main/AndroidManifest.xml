@@ -34,7 +34,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".Activity.LoginActivity">
+        <activity android:name=".Activity.Peticiones.PeticionDetail">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +45,7 @@
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.RegisterVolunteerActivity" />
         <activity android:name=".Activity.RegisterBenefactorActivity" />
-        <activity android:name=".Activity.Peticiones.PeticionDetail" />
+        <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Home" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
