@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class PeticionDetail extends AppCompatActivity {
 
     private TextView categoria, fecha, hora, descripcion, estado, autor;
-    private Button borrar,editar,aceptar;
+    private Button borrar,editar,aceptar,enviarmensaje;
     private Context context;
     private DatabaseReference reference;
 
@@ -45,6 +45,7 @@ public class PeticionDetail extends AppCompatActivity {
         borrar           = findViewById(R.id.borrar);
         editar           = findViewById(R.id.editar);
         aceptar          = findViewById(R.id.ofrecer);
+        enviarmensaje          = findViewById(R.id.enviarMensaje);
 
         editar.setText("Editar");
         borrar.setText("Borrar");
