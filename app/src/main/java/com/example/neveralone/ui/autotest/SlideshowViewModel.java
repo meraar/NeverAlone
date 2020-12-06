@@ -1,4 +1,4 @@
-package com.example.neveralone.ui.slideshow;
+package com.example.neveralone.ui.autotest;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

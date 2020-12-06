@@ -11,27 +11,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
+
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
-import com.google.android.gms.auth.api.signin.internal.Storage;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -47,11 +38,9 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 import id.zelory.compressor.Compressor;
 
@@ -61,11 +50,10 @@ public class UserProfileActivity<InputLayout> extends AppCompatActivity {
     private TextInputLayout first_puntuacion, first_piso_puerta, first_direccion, first_motivo;
     private ImageView profile_image;
     private FirebaseUser user;
-    private DatabaseReference reference, reference_image;
+    private DatabaseReference reference;
     private Usuario usuario;
     private String id;
-    private DatabaseReference user_foto_reference;
-    private ProgressDialog cargando;
+
     private StorageReference storageReference;
     private Bitmap bitmap = null;
 
