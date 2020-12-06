@@ -14,13 +14,14 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Home extends AppCompatActivity {
 
-    private Button btnChat;
+    private Button btnChat, btnCrearChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         btnChat = findViewById(R.id.buttonChat);
+
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,6 +29,16 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnCrearChat = findViewById(R.id.buttonCrearChat);
+        btnCrearChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, CrearChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     /*TODO he añadido la función que está asociada al botón, cuando le das a cerrar sesión. Está será la pagina de inicio tras iniciar sesión.*/

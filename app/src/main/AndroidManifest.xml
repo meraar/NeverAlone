@@ -50,6 +50,9 @@
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
         <activity android:name=".Activity.Chat.MessageActivity" />
+        <activity android:name=".Activity.ListaContactosActivity" />
+        <activity android:name=".Activity.CrearChatActivity" />
+
 
         <meta-data
             android:name="preloaded_fonts"
