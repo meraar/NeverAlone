@@ -1,4 +1,4 @@
-package com.example.neveralone.Holder;
+package com.example.neveralone.Papelera;
 
 import android.view.View;
 import android.widget.TextView;
@@ -19,20 +19,20 @@ public class ContactoViewHolder extends RecyclerView.ViewHolder {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public TextView getTxtNombreUsurio() {
-        return txtNombreUsurio;
+    public TextView getTxtNombre() {
+        return txtNombre;
     }
 
-    public void setTxtNombreUsurio(TextView txtNombreUsurio) {
-        this.txtNombreUsurio = txtNombreUsurio;
+    public void setTxtNombre(TextView txtNombreUsurio) {
+        this.txtNombre = txtNombreUsurio;
     }
 
     private CircleImageView fotoPerfil;
-    private TextView txtNombreUsurio;
+    private TextView txtNombre;
     public ContactoViewHolder(@NonNull View itemView) {
         super(itemView);
         fotoPerfil = itemView.findViewById(R.id.fotoPerfil);
-        txtNombreUsurio = itemView.findViewById(R.id.nombreUsuario);
+        txtNombre = itemView.findViewById(R.id.nombreUsuario);
 
     }
 }

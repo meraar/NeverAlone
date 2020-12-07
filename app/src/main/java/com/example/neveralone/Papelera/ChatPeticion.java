@@ -1,4 +1,4 @@
-package com.example.neveralone;
+package com.example.neveralone.Papelera;
 
 
 import com.example.neveralone.Peticion.Estado;
@@ -34,39 +34,5 @@ public class ChatPeticion implements Serializable {
         return result;
     }
 
-/*
-    private String uid;
-    private String idPeticion;
-    private String idUsuario1;
-    public String getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfil(String fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
-    }
-
-    private String fotoPerfil;
-*/
-
-
-   /* public String getidPeticion() {
-        return idPeticion;
-    }
-    public void setidPeticion(String idPeticion) {
-        this.idPeticion = idPeticion;
-    }
-
-
-
-    public String getidUsuario1() {
-        return idUsuario1;
-    }
-    public void setidUsuario1(String idUsuario1) {
-        this.idUsuario1 = idUsuario1;
-    }
-
-
-*/
 }
 

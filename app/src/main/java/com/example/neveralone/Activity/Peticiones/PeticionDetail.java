@@ -13,8 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.neveralone.Activity.Chat.MessageActivity;
-import com.example.neveralone.Activity.CrearChatActivity;
-import com.example.neveralone.ChatPeticion;
+import com.example.neveralone.Papelera.ChatPeticion;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;

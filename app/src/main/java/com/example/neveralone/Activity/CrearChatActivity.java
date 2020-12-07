@@ -1,34 +1,19 @@
 package com.example.neveralone.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.neveralone.Activity.Chat.Message;
 import com.example.neveralone.Activity.Chat.MessageActivity;
-import com.example.neveralone.Activity.LoginActivity;
-import com.example.neveralone.Activity.RegisterBenefactorActivity;
-import com.example.neveralone.ChatPeticion;
-import com.example.neveralone.Peticion.Peticion;
+import com.example.neveralone.Papelera.ChatPeticion;
 import com.example.neveralone.R;
-import com.example.neveralone.Usuario.Usuario;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class CrearChatActivity extends AppCompatActivity {
 

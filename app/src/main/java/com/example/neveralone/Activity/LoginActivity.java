@@ -75,8 +75,9 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean volunatario = (boolean) dataSnapshot.getValue();
-                if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+                startActivity(new Intent(LoginActivity.this, Home.class));
+               // if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+                //else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -118,8 +119,9 @@ public class LoginActivity extends AppCompatActivity{
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     boolean volunatario = (boolean) dataSnapshot.getValue();
-                                    if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                                    else startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+                                    startActivity(new Intent(LoginActivity.this, Home.class));
+                                    // if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+                                    //else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError error) {

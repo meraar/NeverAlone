@@ -50,8 +50,8 @@
         <activity android:name=".Activity.Peticiones.PeticionDetail" />
         <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
         <activity android:name=".Activity.Chat.MessageActivity" />
-        <activity android:name=".Activity.ListaContactosActivity" />
         <activity android:name=".Activity.CrearChatActivity" />
+        <activity android:name=".Activity.ListaChat.ListaDeContactos" />
 
 
         <meta-data
