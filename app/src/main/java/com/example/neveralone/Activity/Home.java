@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Home extends AppCompatActivity {
 
-    private Button btnChat, btnCrearChat;
+    private Button btnChat, btnCrearChat, btnListaContactos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,15 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, CrearChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnListaContactos = findViewById(R.id.buttonListaContactos);
+        btnListaContactos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, ListaContactosActivity.class);
                 startActivity(intent);
             }
         });
