@@ -2,11 +2,12 @@ package com.example.neveralone.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.Menu;
 
 import com.example.neveralone.R;
 
+import com.example.neveralone.Usuario.Usuario;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,7 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class FirstHomeActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -26,7 +27,7 @@ public class FirstHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_home);
+        setContentView(R.layout.activity_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,25 +43,25 @@ public class FirstHomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
         MenuItem logoutIt = navigationView.getMenu().findItem(R.id.nav_logout);
         logoutIt.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(FirstHomeActivity.this, LoginActivity.class));
+                startActivity(new Intent(MenuActivity.this, LoginActivity.class));
                 finish();
                 return true;
             }
         });
     }
 
+    /* TODO Si no añadimos settings eliminar esto
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.first_home, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onSupportNavigateUp() {

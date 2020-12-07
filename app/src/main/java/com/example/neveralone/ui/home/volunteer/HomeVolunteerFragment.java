@@ -1,4 +1,4 @@
-package com.example.neveralone.ui.home;
+package com.example.neveralone.ui.home.volunteer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +17,7 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class HomeFragment extends Fragment {
-
-    private HomeViewModel homeViewModel;
+public class HomeVolunteerFragment extends Fragment {
     private FloatingActionButton fab;
     private TabLayout homeTabLayout;
     private TabItem maps_tab, list_tab;
@@ -28,18 +26,12 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_homevolunteer, container, false);
         pager = root.findViewById(R.id.viewpager);
         homeTabLayout = root.findViewById(R.id.tabLayout);
         maps_tab = root.findViewById(R.id.maps_tab);
         list_tab = root.findViewById(R.id.list_tab);
-        fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CrearPeticionActivity.class));
-            }
-        });
+
 
         return root;
     }

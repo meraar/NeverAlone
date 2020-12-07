@@ -47,7 +47,6 @@ import id.zelory.compressor.Compressor;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
-    private ProfileViewModel profileViewModel;
     private EditText nombretxt, apellidotxt, dnitxt, codigo_postaltxt, direcciontxt, emailtxt;
     private EditText puntuacion_mediatxt, piso_puertatxt, motivotxt;
     private TextInputLayout first_puntuacion, first_piso_puerta, first_direccion, first_motivo;
@@ -61,8 +60,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
-                ViewModelProviders.of(this).get(ProfileViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         //final TextView textView = root.findViewById(R.id.text_gallery);
         nombretxt = root.findViewById(R.id.Nombre);

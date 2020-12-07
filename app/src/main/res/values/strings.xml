@@ -70,5 +70,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="avg_punctuation">Puntuación Media</string>
     <string name="menu_autotest">AUTO-TEST</string>
+    <string name="crear_peticion_button">Crear Petición</string>
 
 </resources>

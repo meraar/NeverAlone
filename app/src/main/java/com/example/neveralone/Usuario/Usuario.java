@@ -3,7 +3,7 @@ package com.example.neveralone.Usuario;
 
 public class Usuario {
     private String email;
-    private String nombre;
+    public String nombre;
     private String apellidos;
     private String dni;
     private String codigopostal;
@@ -13,14 +13,8 @@ public class Usuario {
     private String piso_puerta;
     private String motivo;
 
-    public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal,Boolean voluntario, Float puntuacioMedia) {
-        this.email = email;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.dni = dni;
-        this.codigopostal = codigopostal;
-        this.voluntario=voluntario;
-        this.puntuacioMedia=puntuacioMedia;
+    public Usuario(){
+        this.nombre = getNombre();
     }
 
     public String getDireccion() {
@@ -57,8 +51,6 @@ public class Usuario {
 
     public Boolean getVoluntario() { return voluntario; }
 
-    public Usuario() { }
-
     public String getEmail() {
         return email;
     }
@@ -91,10 +83,6 @@ public class Usuario {
         this.codigopostal = codigopostal;
     }
 
-    protected Usuario getUsuario() {
-        return this;
-    }
-
     public float getPuntuacioMedia() {
         return puntuacioMedia;
     }
@@ -103,10 +91,9 @@ public class Usuario {
         this.puntuacioMedia = puntuacioMedia;
     }
 
-
-
     public void setVoluntario(Boolean voluntario) {
         this.voluntario = voluntario;
     }
+
 }
 
