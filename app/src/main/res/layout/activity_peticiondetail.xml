@@ -169,12 +169,13 @@
 
         <Button
             android:id="@+id/enviarMensaje"
-            android:layout_height="wrap_content"
             android:layout_width="124dip"
-            android:layout_marginStart="5dp"
+            android:layout_height="37dp"
+            android:text="Contactar"
             android:layout_below="@+id/contenidoDescripción"
-            android:layout_toRightOf="@id/editar"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/editar" />
 
     </LinearLayout>
 
