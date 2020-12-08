@@ -1,7 +1,9 @@
 package com.example.neveralone.Activity.ListaChat;
 
 
-public class ElementosDeLista {
+import java.io.Serializable;
+
+public class ElementosDeLista implements Serializable {
     private String nombre;
     private String idPeticion;
 
