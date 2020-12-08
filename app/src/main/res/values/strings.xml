@@ -55,6 +55,9 @@
     <string name="Mis_peticiones_title">Mis Peticiones</string>
     <string name="TituloPeticion">Comprar Mercadona</string>
     <string name="usuarioPeticion">Setch</string>
+
+    <string name="usuarioContacto">Setch</string>
+
     <string name="estadoPeticion">Pendiente</string>
     <string name="fechaDetailViewContribution">Fecha:</string>
     <string name="horadetailViewContribucion">"Hora: "</string>
