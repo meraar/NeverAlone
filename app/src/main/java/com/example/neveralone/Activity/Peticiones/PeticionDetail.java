@@ -3,19 +3,33 @@ package com.example.neveralone.Activity.Peticiones;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.UrlQuerySanitizer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neveralone.Activity.Home;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
+import com.example.neveralone.Usuario.Usuario;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PeticionDetail extends AppCompatActivity {
 
@@ -23,19 +37,23 @@ public class PeticionDetail extends AppCompatActivity {
     private Button borrar,editar,aceptar,enviarmensaje;
     private Context context;
     private DatabaseReference reference;
-
+    private Peticion p; //peticion que ens arriba desde lista de peticions al intent
+    private List<Usuario> elements;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peticiondetail);
         context = this;
+        reference = FirebaseDatabase.getInstance().getReference();
         init();
     }
 
     private void init() {
         //Intent i = getIntent();
         //Peticion p = (Peticion) i.getSerializableExtra("Peticion");
-        final Peticion p = new Peticion("-MNOlUcIUGjHJPHn6WCX", "Eric", "4IS1tZ6IrGbEqE2h6jXR05EeXCj1","Compras","30/11/2020","17:29","");
+
+        elements = new ArrayList<>();
+        p = new Peticion("-MO17MRg8AoJJoK5JGxq", "Meraj", "np2Es3nr6bNZL93gUKYJZAznjZg2","Compras","30/11/2020","17:29","");
         categoria        = findViewById(R.id.CategoriaPeticion);
         fecha            = findViewById(R.id.fechaAct);
         descripcion      = findViewById(R.id.contenidoDescripción);
@@ -45,12 +63,12 @@ public class PeticionDetail extends AppCompatActivity {
         borrar           = findViewById(R.id.borrar);
         editar           = findViewById(R.id.editar);
         aceptar          = findViewById(R.id.ofrecer);
-        enviarmensaje          = findViewById(R.id.enviarMensaje);
+        enviarmensaje    = findViewById(R.id.enviarMensaje);
 
         editar.setText("Editar");
         borrar.setText("Borrar");
 
-        aceptar.setVisibility(View.GONE);
+        //aceptar.setVisibility(View.GONE);
 
         categoria.setText(p.getCategoria());
         fecha.setText(p.getFecha());
@@ -92,6 +110,77 @@ public class PeticionDetail extends AppCompatActivity {
             }
         });
 
+        aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Debe crear una instancia de Interacción
+
+                String uidVoluntario = "np2Es3nr6bNZL93gUlYJZAznjZg2";
+                String name = "Vicente";
+                String apellido = "Morado";
+                reference = FirebaseDatabase.getInstance().getReference();
+                String key = reference.child("Interacciones").push().getKey();
+
+                Map<String, Object> postValues = new HashMap<>();
+
+                postValues.put("uid", uidVoluntario);
+                postValues.put("user", name);
+                postValues.put("apellidos", apellido);
+
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put("/Interacciones/" + p.getPeticionID() + "/" + uidVoluntario, postValues);
+
+                reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+            }
+        });
+
+        initVoluntarios();
+
+    }
+
+    private void initVoluntarios() {
+
+        reference.child("Interacciones").child(p.getPeticionID()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Usuario p = new Usuario("",(String) ds.child("user").getValue(),(String) ds.child("apellidos").getValue(),"","",true,0);
+                        elements.add(p);
+                        //int a = 3;
+                    }
+
+                    AdaptadorUsers listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Usuario p) {
+                            VerPerfilUsuario();
+                        }
+                    });
+
+                    RecyclerView recyclerView = findViewById(R.id.recycleViewUsers);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setAdapter(listAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void VerPerfilUsuario() {
+        //Intent i = new Intent(context,VerPerfilUsuario.class);
+        //startActivity(i);
     }
 
 

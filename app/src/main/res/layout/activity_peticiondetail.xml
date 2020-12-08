@@ -149,18 +149,19 @@
         android:layout_below="@id/estado"
         android:layout_marginTop="10dp"
         android:gravity="center"
+        android:id="@+id/Botons"
         >
 
         <Button
             android:id="@+id/editar"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="124dip"
             android:layout_below="@+id/contenidoDescripción"
             />
 
         <Button
             android:id="@+id/borrar"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="124dip"
             android:layout_marginStart="5dp"
             android:layout_below="@+id/contenidoDescripción"
@@ -169,6 +170,7 @@
 
         <Button
             android:id="@+id/enviarMensaje"
+            android:text="@string/enviar_mensaje"
             android:layout_height="wrap_content"
             android:layout_width="124dip"
             android:layout_marginStart="5dp"
@@ -176,14 +178,35 @@
             android:layout_toRightOf="@id/editar"
             android:layout_marginLeft="5dp" />
 
+
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voluntarios"
+        android:layout_below="@+id/Botons"
+        android:id="@+id/tituloVoluntarios"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tituloVoluntarios"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/recycleViewUsers"/>
 
 
     <Button
         android:id="@+id/ofrecer"
+        android:text="Ofrecer Ayuda"
         android:layout_height="wrap_content"
         android:layout_width="124dip"
-        android:layout_marginTop="5dip"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom= "true"
         android:layout_marginBottom="50dp"

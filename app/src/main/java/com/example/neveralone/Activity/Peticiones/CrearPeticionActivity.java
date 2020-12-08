@@ -74,9 +74,6 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
         descripcionEt = findViewById(R.id.descripcion);
         result        = findViewById(R.id.result);
 
-
-
-
         fechaEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -117,7 +114,6 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                 try {
                     if(compruebaFecha()){
                         result.setText("SUCCES");
-                        Log.d("MyApp", "CREADO");
                         rootNode = FirebaseDatabase.getInstance();
                         reference = rootNode.getReference();
 
@@ -134,8 +130,8 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                             name = "Sufang";
                         }
 
-                        uid = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
-                        name = "Eric";
+                        uid = "np2Es3nr6bNZL93gUKYJZAznjZg2";
+                        name = "Meraj";
 
 
                         String key = reference.child("Peticiones").push().getKey();

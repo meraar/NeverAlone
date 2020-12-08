@@ -63,6 +63,7 @@
     <string name="horadetailViewContribucion">"Hora: "</string>
     <string name="descriptionDetailViewpeticion">Descripción</string>
     <string name="title_activity_maps">Map</string>
+    <string name="enviar_mensaje">Enviar Mensaje</string>
 
 
 </resources>
