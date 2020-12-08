@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity{
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean volunatario = (boolean) dataSnapshot.getValue();
+                //boolean volunatario = (boolean) dataSnapshot.getValue();
                 startActivity(new Intent(LoginActivity.this, Home.class));
                // if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
                 //else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity{
                             reference.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    boolean volunatario = (boolean) dataSnapshot.getValue();
+                                   // boolean volunatario = (boolean) dataSnapshot.getValue();
                                     startActivity(new Intent(LoginActivity.this, Home.class));
                                     // if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
                                     //else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));

@@ -7,16 +7,26 @@ public class Message {
     private String fotoPerfil;
     private String type_mensaje;
     private String hora;
+    private String idPeticion;
+
+    public String getIdPeticion() {
+        return idPeticion;
+    }
+
+    public void setIdPeticion(String idPeticion) {
+        this.idPeticion = idPeticion;
+    }
 
     public Message() {
     }
 
-    public Message(String mensaje, String nombre, String fotoPerfil, String type_mensaje, String hora) {
+    public Message(String mensaje, String nombre, String fotoPerfil, String type_mensaje, String hora,String idPeticion) {
         this.mensaje = mensaje;
         this.nombre = nombre;
         this.fotoPerfil = fotoPerfil;
         this.type_mensaje = type_mensaje;
         this.hora = hora;
+        this.idPeticion = idPeticion;
     }
 
     public String getMensaje() {

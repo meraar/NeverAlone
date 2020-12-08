@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.neveralone.Activity.CrearChatActivity;
+import com.example.neveralone.Activity.ListaChat.relacionChat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ValueEventListener;
 
@@ -36,7 +37,7 @@ public class MessageActivity extends AppCompatActivity {
 
     private CircleImageView fotoPerfil;
     private TextView nombre;
-    private String nombre_2;
+    private String nombre_2,nombre2,nombre1;
     private RecyclerView rvMensajes;
     private EditText txtMensaje;
     private Button btnEnviar;
@@ -46,7 +47,7 @@ public class MessageActivity extends AppCompatActivity {
     private AdaptadorMessage adaptador, adaptador_2;
 
     private FirebaseDatabase database;
-    private DatabaseReference databaseReference, databaseReference_2;
+    private DatabaseReference databaseReference, databaseReference_2,databaseReference_3,databaseReference_4;
     //private FirebaseStorage storage;
     //private StorageReference storageReference;
 
@@ -80,6 +81,9 @@ public class MessageActivity extends AppCompatActivity {
             idUsuario1 = (String) b.getString("idUsuario1");
             idUsuario2 = (String) b.getString("idUsuario2");
             idPeticion = (String) b.getString("idPeticion");
+            nombre2 = (String) b.getString("nombre2");
+            nombre1 = (String) b.getString("nombre1");
+            Log.i("nombreChat",nombre2);
         }
         System.out.println("Hola: ");
 
@@ -113,9 +117,10 @@ public class MessageActivity extends AppCompatActivity {
                 });
 
 
-        databaseReference = database.getReference("ChatPeticion/" + idUsuario1 + "/" + idPeticion + "/" + idUsuario2);
-        databaseReference_2 = database.getReference("ChatPeticion/" + idUsuario2 + "/" + idPeticion + "/" + idUsuario1);
-
+        databaseReference = database.getReference("chat/"+idUsuario1);
+        databaseReference_2 = database.getReference("chat/"+idUsuario2);
+        databaseReference_3 = database.getReference("ChatPeticion/"+idUsuario1);
+        databaseReference_4 = database.getReference("ChatPeticion/"+idUsuario2);
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
 
@@ -124,10 +129,12 @@ public class MessageActivity extends AppCompatActivity {
                     Toast.makeText(MessageActivity.this, "No hay nada escrito", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    databaseReference.push().setValue(new Message(txtMensaje.getText().toString(), nombre_2, "", "1", "00:00"));
-                    databaseReference_2.push().setValue(new Message(txtMensaje.getText().toString(), nombre_2, "", "1", "00:00"));
+                   databaseReference.push().setValue(new Message(txtMensaje.getText().toString(), nombre2, "", "1", "00:00",idPeticion));
+                   databaseReference_2.push().setValue(new Message(txtMensaje.getText().toString(), nombre1, "", "1", "00:00",idPeticion));
+                   databaseReference_3.push().setValue(new relacionChat(idUsuario2,nombre2,idPeticion));
+                   databaseReference_4.push().setValue(new relacionChat(idUsuario1,nombre1,idPeticion));
                     //databaseReference.push().setValue(new Message(txtMensaje.getText().toString(), nombre.getText().toString(), "", "1", "00:00"));
-                    txtMensaje.setText(null);
+                   txtMensaje.setText(null);
                 }
             }
         });

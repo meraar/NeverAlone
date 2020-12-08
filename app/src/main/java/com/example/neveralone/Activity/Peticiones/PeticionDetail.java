@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -80,6 +81,8 @@ public class PeticionDetail extends AppCompatActivity {
                 //cambiar por los datos de la peticion
                 final String idUsuario1 = "yyZIf6aLmFYPklgpAtJwkSfNOqV2";
                 String idUsuario2 = "";
+                String nombre2= p.getUser();
+                Log.i("nombre2",nombre2);
                 final String idPeticion = "MMMmVvp4TTw3UPIJV07";
                 if (idUsuario1.equals("4IS1tZ6IrGbEqE2h6jXR05EeXCj1")) {
                     idUsuario2 = "yyZIf6aLmFYPklgpAtJwkSfNOqV2";
@@ -95,6 +98,8 @@ public class PeticionDetail extends AppCompatActivity {
                 b.putString("idUsuario1", idUsuario1);
                 b.putString("idUsuario2", idUsuario2);
                 b.putString("idPeticion", idPeticion);
+                b.putString("nombre2",p.getUser());
+                b.putString("nombre1","nombre1");//cambiar nombre 1 por nombre del corrent user
 
                 Intent intent = new Intent(PeticionDetail.this, MessageActivity.class);
                 intent.putExtras(b);
