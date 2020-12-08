@@ -119,8 +119,8 @@ public class MessageActivity extends AppCompatActivity {
 
         databaseReference = database.getReference("chat/"+idUsuario1);
         databaseReference_2 = database.getReference("chat/"+idUsuario2);
-        databaseReference_3 = database.getReference("ChatPeticion/"+idUsuario1);
-        databaseReference_4 = database.getReference("ChatPeticion/"+idUsuario2);
+        //databaseReference_3 = database.getReference("ChatPeticion/"+idUsuario1);
+        //databaseReference_4 = database.getReference("ChatPeticion/"+idUsuario2);
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
 
@@ -131,8 +131,8 @@ public class MessageActivity extends AppCompatActivity {
                 else {
                    databaseReference.push().setValue(new Message(txtMensaje.getText().toString(), nombre2, "", "1", "00:00",idPeticion));
                    databaseReference_2.push().setValue(new Message(txtMensaje.getText().toString(), nombre1, "", "1", "00:00",idPeticion));
-                   databaseReference_3.push().setValue(new relacionChat(idUsuario2,nombre2,idPeticion));
-                   databaseReference_4.push().setValue(new relacionChat(idUsuario1,nombre1,idPeticion));
+                  // databaseReference_3.push().setValue(new relacionChat(idUsuario2,nombre2,idPeticion));
+                   //databaseReference_4.push().setValue(new relacionChat(idUsuario1,nombre1,idPeticion));
                     //databaseReference.push().setValue(new Message(txtMensaje.getText().toString(), nombre.getText().toString(), "", "1", "00:00"));
                    txtMensaje.setText(null);
                 }

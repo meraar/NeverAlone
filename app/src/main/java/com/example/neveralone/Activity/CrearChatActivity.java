@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.neveralone.Activity.Chat.MessageActivity;
-import com.example.neveralone.Papelera.ChatPeticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +46,6 @@ public class CrearChatActivity extends AppCompatActivity {
                 }
                 //DatabaseReference reference = database.getReference("ChatPeticion/" + idUsuario1 + "/" + idPeticion + "/" + idUsuario2);
                 //reference.push().setValue(new Message(null, "Eric", "", "1", "00:00"));
-                ChatPeticion cp = new ChatPeticion(idUsuario2);
 
                 /*DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios/" + idUsuario1 + "/nombre");
                 databaseReference.addValueEventListener(

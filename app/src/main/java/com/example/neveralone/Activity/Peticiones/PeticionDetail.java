@@ -13,8 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.neveralone.Activity.Chat.Message;
 import com.example.neveralone.Activity.Chat.MessageActivity;
-import com.example.neveralone.Papelera.ChatPeticion;
+import com.example.neveralone.Activity.ListaChat.relacionChat;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -90,8 +91,11 @@ public class PeticionDetail extends AppCompatActivity {
                 else if (idUsuario1.equals("yyZIf6aLmFYPklgpAtJwkSfNOqV2")) {
                     idUsuario2 = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
                 }
+                DatabaseReference databaseReference_3 = database.getReference("ChatPeticion/" + idUsuario1);
+                DatabaseReference databaseReference_4 = database.getReference("ChatPeticion/"+idUsuario2);
+                databaseReference_3.push().setValue(new relacionChat(idUsuario2,nombre2,idPeticion));
+                databaseReference_4.push().setValue(new relacionChat(idUsuario1,"nombre1",idPeticion));
 
-                ChatPeticion cp = new ChatPeticion(idUsuario2);
 
                 Toast.makeText(PeticionDetail.this, "Se creado el chat", Toast.LENGTH_SHORT).show();
                 Bundle b = new Bundle();

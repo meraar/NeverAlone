@@ -58,6 +58,8 @@ public class ListaDeContactos extends AppCompatActivity {
                             @Override
                             public void onItemClick(ElementosDeLista item) {
                                 Intent i = new Intent(context, MessageActivity.class);
+                                //info que se pasa a chat de mensajes
+                                //i.putExtra("chat",item);
                                 startActivity(i);
 
                             }
