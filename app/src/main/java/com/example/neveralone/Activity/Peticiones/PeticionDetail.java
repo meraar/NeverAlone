@@ -39,6 +39,7 @@ public class PeticionDetail extends AppCompatActivity {
     private DatabaseReference reference;
     private Peticion p; //peticion que ens arriba desde lista de peticions al intent
     private List<Usuario> elements;
+    private AdaptadorUsers listAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +116,7 @@ public class PeticionDetail extends AppCompatActivity {
             public void onClick(View v) {
                 //Debe crear una instancia de Interacción
 
-                String uidVoluntario = "np2Es3nr6bNZL93gUlYJZAznjZg2";
+                String uidVoluntario = "np2Es3nr6bNZL93gglYJZAznjZg2";
                 String name = "Vicente";
                 String apellido = "Morado";
                 reference = FirebaseDatabase.getInstance().getReference();
@@ -133,7 +134,7 @@ public class PeticionDetail extends AppCompatActivity {
                 reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
+                        listAdapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -156,7 +157,7 @@ public class PeticionDetail extends AppCompatActivity {
                         //int a = 3;
                     }
 
-                    AdaptadorUsers listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
+                    listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
                         @Override
                         public void onItemClick(Usuario p) {
                             VerPerfilUsuario();
