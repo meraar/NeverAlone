@@ -153,6 +153,7 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
                         Map<String, Object> childUpdates = new HashMap<>();
 
                         ref.setValue(postValues);
+
                         reference.child("User-Peticiones").child(uid).setValue(postValues);
 
 

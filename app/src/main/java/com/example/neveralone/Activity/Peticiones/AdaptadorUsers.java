@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHolderUser> {
+    private final String peticion;
     private List<Usuario> mData;
     private LayoutInflater mInflater;
     private Context context;
@@ -37,11 +38,12 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
         void onItemClick(Usuario p);
     }
 
-    public AdaptadorUsers(List<Usuario> mData, Context context, AdaptadorUsers.OnItemClickListener listener) {
+    public AdaptadorUsers(List<Usuario> mData, Context context, AdaptadorUsers.OnItemClickListener listener, String peticion) {
         this.mData      = mData;
         this.mInflater  = LayoutInflater.from(context);
         this.context    = context;
         this.listener   = listener;
+        this.peticion   = peticion;
     }
 
 
@@ -90,7 +92,51 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(item);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("¿Está seguro que quiere borrar la petición?")
+                            .setCancelable(false)
+                            .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //Actualizar estado de la peticion
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Peticiones");
+
+                                    reference.child(peticion).child("Estado").setValue(Estado.CURSO);
+
+                                    reference = FirebaseDatabase.getInstance().getReference().child("User-Peticiones");
+
+                                    reference.child("np2Es3nr6bNZL93gUKYJZAznjZg2").child(peticion).child("Estado").setValue(Estado.CURSO);
+
+                                    //Borrar interacciones
+                                    reference = FirebaseDatabase.getInstance().getReference().child("Interacciones");
+
+                                    reference.child(peticion).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(snapshot.hasChildren()) {
+                                                for (DataSnapshot ds : snapshot.getChildren()) {
+                                                    //el id debe ser item.getUID -> falta implementar la erika
+                                                    if (!(ds.getValue().toString().equals("zzQA9zldñ1VSFLMNF2fYrgJvzgi1"))) {
+                                                        ds.getRef().removeValue();
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
 
 

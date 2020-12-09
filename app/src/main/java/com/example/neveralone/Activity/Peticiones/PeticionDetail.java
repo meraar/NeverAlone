@@ -99,6 +99,7 @@ public class PeticionDetail extends AppCompatActivity {
                                 reference = FirebaseDatabase.getInstance().getReference();
                                 reference.child("Peticiones").child(p.getPeticionID()).removeValue();
                                 reference.child("User-Peticiones").child("np2Es3nr6bNZL93gUKYJZAznjZg2").child(p.getPeticionID()).removeValue();
+                                reference.child("Interacciones").child(p.getPeticionID()).removeValue();
                                 dialog.dismiss();
                             }
                         })
@@ -118,8 +119,8 @@ public class PeticionDetail extends AppCompatActivity {
             public void onClick(View v) {
                 //Debe crear una instancia de Interacción
 
-                String uidVoluntario = "zzQA9zldñ1VSFLMNF2fYrgJvzgi1";
-                String name = "Marcel83";
+                String uidVoluntario = "zzQA9zldlm1mkzpFLMF2fYrgJvzgi1";
+                String name = "Marc";
                 String apellido = ":-()";
                 reference = FirebaseDatabase.getInstance().getReference();
                 String key = reference.child("Interacciones").push().getKey();
@@ -165,7 +166,7 @@ public class PeticionDetail extends AppCompatActivity {
                         public void onItemClick(Usuario p) {
                             AceptarPeticion();
                         }
-                    });
+                    }, p.getPeticionID());
 
                     RecyclerView recyclerView = findViewById(R.id.recycleViewUsers);
                     recyclerView.setHasFixedSize(true);
@@ -183,69 +184,7 @@ public class PeticionDetail extends AppCompatActivity {
     }
 
     private void AceptarPeticion() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("¿Está seguro que quiere borrar la petición?")
-                .setCancelable(false)
-                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Borrar todas las interacciones de los demas que no sean este usuario
-                        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Peticiones");
 
-                        reference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                String name = null,uid = null, peticionUId = null;
-
-                                Peticion p = new Peticion(peticionUId,name, uid,"categoria","fecha","hora","descripcion", Estado.CURSO);
-
-                                Map<String, Object> postValues = p.toMap();
-                                Map<String, Object> childUpdates = new HashMap<>();
-
-                                reference.setValue(postValues);
-                                reference.child("User-Peticiones").child("idpersona").setValue(postValues);
-                                reference.child(p.getPeticionID()).setValue(postValues);
-                                reference.updateChildren(childUpdates);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        final DatabaseReference referenceInteracc = FirebaseDatabase.getInstance().getReference().child("Interacciones");
-                        referenceInteracc.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                //Borrar users no relacionados
-
-                                if(snapshot.exists()){
-                                    for(DataSnapshot ds: snapshot.getChildren()){
-                                        if(!(ds.getKey().equals("idPersona"))){
-                                            referenceInteracc.removeValue();
-                                        }
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-
-
-
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
 }
