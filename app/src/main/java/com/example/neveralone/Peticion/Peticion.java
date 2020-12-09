@@ -17,6 +17,8 @@ public class Peticion implements Serializable {
     private String hora;
     private Estado estado;
 
+    public Peticion(){}
+
     public Peticion(String peticionID){
         this.peticionID     = peticionID;
         this.user           = null;
@@ -36,6 +38,17 @@ public class Peticion implements Serializable {
         this.fecha          = fecha;
         this.hora           = hora;
         this.estado         = Estado.PENDIENTE;
+    }
+
+    public Peticion(String peticionID, String user, String uid, String categoria, String fecha, String hora, String descripcion, Estado estado){
+        this.user           = user;
+        this.peticionID     = peticionID;
+        this.uid            = uid;
+        this.descripcion    = descripcion;
+        this.categoria      = categoria;
+        this.fecha          = fecha;
+        this.hora           = hora;
+        this.estado         = estado;
     }
 
     @Exclude

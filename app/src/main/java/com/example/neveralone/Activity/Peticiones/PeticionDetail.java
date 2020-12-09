@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neveralone.Activity.Home;
+import com.example.neveralone.Peticion.Estado;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
@@ -54,7 +55,7 @@ public class PeticionDetail extends AppCompatActivity {
         //Peticion p = (Peticion) i.getSerializableExtra("Peticion");
 
         elements = new ArrayList<>();
-        p = new Peticion("-MO17MRg8AoJJoK5JGxq", "Meraj", "np2Es3nr6bNZL93gUKYJZAznjZg2","Compras","30/11/2020","17:29","");
+        p = new Peticion("-MO29oVXc6gSWEhSfXwa", "Meraj", "np2Es3nr6bNZL93gUKYJZAznjZg2","Compras","30/11/2020","17:29","");
         categoria        = findViewById(R.id.CategoriaPeticion);
         fecha            = findViewById(R.id.fechaAct);
         descripcion      = findViewById(R.id.contenidoDescripción);
@@ -97,6 +98,7 @@ public class PeticionDetail extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 reference = FirebaseDatabase.getInstance().getReference();
                                 reference.child("Peticiones").child(p.getPeticionID()).removeValue();
+                                reference.child("User-Peticiones").child("np2Es3nr6bNZL93gUKYJZAznjZg2").child(p.getPeticionID()).removeValue();
                                 dialog.dismiss();
                             }
                         })
@@ -116,9 +118,9 @@ public class PeticionDetail extends AppCompatActivity {
             public void onClick(View v) {
                 //Debe crear una instancia de Interacción
 
-                String uidVoluntario = "np2Es3nr6bNZL93gglYJZAznjZg2";
-                String name = "Vicente";
-                String apellido = "Morado";
+                String uidVoluntario = "zzQA9zldñ1VSFLMNF2fYrgJvzgi1";
+                String name = "Marcel83";
+                String apellido = ":-()";
                 reference = FirebaseDatabase.getInstance().getReference();
                 String key = reference.child("Interacciones").push().getKey();
 
@@ -150,8 +152,9 @@ public class PeticionDetail extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-
+                    elements = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
+
                         Usuario p = new Usuario("",(String) ds.child("user").getValue(),(String) ds.child("apellidos").getValue(),"","",true,0);
                         elements.add(p);
                         //int a = 3;
@@ -160,7 +163,7 @@ public class PeticionDetail extends AppCompatActivity {
                     listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
                         @Override
                         public void onItemClick(Usuario p) {
-                            VerPerfilUsuario();
+                            AceptarPeticion();
                         }
                     });
 
@@ -179,11 +182,74 @@ public class PeticionDetail extends AppCompatActivity {
 
     }
 
-    private void VerPerfilUsuario() {
-        //Intent i = new Intent(context,VerPerfilUsuario.class);
-        //startActivity(i);
+    private void AceptarPeticion() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("¿Está seguro que quiere borrar la petición?")
+                .setCancelable(false)
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Borrar todas las interacciones de los demas que no sean este usuario
+                        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Peticiones");
+
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String name = null,uid = null, peticionUId = null;
+
+                                Peticion p = new Peticion(peticionUId,name, uid,"categoria","fecha","hora","descripcion", Estado.CURSO);
+
+                                Map<String, Object> postValues = p.toMap();
+                                Map<String, Object> childUpdates = new HashMap<>();
+
+                                reference.setValue(postValues);
+                                reference.child("User-Peticiones").child("idpersona").setValue(postValues);
+                                reference.child(p.getPeticionID()).setValue(postValues);
+                                reference.updateChildren(childUpdates);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        final DatabaseReference referenceInteracc = FirebaseDatabase.getInstance().getReference().child("Interacciones");
+                        referenceInteracc.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                //Borrar users no relacionados
+
+                                if(snapshot.exists()){
+                                    for(DataSnapshot ds: snapshot.getChildren()){
+                                        if(!(ds.getKey().equals("idPersona"))){
+                                            referenceInteracc.removeValue();
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
-
 }
+
+
+
 

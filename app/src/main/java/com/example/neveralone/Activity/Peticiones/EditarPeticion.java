@@ -200,12 +200,12 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
 
     private void carregarPeticio() {
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
+       // user = FirebaseAuth.getInstance().getCurrentUser();
 
         Intent i = getIntent();
         //SUFANG: DESCOMENTAR ESTO Y COMENTAR LINEA 65 PARA QUE TE FUNCIONE
-        peticionID = i.getStringExtra("Peticion");
-        //final String peticionID = "-MMMmSBRnZ-_8Q5Gm67t";
+        //peticionID = i.getStringExtra("Peticion");
+        final String peticionID = "-MO1o0i3TUX_5ZDylJJd";
 
 
         reference = FirebaseDatabase.getInstance().getReference();
