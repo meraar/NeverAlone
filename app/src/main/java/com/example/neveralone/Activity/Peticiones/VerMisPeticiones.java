@@ -54,7 +54,7 @@ public class VerMisPeticiones extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
-                    if (ds.getValue().toString().equals(uid)) {
+                    if (ds.getKey().toString().equals(uid)) {
                         String Vol_or_Ben = ds.child("voluntario").getValue().toString();
                         if (Vol_or_Ben.equals("true")) voluntario = true;
                     }
