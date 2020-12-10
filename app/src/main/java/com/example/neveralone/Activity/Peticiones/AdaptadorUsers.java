@@ -104,7 +104,7 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
 
                                     reference = FirebaseDatabase.getInstance().getReference().child("User-Peticiones");
 
-                                    reference.child("np2Es3nr6bNZL93gUKYJZAznjZg2").child(peticion).child("Estado").setValue(Estado.CURSO);
+                                    reference.child("np2Es3nr6bNZL93gUKYJZAznjZg2").child(peticion).child("estado").setValue(Estado.CURSO);
 
                                     //Borrar interacciones
                                     reference = FirebaseDatabase.getInstance().getReference().child("Interacciones");

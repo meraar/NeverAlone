@@ -65,7 +65,7 @@ public class PeticionDetail extends AppCompatActivity {
         borrar           = findViewById(R.id.borrar);
         editar           = findViewById(R.id.editar);
         aceptar          = findViewById(R.id.ofrecer);
-        enviarmensaje    = findViewById(R.id.enviarMensaje);
+
 
         editar.setText("Editar");
         borrar.setText("Borrar");
