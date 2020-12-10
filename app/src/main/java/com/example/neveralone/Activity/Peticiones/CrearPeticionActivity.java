@@ -22,7 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.neveralone.Activity.MenuActivity;
+//import com.example.neveralone.Activity.FirstHomeActivity;
 import com.example.neveralone.Peticion.DatePicker;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
@@ -255,7 +255,7 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
     }
 
     public void back_button(View view) {
-        startActivity(new Intent(CrearPeticionActivity.this, MenuActivity.class));
+        //startActivity(new Intent(CrearPeticionActivity.this, FirstHomeActivity.class));
         finish();
     }
 }
