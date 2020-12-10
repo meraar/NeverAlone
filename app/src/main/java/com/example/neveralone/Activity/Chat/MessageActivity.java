@@ -94,7 +94,8 @@ public class MessageActivity extends AppCompatActivity {
 
         System.out.println("Aquí hi ha el currentUserName: " + currentUserName);
 
-        friendUserId = "zzQA9zldn1VSFLMNF2VYrgJvzgi1"; // cambiar luego, acceder a la activity anterior y obtener el id del usuario con quien se contacta
+        if (currentUserId.equals("92zm7ANS1QTzfaOfUTaoh6rtF5n1")) friendUserId = "MxaX5eUimvTMsDq9sAj1yfM4C0k1";
+        else friendUserId = "92zm7ANS1QTzfaOfUTaoh6rtF5n1";
         //databaseReference_2 = FirebaseDatabase.getInstance().getReference("Usuarios/" + idUsuario1 + "/nombre");
         databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Usuarios/" + friendUserId + "/nombre");
         databaseReference_friendUser.addValueEventListener(
@@ -112,8 +113,8 @@ public class MessageActivity extends AppCompatActivity {
                 });
 
 
-        databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("Chat/" + currentUserId + friendUserId);
-        databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Chat/" + friendUserId + currentUserId);
+        databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("Chat/" + currentUserId + "/" + friendUserId);
+        databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Chat/" + friendUserId + "/" + currentUserId);
         //databaseReference_3 = database.getReference("ChatPeticion/"+idUsuario1);
         //databaseReference_4 = database.getReference("ChatPeticion/"+idUsuario2);
 
