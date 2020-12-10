@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.neveralone.Activity.MenuActivity;
-import com.example.neveralone.MapsActivity;
 import com.example.neveralone.R;
 
 import com.google.android.gms.maps.CameraUpdateFactory;

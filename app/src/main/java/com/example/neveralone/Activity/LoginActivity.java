@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.neveralone.R;
 
-import com.example.neveralone.Usuario.Usuario;
+import com.example.neveralone.ValueEventListenerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -27,12 +27,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.NotNull;
 
 
 public class LoginActivity extends AppCompatActivity{
@@ -40,16 +37,10 @@ public class LoginActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1;
-    private FirebaseUser user;
     private DatabaseReference reference;
+    private ValueEventListenerAdapter valueEventListenerAdapter;
     private String id;
-    private Callback c;
-    private Usuario u;
-    private String nombre;
 
-    private void setnombre(String n) {
-        this.nombre = n;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,35 +150,11 @@ public class LoginActivity extends AppCompatActivity{
             }
         }
     }
-//@NotNull final Callback callback
-    private void initialize() {
-        //final Usuario[] u = new Usuario[1];
-        //final String[] nombre = new String[1];
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
-        id = user.getUid();
-        reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("Usuarios").child(id).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            Usuario us = snapshot.getValue(Usuario.class);
-                            Log.d("NOMBREEEE.........",us.getNombre());
-                            //System.out.println("Nombre ...."+ us.getNombre());
-                            //u[0] = us;
-                            setnombre(us.getNombre());
-                            //nombre[0] = us.getNombre();
-                            //Log.d("nombre ", nombre[0]);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                }
-        );
-        System.out.println(nombre);
-        Log.d("nombre ", nombre);
 
+    private void initialize() {
+        id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        reference = FirebaseDatabase.getInstance().getReference();
+        valueEventListenerAdapter = new ValueEventListenerAdapter();
+        reference.child("Usuarios").child(id).addListenerForSingleValueEvent(valueEventListenerAdapter);
     }
 }

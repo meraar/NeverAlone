@@ -1,6 +1,5 @@
 package com.example.neveralone.Usuario;
 
-
 public class Usuario {
     private String email;
     public String nombre;
@@ -12,10 +11,6 @@ public class Usuario {
     private String direccion;
     private String piso_puerta;
     private String motivo;
-
-    public Usuario(){
-        this.nombre = getNombre();
-    }
 
     public String getDireccion() {
         return direccion;
