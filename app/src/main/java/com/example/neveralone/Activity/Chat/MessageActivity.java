@@ -124,8 +124,8 @@ public class MessageActivity extends AppCompatActivity {
                     Toast.makeText(MessageActivity.this, "No hay nada escrito", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                   databaseReference_currentUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), currentUserName, "", "1", idPeticion, ServerValue.TIMESTAMP));
-                   databaseReference_friendUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), currentUserName, "", "1", idPeticion, ServerValue.TIMESTAMP));
+                   databaseReference_currentUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), currentUserId, "", "1", idPeticion, ServerValue.TIMESTAMP));
+                   databaseReference_friendUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), currentUserId, "", "1", idPeticion, ServerValue.TIMESTAMP));
                   // databaseReference_3.push().setValue(new relacionChat(idUsuario2,nombre2,idPeticion));
                    //databaseReference_4.push().setValue(new relacionChat(idUsuario1,nombre1,idPeticion));
                     //databaseReference.push().setValue(new Message(txtMensaje.getText().toString(), nombre.getText().toString(), "", "1", "00:00"));

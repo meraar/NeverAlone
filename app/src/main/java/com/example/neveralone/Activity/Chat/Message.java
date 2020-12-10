@@ -3,25 +3,17 @@ package com.example.neveralone.Activity.Chat;
 public class Message {
 
     private String mensaje;
-    private String nombre;
+    private String userID;
     private String fotoPerfil;
     private String type_mensaje;
     private String idPeticion;
 
-    public String getIdPeticion() {
-        return idPeticion;
-    }
-
-    public void setIdPeticion(String idPeticion) {
-        this.idPeticion = idPeticion;
-    }
-
     public Message() {
     }
 
-    public Message(String mensaje, String nombre, String fotoPerfil, String type_mensaje,String idPeticion) {
+    public Message(String mensaje, String userID, String fotoPerfil, String type_mensaje, String idPeticion) {
         this.mensaje = mensaje;
-        this.nombre = nombre;
+        this.userID = userID;
         this.fotoPerfil = fotoPerfil;
         this.type_mensaje = type_mensaje;
         this.idPeticion = idPeticion;
@@ -35,12 +27,12 @@ public class Message {
         this.mensaje = mensaje;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getFotoPerfil() {
@@ -57,5 +49,13 @@ public class Message {
 
     public void setType_mensaje(String type_mensaje) {
         this.type_mensaje = type_mensaje;
+    }
+
+    public String getIdPeticion() {
+        return idPeticion;
+    }
+
+    public void setIdPeticion(String idPeticion) {
+        this.idPeticion = idPeticion;
     }
 }
