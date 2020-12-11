@@ -73,8 +73,11 @@ public class VerMisPeticiones extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        Peticion p = ds.getValue(Peticion.class);
-                        elements.add(p);
+                        if (ds.child("estado").getValue().toString().equals("PENDIENTE")){
+                            Peticion p = ds.getValue(Peticion.class);
+                            elements.add(p);
+                        }
+
                     }
                     Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
                         @Override
