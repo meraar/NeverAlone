@@ -55,7 +55,7 @@ public class PeticionDetail extends AppCompatActivity {
         //Peticion p = (Peticion) i.getSerializableExtra("Peticion");
 
         elements = new ArrayList<>();
-        p = new Peticion("-MO29oVXc6gSWEhSfXwa", "Meraj", "np2Es3nr6bNZL93gUKYJZAznjZg2","Compras","30/11/2020","17:29","");
+        p = new Peticion("-MOaOzQr2wYxoKspiYVO", "Meraj", "np2Es3nr6bNZL93gUKYJZAznjZg2","Compras","24/12/2020","12:22","");
         categoria        = findViewById(R.id.CategoriaPeticion);
         fecha            = findViewById(R.id.fechaAct);
         descripcion      = findViewById(R.id.contenidoDescripción);
@@ -70,7 +70,7 @@ public class PeticionDetail extends AppCompatActivity {
         editar.setText("Editar");
         borrar.setText("Borrar");
 
-        //aceptar.setVisibility(View.GONE);
+
 
         categoria.setText(p.getCategoria());
         fecha.setText(p.getFecha());
@@ -99,7 +99,12 @@ public class PeticionDetail extends AppCompatActivity {
                                 reference = FirebaseDatabase.getInstance().getReference();
                                 reference.child("Peticiones").child(p.getPeticionID()).removeValue();
                                 reference.child("User-Peticiones").child("np2Es3nr6bNZL93gUKYJZAznjZg2").child(p.getPeticionID()).removeValue();
-                                reference.child("Interacciones").child(p.getPeticionID()).removeValue();
+                                reference.child("Interacciones").child(p.getPeticionID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        listAdapter.notifyDataSetChanged();
+                                    }
+                                });
                                 dialog.dismiss();
                             }
                         })
@@ -119,9 +124,9 @@ public class PeticionDetail extends AppCompatActivity {
             public void onClick(View v) {
                 //Debe crear una instancia de Interacción
 
-                String uidVoluntario = "zzQA9zldlm1mkzpFLMF2fYrgJvzgi1";
-                String name = "Marc";
-                String apellido = ":-()";
+                String uidVoluntario = "zzQA9zhkm1ñkz2FLMF2fYrgJvzgi1";
+                String name = "Maron";
+                String apellido = "Riera";
                 reference = FirebaseDatabase.getInstance().getReference();
                 String key = reference.child("Interacciones").push().getKey();
 
@@ -148,47 +153,34 @@ public class PeticionDetail extends AppCompatActivity {
     }
 
     private void initVoluntarios() {
-
         reference.child("Interacciones").child(p.getPeticionID()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    elements = new ArrayList<>();
-                    for (DataSnapshot ds : snapshot.getChildren()) {
+                elements = new ArrayList<>();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Usuario p = new Usuario("",(String) ds.child("user").getValue(),(String) ds.child("apellidos").getValue(),"","",true,0);
+                    elements.add(p);
 
-                        Usuario p = new Usuario("",(String) ds.child("user").getValue(),(String) ds.child("apellidos").getValue(),"","",true,0);
-                        elements.add(p);
-                        //int a = 3;
-                    }
-
-                    listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Usuario p) {
-                            AceptarPeticion();
-                        }
-                    }, p.getPeticionID());
-
-                    RecyclerView recyclerView = findViewById(R.id.recycleViewUsers);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    recyclerView.setAdapter(listAdapter);
                 }
-            }
 
+                listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Usuario p) {
+                        AceptarPeticion();
+                    }}, p.getPeticionID());
+
+                RecyclerView recyclerView = findViewById(R.id.recycleViewUsers);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setAdapter(listAdapter);
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
     }
-
     private void AceptarPeticion() {
 
     }
 
 }
-
-
-
-

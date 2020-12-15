@@ -100,7 +100,7 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
                                     //Actualizar estado de la peticion
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Peticiones");
 
-                                    reference.child(peticion).child("Estado").setValue(Estado.CURSO);
+                                    reference.child(peticion).child("estado").setValue(Estado.CURSO);
 
                                     reference = FirebaseDatabase.getInstance().getReference().child("User-Peticiones");
 

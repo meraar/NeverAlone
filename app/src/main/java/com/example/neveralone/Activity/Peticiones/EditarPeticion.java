@@ -140,9 +140,9 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
                             peticionUId = "-MMMmSBRnZ-_8Q5Gm67t";
                         }
 
-                        uid  = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
-                        name = "Eric";
-                        peticionUId = "-MNOlUcIUGjHJPHn6WCX";
+                        uid  = "np2Es3nr6bNZL93gUKYJZAznjZg2";
+                        name = "Meraj";
+                        peticionUId = "-MOaOzQr2wYxoKspiYVO";
 
                         Peticion p = new Peticion(peticionUId,name, uid,categoria,fecha,hora,descripcion);
 
@@ -203,10 +203,10 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
 
        // user = FirebaseAuth.getInstance().getCurrentUser();
 
-        Intent i = getIntent();
+        //Intent i = getIntent();
         //SUFANG: DESCOMENTAR ESTO Y COMENTAR LINEA 65 PARA QUE TE FUNCIONE
         //peticionID = i.getStringExtra("Peticion");
-        final String peticionID = "-MO1o0i3TUX_5ZDylJJd";
+        final String peticionID = "-MOa7h9lhKYGXWfTq800";
 
 
         reference = FirebaseDatabase.getInstance().getReference();
