@@ -2,12 +2,11 @@ package com.example.neveralone.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.neveralone.R;
 
-import com.example.neveralone.Usuario.Usuario;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -53,6 +52,16 @@ public class MenuActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        TextView name = findViewById(R.id.navHeaderName);
+        TextView email = findViewById(R.id.navHeaderEmail);
+       /* try {
+            ValueEventListenerAdapter.getSemaphore().acquire();
+            name.setText(ValueEventListenerAdapter.getUser().getNombre());
+            email.setText(ValueEventListenerAdapter.getUser().getEmail());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
     }
 
     /* TODO Si no añadimos settings eliminar esto
@@ -69,7 +78,4 @@ public class MenuActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
-
 }

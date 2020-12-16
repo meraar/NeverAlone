@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity{
                                     Log.d("NOMBRE2",us.getNombre());
                                 }
                             });*/
-                            initialize();
+                            //initialize();
                             nextActivity();
                         }
                     } else {
