@@ -50,8 +50,9 @@ public class RecoverPasswordActivity extends AppCompatActivity {
                         startActivity(new Intent(RecoverPasswordActivity.this, LoginActivity.class));
                         finish();
                     }else {
+                        mail.setError("Porfavor, introduce un mail registrado en NeverAlone.");
                         Toast.makeText(RecoverPasswordActivity.this, "No se pudo enviar el mail de restablecer la contraseña.", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(RecoverPasswordActivity.this, "Porfavor, introduce un mail registrado en NeverAlone", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RecoverPasswordActivity.this, "Porfavor, introduce un mail registrado en NeverAlone", Toast.LENGTH_SHORT).show();
 
                     }
                     Progressdialog.dismiss();
