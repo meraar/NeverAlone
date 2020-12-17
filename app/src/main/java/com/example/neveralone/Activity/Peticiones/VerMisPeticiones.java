@@ -54,7 +54,7 @@ public class VerMisPeticiones extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
-                    if (ds.getValue().toString().equals(uid)) {
+                    if (ds.getKey().toString().equals(uid)) {
                         String Vol_or_Ben = ds.child("voluntario").getValue().toString();
                         if (Vol_or_Ben.equals("true")) voluntario = true;
                     }
@@ -67,9 +67,9 @@ public class VerMisPeticiones extends AppCompatActivity {
             }
         });
 
-        //Si es voluntario desplegamos peticiones hechas por el
+        //Si es beneficiario desplegamos peticiones existentes
         if (voluntario) {
-            reference.child("User-Peticiones").child("4gGXfo84A6aKnNF6NgO1jqMTLpI3").addValueEventListener(new ValueEventListener() {
+            reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
@@ -94,14 +94,18 @@ public class VerMisPeticiones extends AppCompatActivity {
                 }
             });
         }
-        //Si es beneficiario desplegamos todas las peticiones existentes
+        //Si es beneficiario desplegamos todas las peticiones hechas por el
         else {
-            reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
+            reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        Peticion p = ds.getValue(Peticion.class);
-                        elements.add(p);
+                        if (ds.getKey().equals(uid)){
+                            for(DataSnapshot ds2:ds.getChildren()){
+                                Peticion p = ds2.getValue(Peticion.class);
+                                elements.add(p);
+                            }
+                        }
                     }
                     Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
                         @Override
