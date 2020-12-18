@@ -2,34 +2,35 @@ package com.example.neveralone.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.neveralone.Activity.Peticiones.VerMisPeticiones;
+import com.example.neveralone.MapsActivity;
 import com.example.neveralone.R;
-
-import com.example.neveralone.ValueEventListenerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity{
@@ -37,10 +38,7 @@ public class LoginActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1;
-    private DatabaseReference reference;
-    private ValueEventListenerAdapter valueEventListenerAdapter;
-    private String id;
-
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +62,41 @@ public class LoginActivity extends AppCompatActivity{
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
-            nextActivity();
+            FirebaseAuth.getInstance().signOut();
+            /*Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
+            nextActivity();*/
         }
     }
 
     private void nextActivity(){
-        startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        reference = FirebaseDatabase.getInstance().getReference("Usuarios/" + userID + "/voluntario");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean volunatario = (boolean) dataSnapshot.getValue();
+                seleccionaActivityUser(volunatario);
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
         finish();
+    }
+
+    private void seleccionaActivityUser(boolean volunatario) {
+        if(volunatario){
+            Intent i = new Intent(LoginActivity.this, VerMisPeticiones.class);
+            i.putExtra("Tipus", "Voluntario");
+            startActivity(i);
+            //startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+        }
+        else {
+            Intent i = new Intent(LoginActivity.this, VerMisPeticiones.class);
+            i.putExtra("Tipus", "Beneficiario");
+            startActivity(i);
+        }
     }
 
     public void login(View view) {
@@ -99,16 +124,20 @@ public class LoginActivity extends AppCompatActivity{
                             Toast.makeText(LoginActivity.this, "Se ha iniciado sesion correctamente.", Toast.LENGTH_SHORT).show();
                             txtCorreo.setText("");
                             txtContrasena.setText("");
-                            /*initialize(new Callback(){
+
+                            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            reference = FirebaseDatabase.getInstance().getReference("Usuarios/" + userID + "/voluntario");
+                            reference.addValueEventListener(new ValueEventListener() {
                                 @Override
-                                public void onComplete(Usuario u) {
-                                    Log.d("NOMBRE1",u.getNombre());
-                                    us.nombre = u.getNombre();
-                                    Log.d("NOMBRE2",us.getNombre());
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    boolean voluntario = (boolean) dataSnapshot.getValue();
+                                    seleccionaActivityUser(voluntario);
                                 }
-                            });*/
-                            //initialize();
-                            nextActivity();
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                }
+                            });
                         }
                     } else {
                         Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
@@ -149,12 +178,5 @@ public class LoginActivity extends AppCompatActivity{
                 Toast.makeText(this, "Login Failed!" ,Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void initialize() {
-        id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference = FirebaseDatabase.getInstance().getReference();
-        valueEventListenerAdapter = new ValueEventListenerAdapter();
-        reference.child("Usuarios").child(id).addListenerForSingleValueEvent(valueEventListenerAdapter);
     }
 }

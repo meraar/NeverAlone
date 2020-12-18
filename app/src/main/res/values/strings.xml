@@ -53,11 +53,15 @@
     <string name="Mis_peticiones_title">Mis Peticiones</string>
     <string name="TituloPeticion">Comprar Mercadona</string>
     <string name="usuarioPeticion">Setch</string>
+
+    <string name="usuarioContacto">Setch</string>
+
     <string name="estadoPeticion">Pendiente</string>
     <string name="fechaDetailViewContribution">Fecha:</string>
     <string name="horadetailViewContribucion">"Hora: "</string>
     <string name="descriptionDetailViewpeticion">Descripción</string>
     <string name="title_activity_maps">Map</string>
+    <string name="enviar_mensaje">Enviar Mensaje</string>
 
     <string name="perfil_name">Mi perfil</string>
     <string name="title_activity_first_home">FirstHomeActivity</string>

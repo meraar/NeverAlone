@@ -9,6 +9,7 @@ import java.util.Map;
 public class Peticion implements Serializable {
 
     private String user;
+    private String peticionID;
     private String uid;
     private String descripcion;
     private String categoria;
@@ -16,17 +17,22 @@ public class Peticion implements Serializable {
     private String hora;
     private Estado estado;
 
-    public Peticion(){
-        this.user           = null;
-        this.descripcion    = null;
-        this.categoria      = null;
-        this.fecha          = null;
-        this.hora           = null;
-        this.estado         = null;
+    public Peticion() {}
+
+    public Peticion(String peticionID, String user, String uid, String categoria, String fecha, String hora, String descripcion, Estado estado){
+        this.user           = user;
+        this.peticionID     = peticionID;
+        this.uid            = uid;
+        this.descripcion    = descripcion;
+        this.categoria      = categoria;
+        this.fecha          = fecha;
+        this.hora           = hora;
+        this.estado         = estado;
     }
 
-    public Peticion(String user, String uid, String categoria, String fecha, String hora, String descripcion){
+    public Peticion(String peticionID, String user, String uid, String categoria, String fecha, String hora, String descripcion){
         this.user           = user;
+        this.peticionID     = peticionID;
         this.uid            = uid;
         this.descripcion    = descripcion;
         this.categoria      = categoria;
@@ -38,6 +44,7 @@ public class Peticion implements Serializable {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("peticionID", peticionID);
         result.put("uid", uid);
         result.put("user", user);
         result.put("categoria", categoria);
@@ -46,6 +53,14 @@ public class Peticion implements Serializable {
         result.put("descripcion", descripcion);
         result.put("estado", estado.toString());
         return result;
+    }
+
+    public String getPeticionID() {
+        return peticionID;
+    }
+
+    public void setPeticionID(String peticionID) {
+        this.peticionID = peticionID;
     }
 
     public String getDescripcion() {
@@ -84,6 +99,14 @@ public class Peticion implements Serializable {
         return user;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public void setUser(String user) {
         this.user = user;
     }
@@ -95,4 +118,5 @@ public class Peticion implements Serializable {
     public void setHora(String hora) {
         this.hora = hora;
     }
-}
+
+  }

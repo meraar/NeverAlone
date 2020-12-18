@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-//import com.example.neveralone.Activity.FirstHomeActivity;
 import com.example.neveralone.Peticion.DatePicker;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
@@ -30,8 +29,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.text.ParseException;
@@ -44,11 +46,13 @@ import java.util.Map;
 
 public class CrearPeticionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private Button crear, atras;
+    private Button crear;
     private Spinner categorias;
-    private EditText fechaEt,horaEt, descripcionEt;
+    private EditText fechaEt, horaEt, descripcionEt;
     private TextView result;
+    private String origen;
 
+    private String peticionID;
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
@@ -62,20 +66,63 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
 
         setContentView(R.layout.activity_crearpeticion);
 
-
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        Intent i = getIntent();
+        origen = (String) i.getSerializableExtra("Origen");
+        peticionID = i.getStringExtra("Peticion");
+        if(origen.equals("Editar")) carregarPeticio(peticionID);
         initComponents();
+    }
+
+    private void carregarPeticio(final String peticionID) {
+
+
+        reference = FirebaseDatabase.getInstance().getReference();
+
+        reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    snapshot = snapshot.child(peticionID);
+                    Peticion p = snapshot.getValue(Peticion.class);
+                    if (p.getCategoria() != null) {
+                        categorias.setSelection(getIndex(p.getCategoria()));
+                    }
+
+                    fechaEt.setText(p.getFecha());
+                    horaEt.setText(p.getHora());
+                    descripcionEt.setText(p.getDescripcion());
+
+                } else return;
+            }
+
+            private int getIndex(String categoria) {
+                for (int i=0;i<categorias.getCount();i++){
+                    if (categorias.getItemAtPosition(i).toString().equalsIgnoreCase(categoria)){
+                        return i;
+                    }
+                }
+                return 0;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void initComponents() {
 
-        categorias    = findViewById(R.id.SpinnerCategoriaPeticion);
-        fechaEt       = findViewById(R.id.fecha_peticion);
-        horaEt        = findViewById(R.id.hora_peticion);
-        crear         = findViewById(R.id.idCrearPeticion);
-        atras         = findViewById(R.id.idVolverAtras);
+        categorias = findViewById(R.id.SpinnerCategoriaPeticion);
+        fechaEt = findViewById(R.id.fecha_peticion);
+        horaEt = findViewById(R.id.hora_peticion);
+        crear = findViewById(R.id.idCrearPeticion);
         descripcionEt = findViewById(R.id.descripcion);
-        result        = findViewById(R.id.result);
+        result = findViewById(R.id.result);
+        String[] valores = {"Compras", "Asesoramiento", "Acompañamiento", "Otros"};
+        categorias.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
+        fechaEt.setInputType(InputType.TYPE_NULL);
+        horaEt.setInputType(InputType.TYPE_NULL);
 
         fechaEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -115,9 +162,10 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
             @Override
             public void onClick(View v) {
                 try {
-                    if(compruebaFecha()){
+                    if (compruebaFecha()) {
+
                         result.setText("SUCCES");
-                        Log.d("MyApp", "CREADO");
+
                         rootNode = FirebaseDatabase.getInstance();
                         reference = rootNode.getReference();
 
@@ -125,87 +173,89 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                         final String fecha = fechaEt.getText().toString();
                         final String hora = horaEt.getText().toString();
                         final String descripcion = descripcionEt.getText().toString();
-
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String name = null, uid = null;
-                        if (user != null) {
-                            uid = "1PyehrVEgSZfzxZfPf7cYY2wWK52";
-                            name = "Sufang";
-                        }
+                        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
-                        uid = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
-                        name = "Eric";
-
-
-                        Peticion p = new Peticion("Eric","4IS1tZ6IrGbEqE2h6jXR05EeXCj1",categoria,fecha,hora,descripcion);
-                        String key = reference.child("Peticiones").push().getKey();
-
-                        Map<String, Object> postValues = p.toMap();
-
-                        Map<String, Object> childUpdates = new HashMap<>();
-                        childUpdates.put("/Peticiones/" + key, postValues);
-                        childUpdates.put("/User-Peticiones/" + uid + "/" + key, postValues);
-
-                        reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onSuccess(Void aVoid) {
-                                // Write was successful!
-                                // ...
-                                result.setText("SUCCES");
-                                try {
-                                    Thread.sleep(4);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                Intent returnIntent = new Intent();
-                                returnIntent.putExtra("result", "your message");
-                                setResult(RESULT_OK, returnIntent);
-                                finish();
-                            }
-                        })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    String uid = user.getUid();
+                                    String name = (String) snapshot.child(uid).child("nombre").getValue();
+                                    Map<String, Object> childUpdates = new HashMap<>();
+                                    final Peticion p;
+                                    if(origen.equals("Editar")){
+                                        p = new Peticion(peticionID,name, uid,categoria,fecha,hora,descripcion);
+                                        //DatabaseReference ref = reference.child("Peticiones").child(peticionID);
+                                        Map<String, Object> postValues = p.toMap();
+                                        childUpdates.put("/Peticiones/" + peticionID, postValues);
+                                        childUpdates.put("/User-Peticiones/" + uid + "/" + peticionID, postValues);
+                                    }else{
+                                        String key = reference.child("Peticiones").push().getKey();
+                                        p = new Peticion(key, name, uid, categoria, fecha, hora, descripcion);
+                                        Map<String, Object> postValues = p.toMap();
+                                        childUpdates.put("/Peticiones/" + key, postValues);
+                                        childUpdates.put("/User-Peticiones/" + uid + "/" + key, postValues);
                                     }
-                                });
-                    }else result.setText("Something went wrong");
+
+
+                                    reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            result.setText("SUCCES");
+                                            try {
+                                                Thread.sleep(4);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                            Intent returnIntent = new Intent();
+                                            returnIntent.putExtra("Peticion", p);
+                                            setResult(RESULT_OK,returnIntent);
+                                            finish();
+
+                                        }
+                                    })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+
+                                                }
+                                            });
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {}
+                        });
+                    } else result.setText("Something went wrong");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         });
-
-        String[] valores = {"Compras", "Asesoramiento", "Acompañamiento", "Otros"};
-        categorias.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
-
-        fechaEt.setInputType(InputType.TYPE_NULL);
-        horaEt.setInputType(InputType.TYPE_NULL);
-
     }
 
     private boolean compruebaFecha() throws ParseException {
         String fecha, hora;
 
         fecha = fechaEt.getText().toString();
-        hora  = horaEt.getText().toString();
-        if(fecha.isEmpty()) {
+        hora = horaEt.getText().toString();
+        if (fecha.isEmpty()) {
             fechaEt.setError("Escoja una fecha");
             return false;
         }
-        if(hora.isEmpty()) {
+        if (hora.isEmpty()) {
             fechaEt.setError("Escoja una hora");
             return false;
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String fechaCompleta = fecha+ " " + hora;
+        String fechaCompleta = fecha + " " + hora;
         Date strDate = sdf.parse(fechaCompleta);
 
         Date actual = new Date();
 
-        //Log.d("MyApp",strDate.toString());
-        if (actual.before(strDate)){
+        if (actual.before(strDate)) {
             fechaEt.setError(null);
             horaEt.setError(null);
             return true;
@@ -245,17 +295,12 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         String time = String.valueOf(hourOfDay) + ':';
 
-        if(minute < 10) {
+        if (minute < 10) {
             time = time + '0' + String.valueOf(minute);
-        }else{
-            time = time  + String.valueOf(minute);
+        } else {
+            time = time + String.valueOf(minute);
         }
 
         horaEt.setText(time);
-    }
-
-    public void back_button(View view) {
-        //startActivity(new Intent(CrearPeticionActivity.this, FirstHomeActivity.class));
-        finish();
     }
 }
