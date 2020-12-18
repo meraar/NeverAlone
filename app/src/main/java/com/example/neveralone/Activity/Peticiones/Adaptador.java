@@ -1,13 +1,10 @@
 package com.example.neveralone.Activity.Peticiones;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
@@ -25,17 +20,18 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> {
     private List<Peticion> mData;
     private LayoutInflater mInflater;
     private Context context;
+    private String tusuari;
     final Adaptador.OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void onItemClick(Peticion p);
     }
 
-    public Adaptador(List<Peticion> mData, Context context, Adaptador.OnItemClickListener listener) {
-        this.mData = mData;
+    public Adaptador(List<Peticion> mData, Context context, OnItemClickListener listener) {
+        this.mData     = mData;
         this.mInflater = LayoutInflater.from(context);
-        this.context = context;
-        this.listener = listener;
+        this.context   = context;
+        this.listener  = listener;
     }
 
 

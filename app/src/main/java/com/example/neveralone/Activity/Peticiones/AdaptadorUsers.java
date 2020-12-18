@@ -16,6 +16,7 @@ import com.example.neveralone.Peticion.Estado;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -104,7 +105,7 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
 
                                     reference = FirebaseDatabase.getInstance().getReference().child("User-Peticiones");
 
-                                    reference.child("np2Es3nr6bNZL93gUKYJZAznjZg2").child(peticion).child("estado").setValue(Estado.CURSO);
+                                    reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(peticion).child("estado").setValue(Estado.CURSO);
 
                                     //Borrar interacciones
                                     reference = FirebaseDatabase.getInstance().getReference().child("Interacciones");
@@ -114,8 +115,10 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if(snapshot.hasChildren()) {
                                                 for (DataSnapshot ds : snapshot.getChildren()) {
-                                                    //el id debe ser item.getUID -> falta implementar la erika
-                                                    if (!(ds.getValue().toString().equals("zzQA9zldñ1VSFLMNF2fYrgJvzgi1"))) {
+                                                    //TODO Borrar tots menys l'usuari al qui has acceptat
+                                                    //TODO Necessito que l'usuari guari el seu UID de firebase
+                                                    //TODO O sino, simplement borro tots els voluntaris i ya
+                                                    if (!(ds.getValue().toString().equals(""))) {
                                                         ds.getRef().removeValue();
                                                     }
                                                 }

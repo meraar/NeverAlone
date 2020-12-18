@@ -62,8 +62,9 @@ public class LoginActivity extends AppCompatActivity{
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
-            nextActivity();
+            FirebaseAuth.getInstance().signOut();
+            /*Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
+            nextActivity();*/
         }
     }
 
@@ -75,14 +76,27 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean volunatario = (boolean) dataSnapshot.getValue();
-                if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+                seleccionaActivityUser(volunatario);
             }
             @Override
             public void onCancelled(DatabaseError error) {
             }
         });
         finish();
+    }
+
+    private void seleccionaActivityUser(boolean volunatario) {
+        if(volunatario){
+            Intent i = new Intent(LoginActivity.this, VerMisPeticiones.class);
+            i.putExtra("Tipus", "Voluntario");
+            startActivity(i);
+            //startActivity(new Intent(LoginActivity.this, MapsActivity.class));
+        }
+        else {
+            Intent i = new Intent(LoginActivity.this, VerMisPeticiones.class);
+            i.putExtra("Tipus", "Beneficiario");
+            startActivity(i);
+        }
     }
 
     public void login(View view) {
@@ -117,9 +131,8 @@ public class LoginActivity extends AppCompatActivity{
                             reference.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    boolean volunatario = (boolean) dataSnapshot.getValue();
-                                    if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                                    else startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+                                    boolean voluntario = (boolean) dataSnapshot.getValue();
+                                    seleccionaActivityUser(voluntario);
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError error) {

@@ -142,7 +142,7 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
 
                         uid  = "np2Es3nr6bNZL93gUKYJZAznjZg2";
                         name = "Meraj";
-                        peticionUId = "-MOaOzQr2wYxoKspiYVO";
+                        peticionUId = "-MOfwhmERfcmK005PkR6";
 
                         Peticion p = new Peticion(peticionUId,name, uid,categoria,fecha,hora,descripcion);
 
@@ -155,7 +155,6 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
                         ref.setValue(postValues);
 
                         reference.child("User-Peticiones").child(uid).setValue(postValues);
-
 
                         reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -201,12 +200,11 @@ public class EditarPeticion extends AppCompatActivity implements DatePickerDialo
 
     private void carregarPeticio() {
 
-       // user = FirebaseAuth.getInstance().getCurrentUser();
-
+        // user = FirebaseAuth.getInstance().getCurrentUser();
         //Intent i = getIntent();
         //SUFANG: DESCOMENTAR ESTO Y COMENTAR LINEA 65 PARA QUE TE FUNCIONE
         //peticionID = i.getStringExtra("Peticion");
-        final String peticionID = "-MOa7h9lhKYGXWfTq800";
+        final String peticionID = "-MOfwhmERfcmK005PkR6";
 
 
         reference = FirebaseDatabase.getInstance().getReference();

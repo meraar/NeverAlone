@@ -1,14 +1,11 @@
 package com.example.neveralone.Activity.Peticiones;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +14,6 @@ import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,49 +25,44 @@ import java.util.List;
 
 public class VerMisPeticiones extends AppCompatActivity {
 
-    private boolean voluntario = false;
     private List<Peticion> elements;
     private String uid;
     private DatabaseReference reference;
     private FirebaseUser user;
     private Context context;
+    private String tusuari;
+    private TextView titol;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vermispeticiones);
+
         context = this;
+
         init();
     }
 
     private void init() {
         elements = new ArrayList<>();
+        titol = findViewById(R.id.textView5);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
         reference = FirebaseDatabase.getInstance().getReference();
+
         //Ver si es voluntario o beneficiario
-        reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds: snapshot.getChildren()){
-                    if (ds.getKey().toString().equals(uid)) {
-                        String Vol_or_Ben = ds.child("voluntario").getValue().toString();
-                        if (Vol_or_Ben.equals("true")) voluntario = true;
-                    }
-                }
-            }
+        Intent i = getIntent();
+        tusuari = (String) i.getSerializableExtra("Tipus");
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        //Si es Voluntario desplegamos peticiones existentes
+        if (tusuari.equals("Voluntario")) {
 
-            }
-        });
-
-        //Si es beneficiario desplegamos peticiones existentes
-        if (voluntario) {
+            titol.setText("Peticiones");
             reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    elements = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         Peticion p = ds.getValue(Peticion.class);
                         elements.add(p);
@@ -79,7 +70,7 @@ public class VerMisPeticiones extends AppCompatActivity {
                     Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
                         @Override
                         public void onItemClick(Peticion p) {
-                            AcceptOrNot(p);
+                            moveToDescription(p);
                         }
                     });
                     RecyclerView recyclerView = findViewById(R.id.listRecycleView);
@@ -96,9 +87,11 @@ public class VerMisPeticiones extends AppCompatActivity {
         }
         //Si es beneficiario desplegamos todas las peticiones hechas por el
         else {
+            titol.setText("Mis Peticiones");
             reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    elements = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         if (ds.getKey().equals(uid)){
                             for(DataSnapshot ds2:ds.getChildren()){
@@ -129,13 +122,7 @@ public class VerMisPeticiones extends AppCompatActivity {
     private void moveToDescription(Peticion p) {
         Intent i = new Intent(context,PeticionDetail.class);
         i.putExtra("Peticion",p);
+        i.putExtra("Tipus", tusuari);
         startActivity(i);
     }
-
-    private void AcceptOrNot(Peticion p) {
-        Intent i = new Intent(context,Accept_Refuse_Peticion.class);
-        i.putExtra("Peticion",p);
-        startActivity(i);
-    }
-
 }

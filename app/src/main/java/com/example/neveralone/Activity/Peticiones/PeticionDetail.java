@@ -21,6 +21,8 @@ import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,28 +36,40 @@ import java.util.Map;
 
 public class PeticionDetail extends AppCompatActivity {
 
-    private TextView categoria, fecha, hora, descripcion, estado, autor;
-    private Button borrar,editar,aceptar,enviarmensaje;
+    private TextView categoria, fecha, hora, descripcion, estado, autor,voluntarios;
+    private Button borrar,editar,aceptar;
     private Context context;
     private DatabaseReference reference;
     private Peticion p; //peticion que ens arriba desde lista de peticions al intent
     private List<Usuario> elements;
     private AdaptadorUsers listAdapter;
+    private RecyclerView recyclerView;
+    private FirebaseUser user;
+    private String Tusuari;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peticiondetail);
-        context = this;
-        reference = FirebaseDatabase.getInstance().getReference();
+        context      = this;
+        reference    = FirebaseDatabase.getInstance().getReference();
+        Intent i     = getIntent();
+        p            = (Peticion) i.getSerializableExtra("Peticion");
+        Tusuari      = (String) i.getSerializableExtra("Tipus");
+        init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         init();
     }
 
     private void init() {
-        //Intent i = getIntent();
-        //Peticion p = (Peticion) i.getSerializableExtra("Peticion");
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         elements = new ArrayList<>();
-        p = new Peticion("-MOaOzQr2wYxoKspiYVO", "Meraj", "np2Es3nr6bNZL93gUKYJZAznjZg2","Compras","24/12/2020","12:22","");
+        //p = new Peticion("-MOfwhmERfcmK005PkR6", "Meraj", "np2Es3nr6bNZL93gUKYJZAznjZg2","Compras","24/12/2020","12:22","");
         categoria        = findViewById(R.id.CategoriaPeticion);
         fecha            = findViewById(R.id.fechaAct);
         descripcion      = findViewById(R.id.contenidoDescripción);
@@ -65,12 +79,8 @@ public class PeticionDetail extends AppCompatActivity {
         borrar           = findViewById(R.id.borrar);
         editar           = findViewById(R.id.editar);
         aceptar          = findViewById(R.id.ofrecer);
-
-
-        editar.setText("Editar");
-        borrar.setText("Borrar");
-
-
+        recyclerView     = findViewById(R.id.recycleViewUsers);
+        voluntarios      = findViewById(R.id.tituloVoluntarios);
 
         categoria.setText(p.getCategoria());
         fecha.setText(p.getFecha());
@@ -79,12 +89,24 @@ public class PeticionDetail extends AppCompatActivity {
         estado.setText(p.getEstado().toString());
         autor.setText(p.getUser());
 
+        if(Tusuari.equals("Beneficiario")){
+            editar.setText("Editar");
+            borrar.setText("Borrar");
+            aceptar.setVisibility(View.GONE);
+        }else{
+            borrar.setVisibility(View.GONE);
+            editar.setVisibility(View.GONE);
+            voluntarios.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+        }
+
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, EditarPeticion.class);
+                Intent i = new Intent(context, CrearPeticionActivity.class);
+                i.putExtra("Origen","Editar");
                 i.putExtra("Peticion", p.getPeticionID());
-                startActivity(i);
+                startActivityForResult(i,1);
             }
         });
 
@@ -92,13 +114,13 @@ public class PeticionDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("‚Está seguro que quiere borrar la petición?")
+                builder.setMessage("¿Está seguro que quiere borrar la petición?")
                         .setCancelable(false)
                         .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 reference = FirebaseDatabase.getInstance().getReference();
                                 reference.child("Peticiones").child(p.getPeticionID()).removeValue();
-                                reference.child("User-Peticiones").child("np2Es3nr6bNZL93gUKYJZAznjZg2").child(p.getPeticionID()).removeValue();
+                                reference.child("User-Peticiones").child(user.getUid()).child(p.getPeticionID()).removeValue();
                                 reference.child("Interacciones").child(p.getPeticionID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -124,25 +146,36 @@ public class PeticionDetail extends AppCompatActivity {
             public void onClick(View v) {
                 //Debe crear una instancia de Interacción
 
-                String uidVoluntario = "zzQA9zhkm1ñkz2FLMF2fYrgJvzgi1";
-                String name = "Maron";
-                String apellido = "Riera";
                 reference = FirebaseDatabase.getInstance().getReference();
-                String key = reference.child("Interacciones").push().getKey();
 
-                Map<String, Object> postValues = new HashMap<>();
-
-                postValues.put("uid", uidVoluntario);
-                postValues.put("user", name);
-                postValues.put("apellidos", apellido);
-
-                Map<String, Object> childUpdates = new HashMap<>();
-                childUpdates.put("/Interacciones/" + p.getPeticionID() + "/" + uidVoluntario, postValues);
-
-                reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        listAdapter.notifyDataSetChanged();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Usuario voluntario = snapshot.child(user.getUid()).getValue(Usuario.class);
+                        reference = FirebaseDatabase.getInstance().getReference();
+                        String key = reference.child("Interacciones").push().getKey();
+
+                        Map<String, Object> postValues = new HashMap<>();
+
+                        postValues.put("uid", user.getUid());
+                        postValues.put("user", voluntario.getNombre());
+                        postValues.put("apellidos", voluntario.getApellidos());
+
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("/Interacciones/" + p.getPeticionID() + "/" + user.getUid(), postValues);
+
+                        reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                listAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
             }
@@ -160,16 +193,14 @@ public class PeticionDetail extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Usuario p = new Usuario("",(String) ds.child("user").getValue(),(String) ds.child("apellidos").getValue(),"","",true,0);
                     elements.add(p);
-
                 }
 
                 listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
                     @Override
                     public void onItemClick(Usuario p) {
-                        AceptarPeticion();
+
                     }}, p.getPeticionID());
 
-                RecyclerView recyclerView = findViewById(R.id.recycleViewUsers);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.setAdapter(listAdapter);
@@ -179,8 +210,19 @@ public class PeticionDetail extends AppCompatActivity {
             }
         });
     }
-    private void AceptarPeticion() {
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (1) : {
+                if (resultCode == PeticionDetail.RESULT_OK) {
+                    p = (Peticion) data.getSerializableExtra("Peticion");
+                    Tusuari = "Beneficiario";
+                    init();
+                }
+                break;
+            }
+        }
     }
-
 }
