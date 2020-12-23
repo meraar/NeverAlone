@@ -15,8 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.neveralone.Activity.Home;
-import com.example.neveralone.Peticion.Estado;
+import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
@@ -45,7 +44,6 @@ public class PeticionDetail extends AppCompatActivity {
     private AdaptadorUsers listAdapter;
     private RecyclerView recyclerView;
     private FirebaseUser user;
-    private String Tusuari;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +52,12 @@ public class PeticionDetail extends AppCompatActivity {
         reference    = FirebaseDatabase.getInstance().getReference();
         Intent i     = getIntent();
         p            = (Peticion) i.getSerializableExtra("Peticion");
-        Tusuari      = (String) i.getSerializableExtra("Tipus");
         init();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         init();
     }
 
@@ -89,7 +85,7 @@ public class PeticionDetail extends AppCompatActivity {
         estado.setText(p.getEstado().toString());
         autor.setText(p.getUser());
 
-        if(Tusuari.equals("Beneficiario")){
+        if(!LoginActivity.getUserType()){
             editar.setText("Editar");
             borrar.setText("Borrar");
             aceptar.setVisibility(View.GONE);
@@ -191,7 +187,9 @@ public class PeticionDetail extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 elements = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    Usuario p = new Usuario("",(String) ds.child("user").getValue(),(String) ds.child("apellidos").getValue(),"","",true,0);
+                    Usuario p = new Usuario();
+                    p.setNombre((String) ds.child("user").getValue()); //nombre
+                    p.setApellidos((String) ds.child("apellidos").getValue());
                     elements.add(p);
                 }
 
@@ -218,7 +216,6 @@ public class PeticionDetail extends AppCompatActivity {
             case (1) : {
                 if (resultCode == PeticionDetail.RESULT_OK) {
                     p = (Peticion) data.getSerializableExtra("Peticion");
-                    Tusuari = "Beneficiario";
                     init();
                 }
                 break;

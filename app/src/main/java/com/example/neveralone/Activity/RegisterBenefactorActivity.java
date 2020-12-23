@@ -115,6 +115,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             FirebaseUser currentUser = mAuth.getCurrentUser();
                                             DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
                                             Usuario usuario = new Usuario();
+                                            usuario.setUid(currentUser.getUid());
                                             usuario.setEmail(correo);
                                             usuario.setNombre(nombre);
                                             usuario.setApellidos(apellido);

@@ -11,6 +11,10 @@ public class Usuario {
     private String direccion;
     private String piso_puerta;
     private String motivo;
+    private String uid;
+
+    public Usuario() {
+    }
 
     public String getDireccion() {
         return direccion;
@@ -48,6 +52,14 @@ public class Usuario {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void setEmail(String email) {

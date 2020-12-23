@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.neveralone.Activity.Peticiones.VerMisPeticiones;
 import com.example.neveralone.MapsActivity;
 import com.example.neveralone.R;
+import com.example.neveralone.Usuario.Usuario;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -34,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity{
+    private static boolean voluntario;
     private EditText txtCorreo, txtContrasena;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -62,9 +64,8 @@ public class LoginActivity extends AppCompatActivity{
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            FirebaseAuth.getInstance().signOut();
-            /*Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
-            nextActivity();*/
+            /*Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();*/
+            nextActivity();
         }
     }
 
@@ -75,28 +76,14 @@ public class LoginActivity extends AppCompatActivity{
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean volunatario = (boolean) dataSnapshot.getValue();
-                seleccionaActivityUser(volunatario);
+                voluntario = (boolean) dataSnapshot.getValue();
+                startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             }
             @Override
             public void onCancelled(DatabaseError error) {
             }
         });
         finish();
-    }
-
-    private void seleccionaActivityUser(boolean volunatario) {
-        if(volunatario){
-            Intent i = new Intent(LoginActivity.this, VerMisPeticiones.class);
-            i.putExtra("Tipus", "Voluntario");
-            startActivity(i);
-            //startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-        }
-        else {
-            Intent i = new Intent(LoginActivity.this, VerMisPeticiones.class);
-            i.putExtra("Tipus", "Beneficiario");
-            startActivity(i);
-        }
     }
 
     public void login(View view) {
@@ -131,8 +118,8 @@ public class LoginActivity extends AppCompatActivity{
                             reference.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    boolean voluntario = (boolean) dataSnapshot.getValue();
-                                    seleccionaActivityUser(voluntario);
+                                    voluntario = (boolean) dataSnapshot.getValue();
+                                    startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError error) {
@@ -178,5 +165,9 @@ public class LoginActivity extends AppCompatActivity{
                 Toast.makeText(this, "Login Failed!" ,Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static boolean getUserType() {
+        return voluntario;
     }
 }

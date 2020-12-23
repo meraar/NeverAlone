@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,25 +34,31 @@ import java.util.List;
 public class HomeBenefactorFragment extends Fragment {
     private FloatingActionButton fab;
     private List<Peticion> elements;
+    private String uid;
     private Adaptador listAdapter;
     private DatabaseReference reference;
     private FirebaseUser user;
     private Context context;
     private RecyclerView recyclerView;
+    private TextView titol;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_homebenefactor, container, false);
 
+        //boton flotante crear peticion
         fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CrearPeticionActivity.class));
+                Intent i = new Intent(getActivity(), CrearPeticionActivity.class);
+                i.putExtra("Origen","Crear");
+                startActivity(i);
             }
         });
         context = getContext();
+        titol = root.findViewById(R.id.textView5);
         recyclerView = root.findViewById(R.id.listRecycleView);
         init();
         return root;
@@ -59,40 +66,32 @@ public class HomeBenefactorFragment extends Fragment {
 
     private void init() {
         elements = new ArrayList<>();
-
         user = FirebaseAuth.getInstance().getCurrentUser();
-
-        //Intent i = getIntent();
-        //SUFANG: DESCOMENTAR ESTO Y COMENTAR LINEA 65 PARA QUE TE FUNCIONE
-        // final String userID = i.getStringExtra("UserId");
-        final String userID = "4IS1tZ6IrGbEqE2h6jXR05EeXCj1";
-
-
+        uid = user.getUid();
         reference = FirebaseDatabase.getInstance().getReference();
+        titol.setText("Mis Peticiones");
         reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                elements.clear();
-                if(snapshot.exists()) {
-                    snapshot = snapshot.child(userID);
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Peticion p = ds.getValue(Peticion.class);
-                        elements.add(p);
-                    }
-                    listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Peticion p) {
-                            moveToDescription(p);
+                elements = new ArrayList<>();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (ds.getKey().equals(uid)){
+                        for(DataSnapshot ds2:ds.getChildren()){
+                            Peticion p = ds2.getValue(Peticion.class);
+                            elements.add(p);
                         }
-                    });
-
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    recyclerView.setAdapter(listAdapter);
-
-                } else return;
+                    }
+                }
+                Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Peticion p) {
+                        moveToDescription(p);
+                    }
+                });
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setAdapter(listAdapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -104,28 +103,6 @@ public class HomeBenefactorFragment extends Fragment {
         Intent i = new Intent(context, PeticionDetail.class);
         i.putExtra("Peticion",p);
         startActivity(i);
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-
-            if (resultCode == getActivity().RESULT_OK) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        listAdapter.notifyDataSetChanged();
-                    }
-                });
-                //your code
-
-            }
-            if (resultCode == getActivity().RESULT_CANCELED) {
-                // Write your code if there's no result
-            }
-        }
     }
 
 }

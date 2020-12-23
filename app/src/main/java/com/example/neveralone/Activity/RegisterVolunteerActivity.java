@@ -3,8 +3,6 @@ package com.example.neveralone.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -102,6 +100,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                             FirebaseUser currentUser = mAuth.getCurrentUser();
                                             DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
                                             Usuario usuario = new Usuario();
+                                            usuario.setUid(currentUser.getUid());
                                             usuario.setEmail(correo);
                                             usuario.setNombre(nombre);
                                             usuario.setApellidos(apellido);
@@ -133,9 +132,6 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
         else {
             setContentView(R.layout.activity_registerbeneficiario); // Funciona
             btnAtras = findViewById(R.id.AtrasBut);
-
-
-
         }
 
         btnAtras.setOnClickListener(new View.OnClickListener() {
