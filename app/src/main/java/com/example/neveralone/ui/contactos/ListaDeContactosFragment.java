@@ -1,18 +1,23 @@
-package com.example.neveralone.Activity.ListaChat;
+package com.example.neveralone.ui.contactos;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.neveralone.Activity.Chat.MessageActivity;
+import com.example.neveralone.Activity.ListaChat.ElementosDeLista;
+import com.example.neveralone.Activity.ListaChat.ListaAdaptador;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,38 +29,39 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaDeContactos extends AppCompatActivity {
+public class ListaDeContactosFragment extends Fragment {
 
-    private DatabaseReference reference, ref;
-    private ArrayList<String> peticionesList;
-    private ArrayList<String> userList;
+    private DatabaseReference reference;
+    private RecyclerView recyclerView;
+    private Context context;
 
-   @Override
-    protected void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
-       setContentView(R.layout.listacontactos);
-       init();
-   }
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+
+        View root = inflater.inflate(R.layout.fragment_listadecontactos, container, false);
+        recyclerView = root.findViewById(R.id.ListaRecycleView);
+        context = getContext();
+        init();
+        return root;
+    }
 
     public void init() {
-       final Context context= this;
-        peticionesList = new ArrayList<String>();
         final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/4IS1tZ6IrGbEqE2h6jXR05EeXCj1");
-        //reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/" + userID);
-        Log.i("mensaje",reference.toString());
+        reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/" + userID);
+        Log.i("mensaje", reference.toString());
         reference.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         //Get map of peticiones in datasnapshot
-                        List<ElementosDeLista> elementos = new ArrayList<>();;
+                        List<ElementosDeLista> elementos = new ArrayList<>();
                         for (DataSnapshot dsp : snapshot.getChildren()) {
                             String peticion = dsp.getKey();
-                            String nombre=dsp.child("nombre2").getValue().toString();
+                            String nombre = dsp.child("nombre2").getValue().toString();
                             elementos.add(new ElementosDeLista(nombre, peticion));
                         }
-                        ListaAdaptador listaAdaptador =new ListaAdaptador(elementos, context, new ListaAdaptador.OnItemClickListener() {
+                        ListaAdaptador listaAdaptador = new ListaAdaptador(elementos, context, new ListaAdaptador.OnItemClickListener() {
                             @Override
                             public void onItemClick(ElementosDeLista item) {
                                 Intent i = new Intent(context, MessageActivity.class);
@@ -65,21 +71,18 @@ public class ListaDeContactos extends AppCompatActivity {
 
                             }
                         });
-                        RecyclerView recyclerView= findViewById(R.id.ListaRecycleView);
                         recyclerView.setHasFixedSize(true);
-                        recyclerView.addItemDecoration(new DividerItemDecoration(context,DividerItemDecoration.VERTICAL));
+                        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         recyclerView.setAdapter(listaAdaptador);
-                        }
+                    }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 }
         );
-
-
     }
-
 
 }

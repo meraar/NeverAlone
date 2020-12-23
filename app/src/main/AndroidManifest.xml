@@ -48,6 +48,8 @@
         <activity
             android:name=".Activity.MenuActivity"
             android:label="@string/title_activity_first_home" />
+        <activity android:name=".Activity.Chat.MessageActivity" />
+        <activity android:name=".Activity.ListaChat.ListaDeContactos" />
 
         <meta-data
             android:name="preloaded_fonts"

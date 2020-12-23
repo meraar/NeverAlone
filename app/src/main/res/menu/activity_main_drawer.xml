@@ -21,6 +21,10 @@
                     android:icon="@android:drawable/ic_menu_edit"
                     android:title="@string/menu_autotest" />
                 <item
+                    android:id="@+id/nav_contacts"
+                    android:icon="?attr/actionModePasteDrawable"
+                    android:title="@string/contacts" />
+                <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_baseline_power_settings_new_24"
                     android:title="@string/logout" />

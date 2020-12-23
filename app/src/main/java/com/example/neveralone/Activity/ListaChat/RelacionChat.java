@@ -1,12 +1,12 @@
 package com.example.neveralone.Activity.ListaChat;
 
-public class relacionChat {
+public class RelacionChat {
     private String idUs1;
     private String idUs2;
     private String nombre2;
     private String idPeticion;
 
-    public relacionChat(String idUs2, String nombre2, String idPeticion) {
+    public RelacionChat(String idUs2, String nombre2, String idPeticion) {
         this.idUs2 = idUs2;
         this.nombre2 = nombre2;
         this.idPeticion = idPeticion;

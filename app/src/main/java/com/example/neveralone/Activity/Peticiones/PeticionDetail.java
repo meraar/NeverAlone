@@ -3,7 +3,6 @@ package com.example.neveralone.Activity.Peticiones;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.UrlQuerySanitizer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.neveralone.Activity.Chat.MessageActivity;
+import com.example.neveralone.Activity.ListaChat.RelacionChat;
 import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
@@ -36,7 +37,7 @@ import java.util.Map;
 public class PeticionDetail extends AppCompatActivity {
 
     private TextView categoria, fecha, hora, descripcion, estado, autor,voluntarios;
-    private Button borrar,editar,aceptar;
+    private Button borrar,editar,aceptar, chat;
     private Context context;
     private DatabaseReference reference;
     private Peticion p; //peticion que ens arriba desde lista de peticions al intent
@@ -44,6 +45,8 @@ public class PeticionDetail extends AppCompatActivity {
     private AdaptadorUsers listAdapter;
     private RecyclerView recyclerView;
     private FirebaseUser user;
+    private FirebaseDatabase database;
+    private DatabaseReference database2;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +80,7 @@ public class PeticionDetail extends AppCompatActivity {
         aceptar          = findViewById(R.id.ofrecer);
         recyclerView     = findViewById(R.id.recycleViewUsers);
         voluntarios      = findViewById(R.id.tituloVoluntarios);
+        chat = findViewById(R.id.chat);
 
         categoria.setText(p.getCategoria());
         fecha.setText(p.getFecha());
@@ -85,16 +89,43 @@ public class PeticionDetail extends AppCompatActivity {
         estado.setText(p.getEstado().toString());
         autor.setText(p.getUser());
 
-        if(!LoginActivity.getUserType()){
+        if(!LoginActivity.getUserType()){ //beneficiario
             editar.setText("Editar");
             borrar.setText("Borrar");
             aceptar.setVisibility(View.GONE);
+            chat.setVisibility(View.GONE);
         }else{
             borrar.setVisibility(View.GONE);
             editar.setVisibility(View.GONE);
             voluntarios.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
         }
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String idUsuario1 = user.getUid();//current
+                String idUsuario2 = p.getUid();
+                String idPeticion = p.getPeticionID();
+
+                DatabaseReference databaseReference_3 = database.getInstance().getReference("ChatPeticion/"+idUsuario1);
+                DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/"+idUsuario2);
+                databaseReference_3.push().setValue(new RelacionChat(idUsuario2,p.getUser(),idPeticion));
+                databaseReference_4.push().setValue(new RelacionChat(idUsuario1,user.getDisplayName(),idPeticion));  //TODO cambiar esto
+
+                Bundle b = new Bundle();
+                b.putString("idUsuario1", idUsuario1);
+                b.putString("idUsuario2", idUsuario2);
+                b.putString("idPeticion", idPeticion);
+                b.putString("nombre2",p.getUser());
+                b.putString("nombre1",user.getDisplayName());//cambiar nombre 1 por nombre del corrent user
+
+                Intent intent = new Intent(PeticionDetail.this, MessageActivity.class);
+                intent.putExtras(b);
+
+                startActivity(intent);
+            }
+        });
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override

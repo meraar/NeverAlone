@@ -187,20 +187,32 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/recycleViewUsers"/>
+        android:id="@+id/recycleViewUsers">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
-    <Button
-        android:id="@+id/ofrecer"
-        android:text="Ofrecer Ayuda"
-        android:layout_height="wrap_content"
-        android:layout_width="124dip"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom= "true"
-        android:layout_marginBottom="50dp"
-        />
+    <LinearLayout
+        android:layout_width="396dp"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/chat"
+            android:layout_width="98dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/enviar_mensaje" />
 
+        <Button
+            android:id="@+id/ofrecer"
+            android:layout_width="124dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:text="Ofrecer Ayuda" />
+    </LinearLayout>
 
 
 </RelativeLayout>

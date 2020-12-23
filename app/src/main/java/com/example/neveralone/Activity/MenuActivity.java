@@ -35,25 +35,13 @@ public class MenuActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavInflater navInflater = navController.getNavInflater();
-        NavGraph graph = navInflater.inflate(R.navigation.mobile_navigation);
-
-        if (LoginActivity.getUserType()) {
-            graph.setStartDestination(R.id.nav_homev);
-        } else {
-            graph.setStartDestination(R.id.nav_homeb);
-        }
-
-        navController.setGraph(graph);
-
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_myprofile, R.id.nav_autotest, R.id.nav_logout)
+                R.id.nav_home, R.id.nav_myprofile, R.id.nav_autotest, R.id.nav_contacts, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
-
-        //contenido
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
