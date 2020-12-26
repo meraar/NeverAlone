@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_home">
+    app:startDestination="@id/blankFragment">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_homev"
         android:name="com.example.neveralone.ui.home.volunteer.HomeVolunteerFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_homevolunteer" />
@@ -34,4 +34,17 @@
         android:name="com.example.neveralone.ui.contactos.ListaDeContactosFragment"
         android:label="@string/menu_listadecontactos"
         tools:layout="@layout/fragment_listadecontactos" />
+
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="com.example.neveralone.ui.BlankFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_blank" >
+        <action
+            android:id="@+id/action_blankFragment_to_nav_homeb"
+            app:destination="@id/nav_homeb" />
+        <action
+            android:id="@+id/action_blankFragment_to_nav_homev"
+            app:destination="@id/nav_homev" />
+    </fragment>
 </navigation>

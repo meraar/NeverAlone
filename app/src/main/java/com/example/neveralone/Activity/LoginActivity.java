@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity{
             public void onCancelled(DatabaseError error) {
             }
         });
-        finish();
     }
 
     public void login(View view) {
