@@ -2,13 +2,13 @@ package com.example.neveralone.Activity.ListaChat;
 
 public class RelacionChat {
     private String idUs1;
-    private String idUs2;
-    private String nombre2;
+    private String idFriendUser;
+    private String friendName;
     private String idPeticion;
 
-    public RelacionChat(String idUs2, String nombre2, String idPeticion) {
-        this.idUs2 = idUs2;
-        this.nombre2 = nombre2;
+    public RelacionChat(String idFriendUser, String friendName, String idPeticion) {
+        this.idFriendUser = idFriendUser;
+        this.friendName = friendName;
         this.idPeticion = idPeticion;
     }
 
@@ -20,20 +20,20 @@ public class RelacionChat {
         this.idUs1 = idUs1;
     }
 
-    public String getIdUs2() {
-        return idUs2;
+    public String getIdFriendUser() {
+        return idFriendUser;
     }
 
-    public void setIdUs2(String idUs2) {
-        this.idUs2 = idUs2;
+    public void setIdFriendUser(String idFriendUser) {
+        this.idFriendUser = idFriendUser;
     }
 
-    public String getNombre2() {
-        return nombre2;
+    public String getFriendName() {
+        return friendName;
     }
 
-    public void setNombre2(String nombre2) {
-        this.nombre2 = nombre2;
+    public void setFriendName(String friendName) {
+        this.friendName = friendName;
     }
 
     public String getidPeticion() {

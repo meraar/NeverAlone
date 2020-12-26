@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,29 +31,13 @@ import org.jetbrains.annotations.NotNull;
 public class RegisterVolunteerActivity extends AppCompatActivity {
 
     private EditText txtpostalcode, txtdni;
-    private Button register, back, btnFinalizarRegistro, btnAtras;
+    private Button btnFinalizarRegistro, btnAtras;
     private String correo, nombre, apellido, password;
     private Boolean voluntario;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
-    private DatabaseReference database2;
-    /**
-     private TextWatcher campos = new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    }
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-    String codigopostal = txtpostalcode.getText().toString().trim();
-    String dniText = txtdni.getText().toString().trim();
-    //register.setEnabled(!codigopostal.isEmpty() && !dniText.isEmpty());
-    }
-    @Override
-    public void afterTextChanged(Editable s) {
-    }
-    };
-     **/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,9 +97,14 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                             usuario.setPuntuacioMedia(puntuacion);
                                             usuario.setVoluntario(true);
                                             reference.setValue(usuario);
+
+                                            //SetDisplayName of the User
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(nombre).build();
+                                            currentUser.updateProfile(profileUpdates);
+
                                             // verficar el mail
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            user.sendEmailVerification();
+                                            currentUser.sendEmailVerification();
                                             startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
                                             finish();
                                         } else {

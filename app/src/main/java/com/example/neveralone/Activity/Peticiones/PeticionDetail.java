@@ -104,21 +104,20 @@ public class PeticionDetail extends AppCompatActivity {
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String idUsuario1 = user.getUid();//current
-                String idUsuario2 = p.getUid();
+                String idCurrentUser = user.getUid();
+                String idFriendUser = p.getUid();
                 String idPeticion = p.getPeticionID();
 
-                DatabaseReference databaseReference_3 = database.getInstance().getReference("ChatPeticion/"+idUsuario1);
-                DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/"+idUsuario2);
-                databaseReference_3.push().setValue(new RelacionChat(idUsuario2,p.getUser(),idPeticion));
-                databaseReference_4.push().setValue(new RelacionChat(idUsuario1,user.getDisplayName(),idPeticion));  //TODO cambiar esto
+                DatabaseReference databaseReference_3 = database.getInstance().getReference("ChatPeticion/"+idCurrentUser);
+                DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/"+idFriendUser);
+                databaseReference_3.push().setValue(new RelacionChat(idFriendUser,p.getUser(),idPeticion));
+                databaseReference_4.push().setValue(new RelacionChat(idCurrentUser,user.getDisplayName(),idPeticion));
 
                 Bundle b = new Bundle();
-                b.putString("idUsuario1", idUsuario1);
-                b.putString("idUsuario2", idUsuario2);
+                b.putString("idCurrentUser", idCurrentUser);
+                b.putString("idFriendUser", idFriendUser);
                 b.putString("idPeticion", idPeticion);
-                b.putString("nombre2",p.getUser());
-                b.putString("nombre1",user.getDisplayName());//cambiar nombre 1 por nombre del corrent user
+                b.putString("nameFriendUser",p.getUser());
 
                 Intent intent = new Intent(PeticionDetail.this, MessageActivity.class);
                 intent.putExtras(b);

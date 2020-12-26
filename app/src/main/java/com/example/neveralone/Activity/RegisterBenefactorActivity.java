@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -127,9 +128,14 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             usuario.setPuntuacioMedia(puntuacion);
                                             usuario.setVoluntario(false);
                                             reference.setValue(usuario);
+
+                                            //SetDisplayName of the User
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(nombre).build();
+                                            currentUser.updateProfile(profileUpdates);
+
                                             //verficar el mail
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            user.sendEmailVerification();
+                                            currentUser.sendEmailVerification();
                                             startActivity(new Intent(RegisterBenefactorActivity.this, LoginActivity.class));
                                             finish();
 

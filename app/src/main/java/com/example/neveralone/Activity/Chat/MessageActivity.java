@@ -29,11 +29,11 @@ public class MessageActivity extends AppCompatActivity {
 
     private CircleImageView fotoPerfil;
     private TextView nombre;
-    private String  nombre2,nombre1;
+    private String nameFriendUser;
     private RecyclerView rvMensajes;
     private EditText txtMensaje;
     private Button btnEnviar;
-    private String idUsuario1, idUsuario2, idPeticion;
+    private String idCurrentUser, idFriendUser, idPeticion;
 
     private AdaptadorMessage adaptador_currentUser, adaptador_friendUser;
 
@@ -58,17 +58,16 @@ public class MessageActivity extends AppCompatActivity {
 
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
-            idUsuario1 = (String) b.getString("idUsuario1"); //current
-            idUsuario2 = (String) b.getString("idUsuario2");
+            idCurrentUser = (String) b.getString("idCurrentUser"); //current
+            idFriendUser = (String) b.getString("idFriendUser");
             idPeticion = (String) b.getString("idPeticion");
-            nombre2 = (String) b.getString("nombre2");
-            nombre1 = (String) b.getString("nombre1");
+            nameFriendUser = (String) b.getString("nameFriendUser");
         }
 
-        nombre.setText(nombre2);
+        nombre.setText(nameFriendUser);
 
-        databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("Chat/" + idUsuario1 + "/" + idUsuario2);
-        databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Chat/" + idUsuario2 + "/" + idUsuario1);
+        databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("Chat/" + idCurrentUser + "/" + idFriendUser);
+        databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Chat/" + idFriendUser + "/" + idCurrentUser);
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
 
@@ -77,8 +76,8 @@ public class MessageActivity extends AppCompatActivity {
                     Toast.makeText(MessageActivity.this, "No hay nada escrito", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                   databaseReference_currentUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), idUsuario1, "", "1", idPeticion, ServerValue.TIMESTAMP));
-                   databaseReference_friendUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), idUsuario1, "", "1", idPeticion, ServerValue.TIMESTAMP));
+                   databaseReference_currentUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), idCurrentUser, "", "1", idPeticion, ServerValue.TIMESTAMP));
+                   databaseReference_friendUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), idCurrentUser, "", "1", idPeticion, ServerValue.TIMESTAMP));
                    txtMensaje.setText(null);
                 }
             }

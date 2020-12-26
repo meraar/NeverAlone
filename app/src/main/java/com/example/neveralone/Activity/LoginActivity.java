@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity{
 
     private void nextActivity(){
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
         reference = FirebaseDatabase.getInstance().getReference("Usuarios/" + userID + "/voluntario");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
