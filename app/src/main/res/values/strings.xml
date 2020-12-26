@@ -78,4 +78,8 @@
     <string name="contacts">Contactos</string>
     <string name="menu_listadecontactos">Contactos</string>
 
+    <string name="contrasena">Recuperar Contraseña</string>
+    <string name="contrasena_button">Aceptar</string>
+
+
 </resources>
