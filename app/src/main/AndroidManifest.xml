@@ -45,6 +45,7 @@
         <activity android:name=".Activity.Peticiones.PeticionDetail" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
+        <activity android:name=".Activity.RecoverPasswordActivity"/>
         <activity
             android:name=".Activity.MenuActivity"
             android:label="@string/title_activity_first_home" />

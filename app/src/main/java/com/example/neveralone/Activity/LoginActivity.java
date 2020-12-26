@@ -143,6 +143,11 @@ public class LoginActivity extends AppCompatActivity{
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    public void forgetpass(View view){
+        startActivity(new Intent(LoginActivity.this,RecoverPasswordActivity.class));
+        finish();
+    }
+
     /*
     @Override
     protected void onStart() {
