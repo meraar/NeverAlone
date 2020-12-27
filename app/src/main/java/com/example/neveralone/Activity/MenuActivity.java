@@ -42,11 +42,12 @@ public class MenuActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
+        /*
         if (LoginActivity.getUserType()) {
             navController.navigate(R.id.action_blankFragment_to_nav_homev);
         } else {
             navController.navigate(R.id.action_blankFragment_to_nav_homeb);
-        }
+        }*/
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);

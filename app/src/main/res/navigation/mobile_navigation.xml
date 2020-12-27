@@ -38,13 +38,6 @@
     <fragment
         android:id="@+id/blankFragment"
         android:name="com.example.neveralone.ui.BlankFragment"
-        android:label="fragment_blank"
-        tools:layout="@layout/fragment_blank" >
-        <action
-            android:id="@+id/action_blankFragment_to_nav_homeb"
-            app:destination="@id/nav_homeb" />
-        <action
-            android:id="@+id/action_blankFragment_to_nav_homev"
-            app:destination="@id/nav_homev" />
-    </fragment>
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_blank" />
 </navigation>
