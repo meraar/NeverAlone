@@ -190,7 +190,6 @@ public class MapsFragment extends Fragment implements
     }
 
 
-
     @Override
     public void onMapReady(final GoogleMap googleMap) {
 
