@@ -81,8 +81,6 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        Log.i("mensaje","entra2");
-
         googleM = googleMap;
         x= new Geocoder(this);
         obtenerAdresaUsuario();
