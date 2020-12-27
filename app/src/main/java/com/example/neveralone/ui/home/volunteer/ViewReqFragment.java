@@ -37,7 +37,7 @@ public class ViewReqFragment extends Fragment {
     private DatabaseReference reference;
     private FirebaseUser user;
     private Context context;
-    private TextView titol;
+    //private TextView titol;
     private RecyclerView recyclerView;
 
     @Override
@@ -51,7 +51,7 @@ public class ViewReqFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_vol_view_requests, container, false);
         context = getContext();
-        titol = root.findViewById(R.id.textView5);
+        //titol = root.findViewById(R.id.textView5);
         recyclerView = root.findViewById(R.id.listRecycleView);
         init();
         return root;
@@ -67,7 +67,7 @@ public class ViewReqFragment extends Fragment {
         //Si es Voluntario desplegamos peticiones existentes
         if (LoginActivity.getUserType()) {
 
-            titol.setText("Peticiones");
+           //titol.setText("Peticiones");
             reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -95,7 +95,7 @@ public class ViewReqFragment extends Fragment {
         }
         //TODO borrar esta parte que es del beneficiario
         else {
-            titol.setText("Mis Peticiones");
+            //titol.setText("Mis Peticiones");
             reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
