@@ -36,19 +36,20 @@
         android:src="@drawable/otros"/>
 
     <TextView
+        android:id="@+id/CreadorPeticion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/CreadorPeticion"
-        android:text="Felipe"
-        android:textColor="@android:color/black"
-        android:textSize="28sp"
+        android:layout_below="@+id/CategoriaPeticion"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/CategoriaPeticion"
-        />
+        android:clickable="true"
+        android:onClick="viewProfile"
+        android:text="Felipe"
+        android:textColor="@android:color/black"
+        android:textSize="28sp" />
 
     <TextView
         android:layout_width="wrap_content"
