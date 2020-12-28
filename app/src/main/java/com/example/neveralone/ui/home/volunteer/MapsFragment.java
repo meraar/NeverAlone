@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.Vector;
 
 public class MapsFragment extends Fragment implements
-        OnMapReadyCallback,
-        GoogleMap.OnInfoWindowClickListener
+        OnMapReadyCallback//,
+        //GoogleMap.OnInfoWindowClickListener
 {
 
     private GoogleMap mMap;
@@ -167,7 +167,14 @@ public class MapsFragment extends Fragment implements
                 }
             });
             //startActivity(new Intent(getActivity(), MenuActivity.class));
-           //googleM.setOnInfoWindowClickListener(this);
+           googleM.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+               @Override
+               public void onInfoWindowClick(Marker marker) {
+                   //Intent i = new Intent(this, VerMisPeticiones.class); //TODO esta clase ya no se utiliza
+                   //i.putExtra("UserId",marker.getTag().toString());
+                   //startActivity(i);
+               }
+           });
         }
     };
 
@@ -194,12 +201,5 @@ public class MapsFragment extends Fragment implements
     public void onMapReady(final GoogleMap googleMap) {
 
 
-    }
-
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-        //Intent i = new Intent(this, VerMisPeticiones.class); //TODO esta clase ya no se utiliza
-        //i.putExtra("UserId",marker.getTag().toString());
-        //startActivity(i);
     }
 }
