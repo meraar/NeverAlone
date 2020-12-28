@@ -40,4 +40,10 @@
         android:name="com.example.neveralone.ui.BlankFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_blank" />
+
+    <fragment
+        android:id="@+id/blankFragmentTutor"
+        android:name="com.example.neveralone.ui.tutor.BlankFragmentTutor"
+        android:label="fragment_blank_tutor"
+        tools:layout="@layout/fragment_blank_tutor" />
 </navigation>
