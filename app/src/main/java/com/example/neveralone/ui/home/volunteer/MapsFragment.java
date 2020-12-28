@@ -67,6 +67,7 @@ public class MapsFragment extends Fragment implements
 
                 LatLng sydney = new LatLng( foundGeocode.get(0).getLatitude(), foundGeocode.get(0).getLongitude());
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,15));
+
             }
             @Override
             public void onCancelled(DatabaseError error) {
