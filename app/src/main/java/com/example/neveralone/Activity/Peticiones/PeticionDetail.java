@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.neveralone.Activity.Chat.MessageActivity;
 import com.example.neveralone.Activity.ListaChat.RelacionChat;
 import com.example.neveralone.Activity.LoginActivity;
+import com.example.neveralone.Activity.OtherUserProfileActivity;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
@@ -47,6 +48,7 @@ public class PeticionDetail extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseDatabase database;
     private DatabaseReference database2;
+    private String uid;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,8 @@ public class PeticionDetail extends AppCompatActivity {
         descripcion.setText(p.getDescripcion());
         estado.setText(p.getEstado().toString());
         autor.setText(p.getUser());
+
+        uid = p.getUid();
 
         if(!LoginActivity.getUserType()){ //beneficiario
             editar.setText("Editar");
@@ -251,5 +255,10 @@ public class PeticionDetail extends AppCompatActivity {
                 break;
             }
         }
+    }
+    public void viewProfile(View view){
+        Intent i = new Intent(context, OtherUserProfileActivity.class);
+        i.putExtra("uid", uid);
+        startActivity(i);
     }
 }
