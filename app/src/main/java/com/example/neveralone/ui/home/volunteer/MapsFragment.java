@@ -167,7 +167,7 @@ public class MapsFragment extends Fragment implements
                 }
             });
             //startActivity(new Intent(getActivity(), MenuActivity.class));
-           //googleM.setOnInfoWindowClickListener(this);
+          // googleM.setOnInfoWindowClickListener(this);
         }
     };
 
