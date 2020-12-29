@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.neveralone.Activity.MenuActivity;
+import com.example.neveralone.Activity.Peticiones.PeticionesFilterByUsr;
+import com.example.neveralone.Activity.Peticiones.VerMisPeticiones;
 import com.example.neveralone.R;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -155,6 +157,7 @@ public class MapsFragment extends Fragment implements
 
                                     MarkerEjemplo1.setTag(codigo_usuario_con_pet);
 
+
                                 }
                                 //  MarkerEjemplo1.setSnippet(codigo_usuario_con_pet);
 
@@ -171,9 +174,9 @@ public class MapsFragment extends Fragment implements
            googleM.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                @Override
                public void onInfoWindowClick(Marker marker) {
-                   //Intent i = new Intent(this, VerMisPeticiones.class); //TODO esta clase ya no se utiliza
-                   //i.putExtra("UserId",marker.getTag().toString());
-                   //startActivity(i);
+                   Intent i = new Intent(getContext(), PeticionesFilterByUsr.class); //TODO esta clase ya no se utiliza
+                   i.putExtra("UserId",marker.getTag().toString());
+                   startActivity(i);
                }
            });
         }
