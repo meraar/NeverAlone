@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VerMisPeticiones extends AppCompatActivity {
+public class PeticionesAceptadas extends AppCompatActivity {
 
     private List<Peticion> elements;
     private String uid;
@@ -64,10 +64,8 @@ public class VerMisPeticiones extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     elements = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        if(ds.child("Estado").getValue().toString().equals("PENDIENTE")){
-                            Peticion p = ds.getValue(Peticion.class);
-                            elements.add(p);
-                        }
+                        Peticion p = ds.getValue(Peticion.class);
+                        elements.add(p);
                     }
                     Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
                         @Override

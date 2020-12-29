@@ -13,7 +13,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neveralone.Peticion.Estado;
-import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHolderUser> {
-    private final String peticion;
+    private final String user;
     private List<Usuario> mData;
     private LayoutInflater mInflater;
     private Context context;
@@ -39,12 +38,12 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
         void onItemClick(Usuario p);
     }
 
-    public AdaptadorUsers(List<Usuario> mData, Context context, AdaptadorUsers.OnItemClickListener listener, String peticion) {
+    public AdaptadorUsers(List<Usuario> mData, Context context, AdaptadorUsers.OnItemClickListener listener, String user) {
         this.mData      = mData;
         this.mInflater  = LayoutInflater.from(context);
         this.context    = context;
         this.listener   = listener;
-        this.peticion   = peticion;
+        this.user   = user;
     }
 
 
@@ -73,7 +72,7 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
     public class MyViewHolderUser extends RecyclerView.ViewHolder {
 
         ImageView iconImage,xat;
-        TextView name, titulo, estado;
+        TextView name, titulo;
 
 
         public MyViewHolderUser(@NonNull View itemView) {
@@ -101,16 +100,16 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
                                     //Actualizar estado de la peticion
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Peticiones");
 
-                                    reference.child(peticion).child("estado").setValue(Estado.CURSO);
+                                    reference.child(user).child("estado").setValue(Estado.CURSO);
 
                                     reference = FirebaseDatabase.getInstance().getReference().child("User-Peticiones");
 
-                                    reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(peticion).child("estado").setValue(Estado.CURSO);
+                                    reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(user).child("estado").setValue(Estado.CURSO);
 
                                     //Borrar interacciones
                                     reference = FirebaseDatabase.getInstance().getReference().child("Interacciones");
 
-                                    reference.child(peticion).addValueEventListener(new ValueEventListener() {
+                                    reference.child(user).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if(snapshot.hasChildren()) {
@@ -118,7 +117,9 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
                                                     //TODO Borrar tots menys l'usuari al qui has acceptat
                                                     //TODO Necessito que l'usuari guari el seu UID de firebase
                                                     //TODO O sino, simplement borro tots els voluntaris i ya
-                                                    if (!(ds.getValue().toString().equals(""))) {
+                                                    String userToCheck = ds.child("uid").getValue().toString();
+                                                    String userAccepted = item.getUid();
+                                                    if (!(userToCheck.equals(userAccepted))) {
                                                         ds.getRef().removeValue();
                                                     }
                                                 }
@@ -130,6 +131,21 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
 
                                         }
                                     });
+                                    // Crear una instancia de peticiones aceptadas
+
+                                    reference = FirebaseDatabase.getInstance().getReference();
+
+                                    reference.child("PeticionesAceptadas").push();
+
+                                    Map<String, Object> postValues = new HashMap<>();
+
+                                    postValues.put("peticionID", user);
+                                    String uid = item.getUid();
+                                    Map<String, Object> childUpdates = new HashMap<>();
+                                    childUpdates.put("/PeticionesAceptadas/" + "/" + uid, postValues);
+                                    childUpdates.put("/PeticionesAceptadas/" + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid(), postValues);
+                                    reference.updateChildren(childUpdates);
+
 
                                 }
                             })

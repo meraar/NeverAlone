@@ -184,7 +184,7 @@ public class PeticionDetail extends AppCompatActivity {
                         Map<String, Object> postValues = new HashMap<>();
 
                         postValues.put("uid", user.getUid());
-                        postValues.put("user", voluntario.getNombre());
+                        postValues.put("nombre", voluntario.getNombre());
                         postValues.put("apellidos", voluntario.getApellidos());
 
                         Map<String, Object> childUpdates = new HashMap<>();
@@ -217,9 +217,8 @@ public class PeticionDetail extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 elements = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    Usuario p = new Usuario();
-                    p.setNombre((String) ds.child("user").getValue()); //nombre
-                    p.setApellidos((String) ds.child("apellidos").getValue());
+                    Usuario p = ds.getValue(Usuario.class);
+
                     elements.add(p);
                 }
 
