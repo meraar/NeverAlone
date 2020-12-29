@@ -3,8 +3,6 @@ package com.example.neveralone.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,29 +31,13 @@ import org.jetbrains.annotations.NotNull;
 public class RegisterVolunteerActivity extends AppCompatActivity {
 
     private EditText txtpostalcode, txtdni;
-    private Button register, back, btnFinalizarRegistro, btnAtras;
+    private Button btnFinalizarRegistro, btnAtras;
     private String correo, nombre, apellido, password;
     private Boolean voluntario;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
-    private DatabaseReference database2;
-    /**
-     private TextWatcher campos = new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    }
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-    String codigopostal = txtpostalcode.getText().toString().trim();
-    String dniText = txtdni.getText().toString().trim();
-    //register.setEnabled(!codigopostal.isEmpty() && !dniText.isEmpty());
-    }
-    @Override
-    public void afterTextChanged(Editable s) {
-    }
-    };
-     **/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +68,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                     final String postalcode = txtpostalcode.getText().toString();
                     final String dni = txtdni.getText().toString();
                     final String motivo, direccion, piso;
+                    final Float puntuacion = 0.0f;
                     motivo = "null"; // Guardamos las siguientes variables como null ya que el voluntario no tiene estos atributos.
                     direccion = "null";
                     piso = "null";
@@ -101,6 +85,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                             FirebaseUser currentUser = mAuth.getCurrentUser();
                                             DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
                                             Usuario usuario = new Usuario();
+                                            usuario.setUid(currentUser.getUid());
                                             usuario.setEmail(correo);
                                             usuario.setNombre(nombre);
                                             usuario.setApellidos(apellido);
@@ -109,11 +94,17 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
                                             usuario.setMotivo(motivo);
                                             usuario.setDireccion(direccion);
                                             usuario.setPiso_puerta(piso);
+                                            usuario.setPuntuacioMedia(puntuacion);
                                             usuario.setVoluntario(true);
                                             reference.setValue(usuario);
+
+                                            //SetDisplayName of the User
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(nombre).build();
+                                            currentUser.updateProfile(profileUpdates);
+
                                             // verficar el mail
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            user.sendEmailVerification();
+                                            currentUser.sendEmailVerification();
                                             startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
                                             finish();
                                         } else {
@@ -131,9 +122,6 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
         else {
             setContentView(R.layout.activity_registerbeneficiario); // Funciona
             btnAtras = findViewById(R.id.AtrasBut);
-
-
-
         }
 
         btnAtras.setOnClickListener(new View.OnClickListener() {

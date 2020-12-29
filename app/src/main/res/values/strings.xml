@@ -36,7 +36,6 @@
     <string name="registrar_text_button">Registrar</string>
     <string name="atras_button">Atras</string>
     <string name="Logo">Logo</string>
-    <string name="sign_out">Cerrar Sesión</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -46,8 +45,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_view_profile">Mi perfil</string>
     <string name="label_categoria_petición">Seleccione la categoria de su petición:</string>
     <string name="fecha_para_la_peticion">Seleccione una fecha:</string>
     <string name="input_fecha_peticion">dd/mm/yyyy</string>
@@ -55,11 +53,33 @@
     <string name="Mis_peticiones_title">Mis Peticiones</string>
     <string name="TituloPeticion">Comprar Mercadona</string>
     <string name="usuarioPeticion">Setch</string>
+
+    <string name="usuarioContacto">Setch</string>
+
     <string name="estadoPeticion">Pendiente</string>
     <string name="fechaDetailViewContribution">Fecha:</string>
     <string name="horadetailViewContribucion">"Hora: "</string>
     <string name="descriptionDetailViewpeticion">Descripción</string>
     <string name="title_activity_maps">Map</string>
+    <string name="enviar_mensaje">Enviar Mensaje</string>
+
+    <string name="perfil_name">Mi perfil</string>
+    <string name="title_activity_first_home">FirstHomeActivity</string>
+    <string name="update_profile">Actualizar Perfil</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="my_profile">Perfil</string>
+    <string name="mapa_de_peticiones_tab">Mapa de peticiones</string>
+    <string name="lista_de_peticiones_tab">Lista de peticiones</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="avg_punctuation">Puntuación Media</string>
+    <string name="menu_autotest">AUTO-TEST</string>
+    <string name="crear_peticion_button">Crear Petición</string>
+    <string name="contacts">Contactos</string>
+    <string name="menu_listadecontactos">Contactos</string>
+
+    <string name="contrasena">Recuperar Contraseña</string>
+    <string name="contrasena_button">Aceptar</string>
 
 
 </resources>

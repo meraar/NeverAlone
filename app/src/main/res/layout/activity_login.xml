@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".Activity.LoginActivity">
+    android:clickable="true"
+    tools:context=".Activity.LoginActivity"
+    android:focusable="true">
 
 
     <ImageView
@@ -26,7 +28,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintVertical_bias="0.625" />
 
     <TextView
         android:id="@+id/textView3"
@@ -155,10 +157,13 @@
                 android:autoSizeMaxTextSize="22dp"
                 android:autoSizeMinTextSize="16dp"
                 android:autoSizeTextType="uniform"
+                android:clickable="true"
                 android:gravity="center"
+                android:onClick="forgetpass"
                 android:text="@string/forget_password"
                 android:textAllCaps="false"
-                tools:targetApi="o" />
+                tools:targetApi="o"
+                android:focusable="true" />
 
             <Space
                 android:layout_width="2dp"
@@ -202,8 +207,6 @@
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="@string/sign_up_google" />
-
-
     </LinearLayout>
 
 

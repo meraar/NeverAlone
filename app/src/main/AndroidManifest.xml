@@ -31,28 +31,33 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".Activity.Peticiones.VerMisPeticiones">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.LoginActivity"/>
+        <activity android:name=".Activity.Peticiones.VerMisPeticiones" />
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.RegisterVolunteerActivity" />
         <activity android:name=".Activity.RegisterBenefactorActivity" />
         <activity android:name=".Activity.Peticiones.PeticionDetail" />
-        <activity android:name=".Activity.Home" />
-        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
+        <activity android:name=".Activity.RecoverPasswordActivity"/>
+        <activity
+            android:name=".Activity.MenuActivity"
+            android:label="@string/title_activity_first_home" />
+        <activity android:name=".Activity.Chat.MessageActivity" />
+        <activity android:name=".Activity.ListaChat.ListaDeContactos" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.neveralone.Activity.Peticiones.VerMisPeticiones;
 import com.example.neveralone.MapsActivity;
 import com.example.neveralone.R;
+import com.example.neveralone.Usuario.Usuario;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -34,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity{
+    private static boolean voluntario;
     private EditText txtCorreo, txtContrasena;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -62,27 +64,24 @@ public class LoginActivity extends AppCompatActivity{
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();*/
             nextActivity();
         }
     }
 
     private void nextActivity(){
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
         reference = FirebaseDatabase.getInstance().getReference("Usuarios/" + userID + "/voluntario");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean volunatario = (boolean) dataSnapshot.getValue();
-                if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                else   startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+                voluntario = (boolean) dataSnapshot.getValue();
+                startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             }
             @Override
             public void onCancelled(DatabaseError error) {
             }
         });
-        finish();
     }
 
     public void login(View view) {
@@ -117,9 +116,8 @@ public class LoginActivity extends AppCompatActivity{
                             reference.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    boolean volunatario = (boolean) dataSnapshot.getValue();
-                                    if(volunatario) startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-                                    else startActivity(new Intent(LoginActivity.this, VerMisPeticiones.class));
+                                    voluntario = (boolean) dataSnapshot.getValue();
+                                    startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError error) {
@@ -144,6 +142,11 @@ public class LoginActivity extends AppCompatActivity{
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    public void forgetpass(View view){
+        startActivity(new Intent(LoginActivity.this,RecoverPasswordActivity.class));
+        finish();
+    }
+
     /*
     @Override
     protected void onStart() {
@@ -165,5 +168,9 @@ public class LoginActivity extends AppCompatActivity{
                 Toast.makeText(this, "Login Failed!" ,Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static boolean getUserType() {
+        return voluntario;
     }
 }

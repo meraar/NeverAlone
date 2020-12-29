@@ -1,26 +1,19 @@
 package com.example.neveralone.Usuario;
 
-
 public class Usuario {
     private String email;
-    private String nombre;
+    public String nombre;
     private String apellidos;
     private String dni;
     private String codigopostal;
-    private int puntuacioMedia;
-    private boolean voluntario;
+    private Float puntuacioMedia;
+    private Boolean voluntario;
     private String direccion;
     private String piso_puerta;
     private String motivo;
+    private String uid;
 
-    public Usuario(String email, String nombre, String apellidos, String dni, String codigopostal,boolean voluntario,int puntuacioMedia) {
-        this.email = email;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.dni = dni;
-        this.codigopostal = codigopostal;
-        this.voluntario=voluntario;
-        this.puntuacioMedia=puntuacioMedia;
+    public Usuario() {
     }
 
     public String getDireccion() {
@@ -55,13 +48,18 @@ public class Usuario {
         this.dni = dni;
     }
 
-
-    public Usuario() {
-
-    }
+    public Boolean getVoluntario() { return voluntario; }
 
     public String getEmail() {
         return email;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void setEmail(String email) {
@@ -92,24 +90,17 @@ public class Usuario {
         this.codigopostal = codigopostal;
     }
 
-    protected Usuario getUsuario() {
-        return this;
-    }
-
-    public int getPuntuacioMedia() {
+    public float getPuntuacioMedia() {
         return puntuacioMedia;
     }
 
-    public void setPuntuacioMedia(int puntuacioMedia) {
+    public void setPuntuacioMedia(Float puntuacioMedia) {
         this.puntuacioMedia = puntuacioMedia;
     }
 
-    public boolean isVoluntario() {
-        return voluntario;
-    }
-
-    public void setVoluntario(boolean voluntario) {
+    public void setVoluntario(Boolean voluntario) {
         this.voluntario = voluntario;
     }
+
 }
 

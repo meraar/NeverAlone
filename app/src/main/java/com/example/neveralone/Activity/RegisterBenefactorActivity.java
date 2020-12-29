@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -101,6 +102,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                     final String dni = txtdni.getText().toString();
                     final String direccion = txtDireccion.getText().toString();
                     final String PisoPuerta = txtPisoPuerta.getText().toString();
+                    final Float puntuacion = 0.0f;
                     Spinner spinner = (Spinner)findViewById(R.id.Spinner);
                     final String motivo = spinner.getSelectedItem().toString();
 
@@ -114,6 +116,7 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             FirebaseUser currentUser = mAuth.getCurrentUser();
                                             DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
                                             Usuario usuario = new Usuario();
+                                            usuario.setUid(currentUser.getUid());
                                             usuario.setEmail(correo);
                                             usuario.setNombre(nombre);
                                             usuario.setApellidos(apellido);
@@ -122,22 +125,21 @@ public class RegisterBenefactorActivity extends AppCompatActivity {
                                             usuario.setMotivo(motivo);
                                             usuario.setDireccion(direccion);
                                             usuario.setPiso_puerta(PisoPuerta);
+                                            usuario.setPuntuacioMedia(puntuacion);
                                             usuario.setVoluntario(false);
                                             reference.setValue(usuario);
+
+                                            //SetDisplayName of the User
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(nombre).build();
+                                            currentUser.updateProfile(profileUpdates);
+
                                             //verficar el mail
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            user.sendEmailVerification();
+                                            currentUser.sendEmailVerification();
                                             startActivity(new Intent(RegisterBenefactorActivity.this, LoginActivity.class));
                                             finish();
 
-                                            /**reference.setValue(usuario.getNombre());
-                                             reference.setValue(usuario.getApellidos());
-                                             reference.setValue(usuario.getEmail());
-                                             reference.setValue(usuario.getDni());
-                                             reference.setValue(usuario.getCodigopostal());
-                                             reference = database.getReference("Beneficiarios/" + currentUser.getUid());
-                                             reference.setValue(beneficiario.getDireccion());
-                                             **/
+
                                         } else {
                                             System.out.println("Debug5: No se ha registrado");
                                             Toast.makeText(RegisterBenefactorActivity.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();

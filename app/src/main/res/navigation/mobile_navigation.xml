@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/blankFragment">
+
+    <fragment
+        android:id="@+id/nav_homev"
+        android:name="com.example.neveralone.ui.home.volunteer.HomeVolunteerFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_homevolunteer" />
+
+    <fragment
+        android:id="@+id/nav_myprofile"
+        android:name="com.example.neveralone.ui.profile.ProfileFragment"
+        android:label="@string/menu_view_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_autotest"
+        android:name="com.example.neveralone.ui.autotest.AutotestFragment"
+        android:label="@string/menu_autotest"
+        tools:layout="@layout/fragment_autotest" />
+
+    <fragment
+        android:id="@+id/nav_homeb"
+        android:name="com.example.neveralone.ui.home.benefactor.HomeBenefactorFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_homebenefactor" />
+
+    <fragment
+        android:id="@+id/nav_contacts"
+        android:name="com.example.neveralone.ui.contactos.ListaDeContactosFragment"
+        android:label="@string/menu_listadecontactos"
+        tools:layout="@layout/fragment_listadecontactos" />
+
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="com.example.neveralone.ui.BlankFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_blank" />
+</navigation>
