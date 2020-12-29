@@ -226,7 +226,7 @@ public class PeticionDetail extends AppCompatActivity {
                     @Override
                     public void onItemClick(Usuario p) {
 
-                    }}, p.getPeticionID());
+                    }}, p);
 
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));

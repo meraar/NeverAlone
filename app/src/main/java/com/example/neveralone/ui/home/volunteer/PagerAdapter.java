@@ -20,6 +20,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return new MapsFragment();
             case 1:
                 return new ViewReqFragment();
+            case 2:
+                return new ViewAcceptedFragment();
             default:
                 return null;
         }

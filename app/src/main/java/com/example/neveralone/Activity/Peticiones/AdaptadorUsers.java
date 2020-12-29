@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neveralone.Peticion.Estado;
+import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHolderUser> {
-    private final String user;
+    private final Peticion peticion;
     private List<Usuario> mData;
     private LayoutInflater mInflater;
     private Context context;
@@ -38,12 +39,12 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
         void onItemClick(Usuario p);
     }
 
-    public AdaptadorUsers(List<Usuario> mData, Context context, AdaptadorUsers.OnItemClickListener listener, String user) {
+    public AdaptadorUsers(List<Usuario> mData, Context context, AdaptadorUsers.OnItemClickListener listener, Peticion peticion) {
         this.mData      = mData;
         this.mInflater  = LayoutInflater.from(context);
         this.context    = context;
         this.listener   = listener;
-        this.user   = user;
+        this.peticion = peticion;
     }
 
 
@@ -100,16 +101,16 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
                                     //Actualizar estado de la peticion
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Peticiones");
 
-                                    reference.child(user).child("estado").setValue(Estado.CURSO);
+                                    reference.child(peticion.getPeticionID()).child("estado").setValue(Estado.CURSO);
 
                                     reference = FirebaseDatabase.getInstance().getReference().child("User-Peticiones");
 
-                                    reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(user).child("estado").setValue(Estado.CURSO);
+                                    reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(peticion.getPeticionID()).child("estado").setValue(Estado.CURSO);
 
                                     //Borrar interacciones
                                     reference = FirebaseDatabase.getInstance().getReference().child("Interacciones");
 
-                                    reference.child(user).addValueEventListener(new ValueEventListener() {
+                                    reference.child(peticion.getPeticionID()).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if(snapshot.hasChildren()) {
@@ -135,15 +136,14 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
 
                                     reference = FirebaseDatabase.getInstance().getReference();
 
-                                    reference.child("PeticionesAceptadas").push();
+                                    String key = reference.child("PeticionesAceptadas").push().getKey();
+                                    peticion.setEstado(Estado.CURSO);
+                                    Map<String, Object> postValues = peticion.toMap();
 
-                                    Map<String, Object> postValues = new HashMap<>();
-
-                                    postValues.put("peticionID", user);
                                     String uid = item.getUid();
                                     Map<String, Object> childUpdates = new HashMap<>();
-                                    childUpdates.put("/PeticionesAceptadas/" + "/" + uid, postValues);
-                                    childUpdates.put("/PeticionesAceptadas/" + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid(), postValues);
+                                    childUpdates.put("/PeticionesAceptadas/" + "/" + uid + "/" + key, postValues);
+                                    childUpdates.put("/PeticionesAceptadas/" + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + key, postValues);
                                     reference.updateChildren(childUpdates);
 
 

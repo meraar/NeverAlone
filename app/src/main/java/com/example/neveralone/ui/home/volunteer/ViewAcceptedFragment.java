@@ -3,18 +3,15 @@ package com.example.neveralone.ui.home.volunteer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Activity.Peticiones.Adaptador;
 import com.example.neveralone.Activity.Peticiones.PeticionDetail;
 import com.example.neveralone.Peticion.Peticion;
@@ -30,8 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ViewReqFragment extends Fragment {
+public class ViewAcceptedFragment extends Fragment {
     private List<Peticion> elements;
     private String uid;
     private DatabaseReference reference;
@@ -57,46 +53,46 @@ public class ViewReqFragment extends Fragment {
         return root;
     }
 
-
     private void init() {
         elements = new ArrayList<>();
+
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
         reference = FirebaseDatabase.getInstance().getReference();
 
         //Si es Voluntario desplegamos peticiones existentes
-        if (LoginActivity.getUserType()) {
 
-           //titol.setText("Peticiones");
-            reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    elements = new ArrayList<>();
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        if(ds.child("estado").getValue().toString().equals("PENDIENTE")) {
-                            Peticion p = ds.getValue(Peticion.class);
+
+        reference.child("PeticionesAceptadas").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                elements = new ArrayList<>();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String nodo = ds.getKey();
+
+                    if(nodo.equals(user.getUid())){
+                        for(DataSnapshot users : ds.getChildren()){
+                            Peticion p = users.getValue(Peticion.class);
                             elements.add(p);
                         }
                     }
-                    Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Peticion p) {
-                            moveToDescription(p);
-                        }
-                    });
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    recyclerView.setAdapter(listAdapter);
                 }
+                Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Peticion p) { moveToDescription(p);
+                    }
+                });
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setAdapter(listAdapter);
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-        }
-        //TODO borrar esta parte que es del beneficiario
-
+            }
+        });
     }
 
     private void moveToDescription(Peticion p) {
@@ -104,6 +100,5 @@ public class ViewReqFragment extends Fragment {
         i.putExtra("Peticion",p);
         startActivity(i);
     }
-
 
 }

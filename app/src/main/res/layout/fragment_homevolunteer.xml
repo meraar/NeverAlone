@@ -29,6 +29,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lista_de_peticiones_tab" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/list_accepted_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/peticiones_aceptadas" />
 
         </com.google.android.material.tabs.TabLayout>
 
