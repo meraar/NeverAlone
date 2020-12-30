@@ -5,7 +5,7 @@ import java.util.Map;
 public class MessageEnviar extends Message {
     private Map hora;
 
-    public MessageEnviar() {
+    public MessageEnviar(String userID) {
     }
 
     public MessageEnviar(Map hora) {
