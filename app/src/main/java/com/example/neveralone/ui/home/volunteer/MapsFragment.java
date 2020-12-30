@@ -87,7 +87,6 @@ public class MapsFragment extends Fragment implements
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            Log.i("mensaje","entra2");
 
             googleM = googleMap;
             x= new Geocoder(getContext());
@@ -95,7 +94,7 @@ public class MapsFragment extends Fragment implements
             //FALTA COMPROBARLO Y COMENTAR ALGUNA COSA
             mDatabase = FirebaseDatabase.getInstance().getReference();
             final Geocoder geocoder = new Geocoder(getContext());
-            mDatabase.addValueEventListener(new ValueEventListener() {
+          /*  mDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     if(snapshot.exists()) {
@@ -166,7 +165,7 @@ public class MapsFragment extends Fragment implements
                 @Override
                 public void onCancelled( DatabaseError error) {
                 }
-            });
+            });*/
             //startActivity(new Intent(getActivity(), MenuActivity.class));
            googleM.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                @Override

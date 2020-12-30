@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,14 +42,15 @@ public class BlankFragmentTutor extends Fragment {
         } else {
             transaction.replace(R.id.root_frame, new HomeBenefactorFragment()); //Sustiuir con la clase de tutor beneficiario
         }*/
+          Log.i("mensaje", String.valueOf(LoginActivity.getUserType()));
 
         btnSolicitar = root.findViewById(R.id.btnSolicitar);
         btnSolicitar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("SolicitudBeneficirio/" + userID);
-                databaseReference_currentUser.push().setValue(userID);
+                databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("SolicitudBeneficirio/"+userID);
+                databaseReference_currentUser.setValue(userID);
             }
         });
         transaction.commit();
