@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.tutor.BlankFragmentTutor">
+    tools:context=".ui.tutor.BlankFragmentTutor"
+    tools:ignore="MissingDefaultResource">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -16,12 +17,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:shadowColor="#000000"
-        android:text="Estas a punto de solicitar un tutor "
-        android:textSize="26sp"
+        android:text="Estas a punto de solicitar ser un tutor "
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_gravity="center_horizontal|center_vertical"
         android:background="@color/colorAccent"
         android:hapticFeedbackEnabled="false"
-        android:text="Solicitar tutor"
+        android:text="Solicitar ser tutor"
         android:textSize="30sp" />
 
 </FrameLayout>
