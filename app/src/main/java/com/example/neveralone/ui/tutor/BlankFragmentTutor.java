@@ -1,17 +1,14 @@
 package com.example.neveralone.ui.tutor;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.R;
@@ -22,177 +19,111 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 
 
 public class BlankFragmentTutor extends Fragment {
-    private Button btnSolicitar;
-    private DatabaseReference databaseReference_Benef, databaseReference_Volun,referenceT;
-    private Context context;
+    private DatabaseReference databaseReference_Logeado, databaseReference_Compañero,referenceT;
     private DatabaseReference reference,reference2;
+    private String userID, DirSolicitudLogeado,DirSolicitudCompañero;
+    private FragmentTransaction transaction;
+    private boolean tutor;
+    private Date d;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         View root =inflater.inflate(R.layout.fragment_blank, container, false);
-        context = getContext();
-        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
+        View root =inflater.inflate(R.layout.fragment_blank, container, false);
+        transaction = getFragmentManager().beginTransaction();
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        tutor=false;
+         d= new Date();
         //volunatario
-        if (LoginActivity.getUserType()) {
-            final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            referenceT = FirebaseDatabase.getInstance().getReference().child("Tutoria/"+ userID);
-            referenceT.addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.i("mensaje1", "entraaaa aarriba");
-                            Log.i("mensaje1", String.valueOf(referenceT));
-
-                            if(snapshot.exists()) {
-                                Log.i("mensaje1", "entraaaa");
-
-                                transaction.replace(R.id.root_frame, new TutoriaVoluntario()); //Sustiuir con la clase de tutor voluntario
-                                transaction.commit();
-                            }
-                            //si existe alguna instancia en voluntario, podemos hacer el match
-                            else {
-
-                                reference = FirebaseDatabase.getInstance().getReference().child("SolicitudVoluntario/" + userID);
-                                reference.addListenerForSingleValueEvent(
-                                        new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot snapshot) {
-                                                //miramos si exita instancia en solicitarBenefi
-                                                if (snapshot.exists()) {
-                                                    reference2 = FirebaseDatabase.getInstance().getReference().child("SolicitudBeneficirio/");
-                                                    reference2.addListenerForSingleValueEvent(
-                                                            new ValueEventListener() {
-                                                                @Override
-                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                    //si existe alguna instancia en voluntario, podemos hacer el match
-                                                                    if (snapshot.exists()) {
-                                                                        Iterator i = snapshot.getChildren().iterator();
-
-                                                                        String idbene = (String) ((DataSnapshot) i.next()).getValue();
-                                                                        databaseReference_Volun = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
-                                                                        databaseReference_Volun.setValue(idbene);
-                                                                        databaseReference_Volun = FirebaseDatabase.getInstance().getReference("SolicitudVoluntario/" + userID);
-                                                                        databaseReference_Volun.removeValue();
-
-                                                                        databaseReference_Benef = FirebaseDatabase.getInstance().getReference("Tutoria/" + idbene);
-                                                                        databaseReference_Benef.setValue(userID);
-                                                                        databaseReference_Benef = FirebaseDatabase.getInstance().getReference("SolicitudBeneficirio/" + idbene);
-                                                                        databaseReference_Benef.removeValue();
-                                                                    } else {
-                                                                        transaction.replace(R.id.root_frame, new VolunteerWait()); //Sustiuir con la clase de tutor voluntario
-                                                                        transaction.commit();
-                                                                    }
-                                                                }
-
-                                                                @Override
-                                                                public void onCancelled(@NonNull DatabaseError error) {
-                                                                }
-                                                            });
-                                                }
-
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-                                            }
-                                        });
-                            }
-
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
+        if (LoginActivity.getUserType()){
+            tutor=true;
+            DirSolicitudLogeado = "SolicitudVoluntario/";
+            DirSolicitudCompañero =  "SolicitudBeneficirio/";
         }
-
         //beneficiario
-        else {
-            final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            Log.i("mensaje1", userID);
-            reference = FirebaseDatabase.getInstance().getReference().child("SolicitudBeneficirio/" + userID);
-            reference.addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            //miramos si exita instancia en solicitarBenefi
-                            if (snapshot.exists()) {
-                                reference2 = FirebaseDatabase.getInstance().getReference().child("SolicitudVoluntario/");
-                                reference2.addListenerForSingleValueEvent(
-                                        new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                //si existe alguna instancia en voluntario, podemos hacer el match
-                                                if (snapshot.exists()) {
-                                                    Iterator i = snapshot.getChildren().iterator();
-
-                                                    String idVolun = (String) ((DataSnapshot) i.next()).getValue();
-                                                    databaseReference_Benef = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
-                                                    databaseReference_Benef.setValue(idVolun);
-                                                    databaseReference_Benef = FirebaseDatabase.getInstance().getReference("SolicitudBeneficirio/" + userID);
-                                                    databaseReference_Benef.removeValue();
-
-                                                    databaseReference_Volun = FirebaseDatabase.getInstance().getReference("Tutoria/" + idVolun);
-                                                    databaseReference_Volun.setValue(userID);
-                                                    databaseReference_Volun = FirebaseDatabase.getInstance().getReference("SolicitudVoluntario/" + idVolun);
-                                                    databaseReference_Volun.removeValue();
-                                                }
-                                                else{
-                                                    transaction.replace(R.id.root_frame, new BenefactorWait()); //Sustiuir con la clase de tutor voluntario
-                                                    transaction.commit();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {}
-                                        });
-                            }
-                            else {
-                                //miramos si es tiene tutor o no el beneficiario
-                                databaseReference_Benef = FirebaseDatabase.getInstance().getReference().child("Tutoria/" + userID);
-                                reference.addListenerForSingleValueEvent(
-                                        new ValueEventListener() {
-
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                                if (snapshot.exists()){
-                                                    //vamos a los 3 botoness
-                                                }
-                                                else {
-                                                    transaction.replace(R.id.root_frame, new Benefactor()); //Sustiuir con la clase de tutor voluntario
-                                                    transaction.commit();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-
-
-
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {}
-                    });
+        else{
+            tutor=false;
+            DirSolicitudLogeado = "SolicitudBeneficirio/";
+            DirSolicitudCompañero =  "SolicitudVoluntario/";
         }
+        trato_tutoria_voluntario();
         return root;
     }
+
+    private void trato_tutoria_voluntario() {
+        referenceT = FirebaseDatabase.getInstance().getReference().child("Tutoria/"+ userID);
+        referenceT.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //existe un match
+                if(snapshot.exists()) {
+                    if(tutor) transaction.replace(R.id.root_frame, new TutoriaVoluntario()); //Sustiuir con la clase de tutor voluntario
+                    else transaction.replace(R.id.root_frame, new TutoriaBenefactor()); //Sustiuir con la clase de tutor voluntario
+                    transaction.commit();
+                }
+                //si existe alguna instancia en voluntario, podemos hacer el match
+                else IntentamosHacerMatch();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+
+    private void IntentamosHacerMatch() {
+        reference = FirebaseDatabase.getInstance().getReference().child(DirSolicitudLogeado + userID);
+        reference.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                //miramos si exita instancia en solicitarBenefi
+                if (snapshot.exists()) HamosMatch();
+
+                else{
+                    if(tutor) transaction.replace(R.id.root_frame, new VolunteerMatch()); //Sustiuir con la clase de tutor voluntario
+                    else transaction.replace(R.id.root_frame, new BenefactorMatch()); //Sustiuir con la clase de tutor voluntario
+                    transaction.commit();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+    private void HamosMatch() {
+        reference2 = FirebaseDatabase.getInstance().getReference().child(DirSolicitudCompañero);
+        reference2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //si existe alguna instancia en voluntario, podemos hacer el match
+                if (snapshot.exists()) {
+                    Iterator i = snapshot.getChildren().iterator();
+
+                    String idComp = (String) ((DataSnapshot) i.next()).getValue();
+                    databaseReference_Compañero = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
+                    databaseReference_Compañero.setValue(new tutoria(idComp,d.getDate(),d.getMonth(),d.getYear()));
+                    databaseReference_Compañero = FirebaseDatabase.getInstance().getReference(DirSolicitudLogeado + userID);
+                    databaseReference_Compañero.removeValue();
+
+                    databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
+                    databaseReference_Logeado.setValue(new tutoria(userID,d.getDate(),d.getMonth(),d.getYear()));
+                    databaseReference_Logeado = FirebaseDatabase.getInstance().getReference(DirSolicitudCompañero + idComp);
+                    databaseReference_Logeado.removeValue();
+                }
+                if(tutor) transaction.replace(R.id.root_frame, new VolunteerWait()); //Sustiuir con la clase de tutor voluntario
+                else transaction.replace(R.id.root_frame, new BenefactorWait()); //Sustiuir con la clase de tutor voluntario
+                transaction.commit();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
 }

@@ -15,7 +15,7 @@ public class VolunteerWait extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_blank_tutor_solicitado_voluntario, container, false);
+        root = inflater.inflate(R.layout.fragment_blank_tutor_volunteer_wait, container, false);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         transaction.commit();

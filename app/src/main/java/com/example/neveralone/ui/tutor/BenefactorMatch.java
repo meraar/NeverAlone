@@ -19,15 +19,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 
 
-public class Benefactor extends Fragment {
+public class BenefactorMatch extends Fragment {
     private Button btnSolicitar;
     private DatabaseReference databaseReference_currentUser, databaseReference_Benef,databaseReference_Volun,reference2;
-    private Context context;
     private View root;
-    private DatabaseReference reference;
     private ViewGroup cont;
     private LayoutInflater i;
 
@@ -36,6 +36,7 @@ public class Benefactor extends Fragment {
         root = inflater.inflate(R.layout.fragment_blank_tutor, container, false);
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         btnSolicitar = root.findViewById(R.id.btnSolicitar);
+        final Date d= new Date();
         btnSolicitar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,21 +51,19 @@ public class Benefactor extends Fragment {
                                 //si existe alguna instancia en voluntario, podemos hacer el match
                                 if (snapshot.exists()) {
                                     Iterator i = snapshot.getChildren().iterator();
-
                                     String idVolun = (String) ((DataSnapshot) i.next()).getValue();
                                     databaseReference_Benef = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
-                                    databaseReference_Benef.setValue(idVolun);
+                                    databaseReference_Benef.setValue(new tutoria(idVolun,d.getDate(),d.getMonth(),d.getYear()));
                                     databaseReference_Benef = FirebaseDatabase.getInstance().getReference("SolicitudBeneficirio/" + userID);
                                     databaseReference_Benef.removeValue();
                                     databaseReference_Volun = FirebaseDatabase.getInstance().getReference("Tutoria/" + idVolun);
-                                    databaseReference_Volun.setValue(userID);
+                                    databaseReference_Volun.setValue(new tutoria(userID,d.getDate(),d.getMonth(),d.getYear()));
                                     databaseReference_Volun = FirebaseDatabase.getInstance().getReference("SolicitudVoluntario/" + idVolun);
                                     databaseReference_Volun.removeValue();
                                 }
-                                else{
-                                    transaction.replace(R.id.root_frame, new BenefactorWait()); //Sustiuir con la clase de tutor voluntario
-                                    transaction.commit();
-                                }
+                                transaction.replace(R.id.root_frame, new BenefactorWait()); //Sustiuir con la clase de tutor voluntario
+                                transaction.commit();
+
                             }
 
                             @Override

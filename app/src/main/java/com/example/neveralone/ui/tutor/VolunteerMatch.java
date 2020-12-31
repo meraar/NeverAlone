@@ -29,11 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 
-public class Volunteer extends Fragment {
+public class VolunteerMatch extends Fragment {
     private Button btnSolicitar;
     private DatabaseReference databaseReference_currentUser, databaseReference_Volun,reference2,databaseReference_Benef;
     private Context context;
@@ -46,6 +48,7 @@ public class Volunteer extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_blank_tutor_voluntario, container, false);
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        final Date d= new Date();
         btnSolicitar = root.findViewById(R.id.btnSolicitar);
         btnSolicitar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,22 +68,21 @@ public class Volunteer extends Fragment {
                                 if (snapshot.exists()) {
                                     Iterator i = snapshot.getChildren().iterator();
                                     String idbene = (String) ((DataSnapshot) i.next()).getValue();
+
                                     databaseReference_Volun = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
-                                    databaseReference_Volun.setValue(idbene);
+                                    databaseReference_Volun.setValue(new tutoria(idbene,d.getDate(),d.getMonth(),d.getYear()));
                                     databaseReference_Volun = FirebaseDatabase.getInstance().getReference("SolicitudVoluntario/" + userID);
                                     databaseReference_Volun.removeValue();
 
                                     databaseReference_Benef = FirebaseDatabase.getInstance().getReference("Tutoria/" + idbene);
-                                    databaseReference_Benef.setValue(userID);
+                                    databaseReference_Benef.setValue(new tutoria(userID,d.getDate(),d.getMonth(),d.getYear()));
                                     databaseReference_Benef = FirebaseDatabase.getInstance().getReference("SolicitudBeneficirio/" + idbene);
                                     databaseReference_Benef.removeValue();
                                 }
-                                else{
-                                    Log.i("mmmmmm", "entra else ");
 
                                     transaction.replace(R.id.root_frame, new VolunteerWait()); //Sustiuir con la clase de tutor voluntario
                                     transaction.commit();
-                                }
+
                             }
 
                             @Override
