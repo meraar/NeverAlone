@@ -85,7 +85,7 @@ public class PeticionesAceptadas extends AppCompatActivity {
     }
 
     private void moveToDescription(Peticion p) {
-        Intent i = new Intent(context,PeticionDetail.class);
+        Intent i = new Intent(context,PeticionAceptadaDetail.class);
         i.putExtra("Peticion",p);
         i.putExtra("Tipus", tusuari);
         startActivity(i);

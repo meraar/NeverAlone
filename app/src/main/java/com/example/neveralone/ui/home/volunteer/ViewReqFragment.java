@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Activity.Peticiones.Adaptador;
+import com.example.neveralone.Activity.Peticiones.PeticionAceptadaDetail;
 import com.example.neveralone.Activity.Peticiones.PeticionDetail;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
@@ -37,7 +39,9 @@ public class ViewReqFragment extends Fragment {
     private DatabaseReference reference;
     private FirebaseUser user;
     private Context context;
-    //private TextView titol;
+    private Switch pSwitch;
+
+    private TextView titolSwitch;
     private RecyclerView recyclerView;
 
     @Override
@@ -51,8 +55,11 @@ public class ViewReqFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_vol_view_requests, container, false);
         context = getContext();
-        //titol = root.findViewById(R.id.textView5);
+        titolSwitch = root.findViewById(R.id.titleSwitch);
         recyclerView = root.findViewById(R.id.listRecycleView);
+        pSwitch      = root.findViewById(R.id.switchPeticiones);
+        pSwitch.setVisibility(View.GONE);
+        titolSwitch.setVisibility(View.GONE);
         init();
         return root;
     }
@@ -102,6 +109,7 @@ public class ViewReqFragment extends Fragment {
     private void moveToDescription(Peticion p) {
         Intent i = new Intent(context, PeticionDetail.class);
         i.putExtra("Peticion",p);
+        i.putExtra("switch", false);
         startActivity(i);
     }
 

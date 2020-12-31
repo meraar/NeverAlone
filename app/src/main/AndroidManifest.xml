@@ -43,6 +43,7 @@
         <activity android:name=".Activity.RegisterVolunteerActivity" />
         <activity android:name=".Activity.RegisterBenefactorActivity" />
         <activity android:name=".Activity.Peticiones.PeticionDetail" />
+        <activity android:name=".Activity.Peticiones.PeticionAceptadaDetail" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
         <activity android:name=".Activity.RecoverPasswordActivity"/>

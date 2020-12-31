@@ -102,6 +102,7 @@ public class HomeBenefactorFragment extends Fragment {
     private void moveToDescription(Peticion p) {
         Intent i = new Intent(context, PeticionDetail.class);
         i.putExtra("Peticion",p);
+        i.putExtra("switch", false);
         startActivity(i);
     }
 
