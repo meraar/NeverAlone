@@ -66,6 +66,7 @@
     <string name="perfil_name">Mi perfil</string>
     <string name="title_activity_first_home">FirstHomeActivity</string>
     <string name="update_profile">Actualizar Perfil</string>
+    <string name="unsubscribe">Dar Baja de NeverAlone</string>
     <string name="logout">Cerrar Sesión</string>
     <string name="my_profile">Perfil</string>
     <string name="mapa_de_peticiones_tab">Mapa de peticiones</string>

@@ -304,6 +304,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }else Toast.makeText(getActivity(), "No hay ninguna modificación en los datos, por tanto no se puede actualizar el perfil", Toast.LENGTH_SHORT).show();
     }
 
+    public void Dar_Baja_Usuario(){
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -312,6 +316,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.profile_image:
                 UpdateFoto();
+                break;
+            case R.id.BajaUsuario:
+                Dar_Baja_Usuario();
                 break;
         }
     }
