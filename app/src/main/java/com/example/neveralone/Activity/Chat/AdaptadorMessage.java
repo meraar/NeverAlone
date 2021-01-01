@@ -36,7 +36,6 @@ public class AdaptadorMessage extends RecyclerView.Adapter<HolderMessage> {
 
     @Override
     public HolderMessage onCreateViewHolder(ViewGroup parent, int viewType) {
-        System.out.println("El viewType es: " + viewType);
         if (viewType == MESSAGE_TYPE_ENVIAR) {
             View v = LayoutInflater.from(c).inflate(R.layout.chat_view_right, parent, false);
             return new HolderMessage(v);

@@ -44,6 +44,6 @@
     <fragment
         android:id="@+id/blankFragmentTutor"
         android:name="com.example.neveralone.ui.tutor.BlankFragmentTutor"
-        android:label="fragment_blank_tutor"
+        android:label="Tutoria"
         tools:layout="@layout/fragment_blank_tutor_benefactor" />
 </navigation>

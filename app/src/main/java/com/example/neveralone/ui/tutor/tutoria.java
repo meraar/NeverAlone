@@ -3,7 +3,7 @@ package com.example.neveralone.ui.tutor;
 import java.util.Date;
 
 public class tutoria {
-    public tutoria(String compañeroID, int day, int month, int year) {
+    public tutoria(String compañeroID, String day, String month, String year) {
         this.compañeroID = compañeroID;
         this.day = day;
         this.month = month;
@@ -11,7 +11,9 @@ public class tutoria {
     }
 
     private String compañeroID;
-    private int day;
+    private String day;
+    private String month;
+    private String year;
 
     public String getCompañeroID() {
         return compañeroID;
@@ -21,32 +23,30 @@ public class tutoria {
         this.compañeroID = compañeroID;
     }
 
-    public int getDay() {
+    public String getDay() {
         return day;
     }
 
-    public void setDay(int day) {
+    public void setDay(String day) {
         this.day = day;
     }
 
-    public int getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
-    private int month;
-    private int year;
 
 
 

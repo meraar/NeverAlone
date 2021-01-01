@@ -16,10 +16,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
 
 
 public class BenefactorMatch extends Fragment {
@@ -34,7 +39,11 @@ public class BenefactorMatch extends Fragment {
         root = inflater.inflate(R.layout.fragment_blank_tutor_benefactor, container, false);
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         btnSolicitar = root.findViewById(R.id.btnSolicitar);
-        final Date d= new Date();
+        final Date currentDate = Calendar.getInstance().getTime();
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
+        final SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
+        final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+        //final Date d = new Date();
         btnSolicitar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,11 +60,11 @@ public class BenefactorMatch extends Fragment {
                                     Iterator i = snapshot.getChildren().iterator();
                                     String idVolun = (String) ((DataSnapshot) i.next()).getValue();
                                     databaseReference_Benef = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
-                                    databaseReference_Benef.setValue(new tutoria(idVolun,d.getDate(),d.getMonth(),d.getYear()));
+                                    databaseReference_Benef.setValue(new tutoria(idVolun, dayFormat.format(currentDate), monthFormat.format(currentDate), yearFormat.format(currentDate)));
                                     databaseReference_Benef = FirebaseDatabase.getInstance().getReference("SolicitudBeneficirio/" + userID);
                                     databaseReference_Benef.removeValue();
                                     databaseReference_Volun = FirebaseDatabase.getInstance().getReference("Tutoria/" + idVolun);
-                                    databaseReference_Volun.setValue(new tutoria(userID,d.getDate(),d.getMonth(),d.getYear()));
+                                    databaseReference_Volun.setValue(new tutoria(userID,dayFormat.format(currentDate), monthFormat.format(currentDate), yearFormat.format(currentDate)));
                                     databaseReference_Volun = FirebaseDatabase.getInstance().getReference("SolicitudVoluntario/" + idVolun);
                                     databaseReference_Volun.removeValue();
                                 }

@@ -32,7 +32,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Un tutotr es una persona que se hará responsable de ti durante tu estancai en NeverAlone"
+        android:text="Un tutor es una persona que se hará responsable de ti durante tu estancia en NeverAlone"
         android:textSize="20sp" />
 
     <Button

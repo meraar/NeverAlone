@@ -19,9 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 
 public class BlankFragmentTutor extends Fragment {
@@ -38,7 +40,7 @@ public class BlankFragmentTutor extends Fragment {
         transaction = getFragmentManager().beginTransaction();
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         tutor=false;
-         d= new Date();
+         //d= new Date();
         //volunatario
         if (LoginActivity.getUserType()){
             tutor=true;
@@ -62,7 +64,7 @@ public class BlankFragmentTutor extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //existe un match
                 if(snapshot.exists()) {
-                    if(tutor) transaction.replace(R.id.root_frame, new TutoriaVoluntario()); //Sustiuir con la clase de tutor voluntario
+                    if (tutor) transaction.replace(R.id.root_frame, new TutoriaVoluntario()); //Sustiuir con la clase de tutor voluntario
                     else transaction.replace(R.id.root_frame, new TutoriaBenefactor()); //Sustiuir con la clase de tutor voluntario
                     transaction.commit();
                 }
@@ -96,6 +98,10 @@ public class BlankFragmentTutor extends Fragment {
     }
 
     private void HamosMatch() {
+        final Date currentDate = Calendar.getInstance().getTime();
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
+        final SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
+        final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
         reference2 = FirebaseDatabase.getInstance().getReference().child(DirSolicitudCompañero);
         reference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -106,12 +112,12 @@ public class BlankFragmentTutor extends Fragment {
 
                     String idComp = (String) ((DataSnapshot) i.next()).getValue();
                     databaseReference_Compañero = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
-                    databaseReference_Compañero.setValue(new tutoria(idComp,d.getDate(),d.getMonth(),d.getYear()));
+                    databaseReference_Compañero.setValue(new tutoria(idComp, dayFormat.format(currentDate), monthFormat.format(currentDate), yearFormat.format(currentDate)));
                     databaseReference_Compañero = FirebaseDatabase.getInstance().getReference(DirSolicitudLogeado + userID);
                     databaseReference_Compañero.removeValue();
 
                     databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
-                    databaseReference_Logeado.setValue(new tutoria(userID,d.getDate(),d.getMonth(),d.getYear()));
+                    databaseReference_Logeado.setValue(new tutoria(userID, dayFormat.format(currentDate), monthFormat.format(currentDate), yearFormat.format(currentDate)));
                     databaseReference_Logeado = FirebaseDatabase.getInstance().getReference(DirSolicitudCompañero + idComp);
                     databaseReference_Logeado.removeValue();
                 }
