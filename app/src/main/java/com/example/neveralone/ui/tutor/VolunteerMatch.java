@@ -80,7 +80,7 @@ public class VolunteerMatch extends Fragment {
                                     databaseReference_Benef.removeValue();
                                 }
 
-                                    transaction.replace(R.id.root_frame, new VolunteerWait()); //Sustiuir con la clase de tutor voluntario
+                                    transaction.replace(R.id.root_frame, new VolunteerMatch()); //Sustiuir con la clase de tutor voluntario
                                     transaction.commit();
 
                             }

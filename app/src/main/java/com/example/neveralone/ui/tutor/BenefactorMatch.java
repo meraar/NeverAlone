@@ -1,6 +1,5 @@
 package com.example.neveralone.ui.tutor;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -33,7 +31,7 @@ public class BenefactorMatch extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_blank_tutor, container, false);
+        root = inflater.inflate(R.layout.fragment_blank_tutor_benefactor, container, false);
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         btnSolicitar = root.findViewById(R.id.btnSolicitar);
         final Date d= new Date();
@@ -61,7 +59,7 @@ public class BenefactorMatch extends Fragment {
                                     databaseReference_Volun = FirebaseDatabase.getInstance().getReference("SolicitudVoluntario/" + idVolun);
                                     databaseReference_Volun.removeValue();
                                 }
-                                transaction.replace(R.id.root_frame, new BenefactorWait()); //Sustiuir con la clase de tutor voluntario
+                                transaction.replace(R.id.root_frame, new BenefactorMatch()); //Sustiuir con la clase de tutor voluntario
                                 transaction.commit();
 
                             }
