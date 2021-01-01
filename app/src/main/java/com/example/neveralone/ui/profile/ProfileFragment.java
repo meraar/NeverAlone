@@ -1,6 +1,7 @@
 package com.example.neveralone.ui.profile;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.neveralone.R;
@@ -85,6 +87,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         Button updateButton = root.findViewById(R.id.ActualizarPerfil);
         updateButton.setOnClickListener(this);
+
+        Button unsubscribeButton = root.findViewById(R.id.BajaUsuario);
+        unsubscribeButton.setOnClickListener(this);
 
         CircleImageView imageButton = root.findViewById(R.id.profile_image);
         imageButton.setOnClickListener(this);
@@ -305,6 +310,33 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     public void Dar_Baja_Usuario(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("¿Estás seguro que quiere dar de baja de NeverAlone?")
+                .setTitle("Mensaje de Confirmación")
+                .setCancelable(false)
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //reference = FirebaseDatabase.getInstance().getReference();
+                        //reference.child("Peticiones").child(p.getPeticionID()).removeValue();
+                        //reference.child("User-Peticiones").child(user.getUid()).child(p.getPeticionID()).removeValue();
+                        /** reference.child("Interacciones").child(p.getPeticionID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        });
+                        dialog.dismiss();
+                         */
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
 
     }
 
