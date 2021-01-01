@@ -53,7 +53,8 @@ public class ListaDeContactos extends AppCompatActivity {
                         for (DataSnapshot dsp : snapshot.getChildren()) {
                             String peticion = dsp.getKey();
                             String nombre=dsp.child("nombre2").getValue().toString();
-                            elementos.add(new ElementosDeLista(nombre, peticion));
+                            String id=dsp.child("nombre2").getValue().toString();
+                            elementos.add(new ElementosDeLista(id, nombre, peticion));
                         }
                         ListaAdaptador listaAdaptador =new ListaAdaptador(elementos, context, new ListaAdaptador.OnItemClickListener() {
                             @Override

@@ -34,14 +34,12 @@ public class ListaAdaptador extends RecyclerView.Adapter<ListaAdaptador.ViewHold
     @NonNull
     @Override
     public ListaAdaptador.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        System.out.println("onCreateViewHolder");
         View v = mInflater.inflate(R.layout.elementos_lista_contactos, null);
         return new ListaAdaptador.ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListaAdaptador.ViewHolder holder, final int position) {
-        System.out.println("onBindViewHolder");
 
         holder.bindData(mData.get(position));
     }
@@ -56,11 +54,9 @@ public class ListaAdaptador extends RecyclerView.Adapter<ListaAdaptador.ViewHold
         ViewHolder(@NonNull View itemView){
             super(itemView);
             nombre = itemView.findViewById(R.id.nombreUsuario);
-            System.out.println("ViewHolder Class");
         }
 
         void bindData(final ElementosDeLista item){
-            System.out.println("ViewHolder Class   bindData");
 
             nombre.setText(item.getNombre());
             itemView.setOnClickListener(new View.OnClickListener() {
