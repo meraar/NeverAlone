@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.neveralone.Activity.LoginActivity;
@@ -37,12 +39,14 @@ public class ViewReqFragment extends Fragment {
     private DatabaseReference reference;
     private FirebaseUser user;
     private Context context;
+    private Spinner spinner;
     //private TextView titol;
     private RecyclerView recyclerView;
-
+    private String TipoPeticion;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -51,6 +55,13 @@ public class ViewReqFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_vol_view_requests, container, false);
         context = getContext();
+
+        Spinner spinner = (Spinner) root.findViewById(R.id.Spinner);
+        String[] valores = {"Compras", "Asesoramiento", "Acompañamiento", "Otros"};
+        spinner.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, valores));
+
+        TipoPeticion = spinner.getSelectedItem().toString();
+
         //titol = root.findViewById(R.id.textView5);
         recyclerView = root.findViewById(R.id.listRecycleView);
         init();
@@ -73,8 +84,18 @@ public class ViewReqFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     elements = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        Peticion p = ds.getValue(Peticion.class);
-                        elements.add(p);
+                        if (ds.child("estado").getValue().toString().equals("PENDIENTE")) {
+                            if(TipoPeticion != "")  {//o not null
+                                if(ds.child("categoria").getValue().toString().equals(TipoPeticion)) {
+                                    Peticion p = ds.getValue(Peticion.class);
+                                    elements.add(p);
+                                }
+                            }
+                            else {
+                                Peticion p = ds.getValue(Peticion.class);
+                                elements.add(p);
+                            }
+                        }
                     }
                     Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
                         @Override

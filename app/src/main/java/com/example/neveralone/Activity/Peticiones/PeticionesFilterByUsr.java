@@ -8,8 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.neveralone.Activity.LoginActivity;
+import com.example.neveralone.Activity.RegisterBenefactorActivity;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,11 +33,13 @@ public class PeticionesFilterByUsr extends AppCompatActivity {
     private Context context;
     private TextView titol;
     private String IdUsrBenefactor;
+    private Button BtnAtras;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peticiones_filter_by_usr);
-
+        BtnAtras = findViewById(R.id.BtnAtras);
         context = this;
 
         init();
@@ -76,7 +82,13 @@ public class PeticionesFilterByUsr extends AppCompatActivity {
 
             }
         });
-    }
+        BtnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PeticionesFilterByUsr.this, LoginActivity.class));
+                finish();
+            }
+        });    }
 
     private void moveToDescription(Peticion p) {
         Intent i = new Intent(context,PeticionDetail.class);
