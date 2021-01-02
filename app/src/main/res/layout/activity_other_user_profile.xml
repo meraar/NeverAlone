@@ -15,15 +15,15 @@
         android:text="MI Perfil">
 
         <TextView
-            android:layout_width="397dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:singleLine="true"
-            android:text="Mi Perfil"
+            android:layout_centerInParent="true"
             android:gravity="center"
+            android:singleLine="true"
+            android:text="Perfil"
             android:textColor="@color/colorBlack"
             android:textSize="30dp"
-            android:textStyle="bold"
-            android:layout_centerInParent="true" />
+            android:textStyle="bold" />
     </FrameLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,30 +52,48 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+
             android:orientation="vertical"
             android:padding="20dp">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/Nombre4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/user_name"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"></TextView>
 
 
-                <TextView
-                    android:id="@+id/Nombre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/user_name"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold">
-                </TextView>
+            <TextView
+                android:id="@+id/Nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="320dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/Nombre4"
+                android:hint="@string/user_name"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp"></TextView>
+
+            </RelativeLayout>
 
 
-
-
-                <TextView
+            <TextView
                     android:id="@+id/Apellido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,122 +109,122 @@
                 </TextView>
 
 
+            <!--
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/user_email"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold">
+
+            </TextView>
 
 
-                <TextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/user_email"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold">
+            <TextView
+                android:id="@+id/dni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_dni"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold">
 
-                </TextView>
-
-
-                <TextView
-                    android:id="@+id/dni"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_dni"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold">
-
-                </TextView>
+            </TextView>
 
 
-                <TextView
-                    android:id="@+id/codigo_postal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_codigopostal_EditText"
-                    android:inputType="number"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    >
+            <TextView
+                android:id="@+id/codigo_postal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_codigopostal_EditText"
+                android:inputType="number"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                >
 
-                </TextView>
-
-
-                <TextView
-                    android:id="@+id/puntuacion_media"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:visibility="gone"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold">
-
-                </TextView>
+            </TextView>
 
 
-                <TextView
-                    android:id="@+id/direccion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:visibility="gone"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold">
+            <TextView
+                android:id="@+id/puntuacion_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold">
 
-                </TextView>
-
-
-                <TextView
-                    android:id="@+id/piso_puerta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:visibility="gone"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/motivo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawSelectorOnTop="true"
-                    android:padding="10dp"
-                    android:visibility="gone"
-                    android:textColor="@android:color/black"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold">
-
-                </TextView>
+            </TextView>
 
 
+            <TextView
+                android:id="@+id/direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/piso_puerta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/motivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            -->
 
         </LinearLayout>
 

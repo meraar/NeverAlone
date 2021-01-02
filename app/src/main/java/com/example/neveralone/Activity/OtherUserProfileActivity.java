@@ -58,7 +58,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         motivotxt = findViewById(R.id.motivo);
 
         initialize_data();
-       // initialize_photo();
+        initialize_photo();
     }
 
     private void initialize_data(){
@@ -132,13 +132,14 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         profile_image = findViewById(R.id.profile_image);
         String foto_name = user_uid + ".jpg";
         storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
-        storageReference.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                profile_image.setImageBitmap(bitmap);
-            }
-        });
-
+        if (storageReference != null) {
+            storageReference.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    profile_image.setImageBitmap(bitmap);
+                }
+            });
+        }
     }
 }
