@@ -45,18 +45,18 @@ public class ListaAdaptador extends RecyclerView.Adapter<ListaAdaptador.ViewHold
 
     @NonNull
     @Override
-    public ListaAdaptador.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         System.out.println("ViewType: " + viewType);
         if (viewType == FRIEND_TYPE_PETITION) {
             View v = mInflater.inflate(R.layout.elementos_lista_contactos, null);
-            return new ListaAdaptador.ViewHolder(v);
+            return new ViewHolder(v);
         }
         else if (viewType == FRIEND_TYPE_TUTOR) {
-            View v = mInflater.inflate(R.layout.elementos_lista_contactos_tutor, null);
-            return new ListaAdaptador.ViewHolder(v);
+            View v = mInflater.inflate(R.layout.elementos_lista_contactos, null);
+            return new ViewHolder(v);
         }
         View v = mInflater.inflate(R.layout.elementos_lista_contactos, null);
-        return new ListaAdaptador.ViewHolder(v);
+        return new ViewHolder(v);
     }
 
     @Override

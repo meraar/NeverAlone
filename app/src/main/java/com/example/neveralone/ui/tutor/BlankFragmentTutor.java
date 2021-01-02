@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class BlankFragmentTutor extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root =inflater.inflate(R.layout.fragment_blank, container, false);
+        View root =inflater.inflate(R.layout.fragment_blank_tutor, container, false);
         transaction = getFragmentManager().beginTransaction();
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         tutor=false;
@@ -64,8 +65,9 @@ public class BlankFragmentTutor extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //existe un match
                 if(snapshot.exists()) {
-                    if (tutor) transaction.replace(R.id.root_frame, new TutoriaVoluntario()); //Sustiuir con la clase de tutor voluntario
-                    else transaction.replace(R.id.root_frame, new TutoriaBenefactor()); //Sustiuir con la clase de tutor voluntario
+                    Log.i("mensaje","entra");
+                    if(tutor) transaction.replace(R.id.root_frame_tutor, new TutoriaVoluntario()); //Sustiuir con la clase de tutor voluntario
+                    else transaction.replace(R.id.root_frame_tutor, new TutoriaBenefactor()); //Sustiuir con la clase de tutor voluntario
                     transaction.commit();
                 }
                 //si existe alguna instancia en voluntario, podemos hacer el match
@@ -87,8 +89,8 @@ public class BlankFragmentTutor extends Fragment {
                 if (snapshot.exists()) HamosMatch();
 
                 else{
-                    if(tutor) transaction.replace(R.id.root_frame, new VolunteerMatch()); //Sustiuir con la clase de tutor voluntario
-                    else transaction.replace(R.id.root_frame, new BenefactorMatch()); //Sustiuir con la clase de tutor voluntario
+                    if(tutor) transaction.replace(R.id.root_frame_tutor, new VolunteerRequest()); //Sustiuir con la clase de tutor voluntario
+                    else transaction.replace(R.id.root_frame_tutor, new BenefactorRequest()); //Sustiuir con la clase de tutor voluntario
                     transaction.commit();
                 }
             }
@@ -121,8 +123,8 @@ public class BlankFragmentTutor extends Fragment {
                     databaseReference_Logeado = FirebaseDatabase.getInstance().getReference(DirSolicitudCompañero + idComp);
                     databaseReference_Logeado.removeValue();
                 }
-                if(tutor) transaction.replace(R.id.root_frame, new VolunteerWait()); //Sustiuir con la clase de tutor voluntario
-                else transaction.replace(R.id.root_frame, new BenefactorWait()); //Sustiuir con la clase de tutor voluntario
+                if(tutor) transaction.replace(R.id.root_frame_tutor, new VolunteerWait()); //Sustiuir con la clase de tutor voluntario
+                else transaction.replace(R.id.root_frame_tutor, new BenefactorWait()); //Sustiuir con la clase de tutor voluntario
                 transaction.commit();
             }
 

@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.neveralone.Activity.Chat.MessageActivity;
-import com.example.neveralone.Activity.Peticiones.PeticionDetail;
 import com.example.neveralone.R;
+import com.example.neveralone.ui.profile.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,19 +30,21 @@ import java.util.Locale;
 
 public class TutoriaBenefactor extends Fragment {
     private View root;
+    private Button VerPerfilTutor;
     private Button btnEnviarMensaje, btnDejarSerTutor;
     private Context context;
+    private static  String idTutor;
     private static String idFriendUser, nameFriendUser;
 
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_blank_tutoria_benefactor, container, false);
+        root = inflater.inflate(R.layout.fragment_tutoria_benefactor, container, false);
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         context = this.getContext();
         btnEnviarMensaje = root.findViewById(R.id.btnEnviarMensajeTutorVol);
         btnDejarSerTutor = root.findViewById(R.id.DejarSerTutot);
-
+        VerPerfilTutor = root.findViewById(R.id.VerPerfilTutor);
         btnEnviarMensaje.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -111,7 +113,7 @@ public class TutoriaBenefactor extends Fragment {
                                 databaseReference_Logeado.removeValue();
                                 DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
                                 databaseReference_Comp.removeValue();
-                                transaction.replace(R.id.root_frame, new BenefactorMatch()); //Sustiuir con la clase de tutor voluntario
+                                transaction.replace(R.id.root_frame_tutoria_benefactor, new BenefactorRequest()); //Sustiuir con la clase de tutor voluntario
                                 transaction.commit();
                             }
                         }
@@ -122,6 +124,38 @@ public class TutoriaBenefactor extends Fragment {
                     });
             }
         });
+
+        VerPerfilTutor.setOnClickListener(new View.OnClickListener() {
+
+           @Override
+           public void onClick(View v) {
+               final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+               final DatabaseReference databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
+
+               databaseReference_Logeado.addListenerForSingleValueEvent(
+                       new ValueEventListener() {
+                           @Override
+                           public void onDataChange(@NonNull DataSnapshot snapshot) {
+                               idTutor = (String) snapshot.child("compañeroID").getValue();
+                           }
+
+                           @Override
+                           public void onCancelled(@NonNull DatabaseError error) {
+                           }
+                       });
+               Bundle b = new Bundle();
+               b.putString("idCurrentUser", idTutor);
+
+               Intent intent = new Intent(v.getContext(), ProfileFragment.class);
+               intent.putExtras(b);
+
+               startActivity(intent);
+           }
+
+
+        });
+
         transaction.commit();
         return root;
     }

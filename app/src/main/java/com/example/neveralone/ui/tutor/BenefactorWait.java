@@ -15,7 +15,7 @@ public class BenefactorWait extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_blank_tutor_benefactor_wait, container, false);
+        root = inflater.inflate(R.layout.fragment_tutor_benefactor_wait, container, false);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.commit();
         return root;
