@@ -81,5 +81,10 @@
     <string name="contrasena">Recuperar Contraseña</string>
     <string name="contrasena_button">Aceptar</string>
 
+    <string name="user_piso">Piso, Puerta</string>
+    <string name="user_motivo">Motivo</string>
+    <string name="user_puntuation">Puntuación</string>
+    <string name="user_direction">Dirección</string>
+
 
 </resources>

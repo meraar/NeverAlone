@@ -27,8 +27,9 @@ import com.google.firebase.storage.StorageReference;
 
 public class OtherUserProfileActivity extends AppCompatActivity {
 
-    private TextView nombretxt, apellidotxt, dnitxt, codigo_postaltxt, direcciontxt, emailtxt;
-    private TextView puntuacion_mediatxt, piso_puertatxt, motivotxt;
+    private TextView nombretxt, apellidotxt, dnitxt, codigo_postaltxt, emailtxt;
+    private TextView puntuacion_mediatxt, piso_puertatxt, motivotxt, direcciontxt;
+    private TextView puntuacion_mediatxt2, piso_puertatxt2, motivotxt2, direcciontxt2;
 
     private String user_uid;
     private ImageView profile_image;
@@ -56,6 +57,11 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         piso_puertatxt = findViewById(R.id.piso_puerta);
         direcciontxt = findViewById(R.id.direccion);
         motivotxt = findViewById(R.id.motivo);
+
+        puntuacion_mediatxt2 = findViewById(R.id.puntuacion_media2);
+        piso_puertatxt2 = findViewById(R.id.piso_puerta2);
+        direcciontxt2 = findViewById(R.id.direccion2);
+        motivotxt2 = findViewById(R.id.motivo2);
 
         initialize_data();
         initialize_photo();
@@ -96,15 +102,19 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                                 String motivo = usuario.getMotivo();
                                 motivotxt.setText(motivo);
                                 motivotxt.setVisibility(View.VISIBLE);
+                                motivotxt2.setVisibility(View.VISIBLE);
                                 //motivotxt.setEnabled(false); // El motivo no se podra actualizar.
                                 motivotxt.setVisibility(View.VISIBLE);
 
-                                String direccion =usuario.getDireccion();
-                                direcciontxt.setText(direccion);
+                                //String direccion = ;
+                                //System.out.println("DIRRREEEEEEEEEEEECCC = "+ direccion);
+                                direcciontxt.setText(usuario.getDireccion());
+                                direcciontxt2.setVisibility(View.VISIBLE);
                                 direcciontxt.setVisibility(View.VISIBLE);
 
                                 String puerta =  usuario.getPiso_puerta();
                                 piso_puertatxt.setText(puerta);
+                                piso_puertatxt2.setVisibility(View.VISIBLE);
                                 piso_puertatxt.setVisibility(View.VISIBLE);
 
                             }
@@ -112,7 +122,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                                 //first_puntuacion.setVisibility(View.VISIBLE);
                                 String puntuacion =  String.valueOf(usuario.getPuntuacioMedia());
                                 puntuacion_mediatxt.setText(puntuacion);
-                               // puntuacion_mediatxt.setEnabled(false);
+                                puntuacion_mediatxt2.setVisibility(View.VISIBLE);
                                 puntuacion_mediatxt.setVisibility(View.VISIBLE);
 
                             }
