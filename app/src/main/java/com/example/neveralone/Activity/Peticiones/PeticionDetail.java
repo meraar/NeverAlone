@@ -164,8 +164,6 @@ public class PeticionDetail extends AppCompatActivity {
                                     reference.child(elements.get(0).getUid()).removeValue(); //el jambo voluntari
                                 }
 
-                                finish();
-
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -178,8 +176,6 @@ public class PeticionDetail extends AppCompatActivity {
             }
 
         });
-
-        //TODO: Abandonar pendiente i actulitzar quan beneficiari accepta tambe ha de borrar de Pendiente de cada usuari que contingui aquesta peticio
 
         dejar.setOnClickListener(new View.OnClickListener() {
             @Override
