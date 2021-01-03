@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.neveralone.Activity.Chat.MessageActivity;
+import com.example.neveralone.Activity.OtherUserProfileActivity;
 import com.example.neveralone.R;
 import com.example.neveralone.ui.profile.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -126,9 +127,8 @@ public class TutoriaVoluntario extends Fragment {
         });
 
         VerPerfilBeneficiario.setOnClickListener(new View.OnClickListener() {
-
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 final DatabaseReference databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
@@ -138,15 +138,15 @@ public class TutoriaVoluntario extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 idTutor = (String) snapshot.child("compañeroID").getValue();
+                                Intent intent = new Intent(getActivity(), OtherUserProfileActivity.class);
+                                intent.putExtra("uid", idTutor);
+                                startActivity(intent);
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.root_frame_tutoria_volunteer, new BlankFragmentTutor());
-                transaction.commit();
             }
 
 
