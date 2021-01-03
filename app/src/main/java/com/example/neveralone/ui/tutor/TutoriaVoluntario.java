@@ -31,8 +31,7 @@ import java.util.Locale;
 
 public class TutoriaVoluntario extends Fragment {
     private View root;
-    private Button btnEnviarMensaje, btnDejarSerTutot;
-    private Button DejarSerTutot,VerPerfilBeneficiario;
+    private Button btnEnviarMensaje, btnDejarSerTutot,VerPerfilBeneficiario;
     private Context context;
     private static String idFriendUser, nameFriendUser;
 
@@ -115,7 +114,7 @@ public class TutoriaVoluntario extends Fragment {
                                     DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
                                     databaseReference_Comp.removeValue();
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.root_frame_tutoria_volunteer, new VolunteerRequest()); //Sustiuir con la clase de tutor voluntario
+                                    transaction.replace(R.id.root_frame_tutoria_volunteer, new BlankFragmentTutor());
                                     transaction.commit();
                                 }
                             }
@@ -145,16 +144,16 @@ public class TutoriaVoluntario extends Fragment {
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
-                Bundle b = new Bundle();
-                b.putString("idCurrentUser", idTutor);
-
-                Intent intent = new Intent(v.getContext(), ProfileFragment.class);
-                intent.putExtras(b);
-                v.getContext().startActivity(intent);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.root_frame_tutoria_volunteer, new BlankFragmentTutor());
+                transaction.commit();
             }
 
 
         });
         return root;
+    }
+    public static String getIdTutoriaVolunteer(){
+        return idTutor;
     }
 }

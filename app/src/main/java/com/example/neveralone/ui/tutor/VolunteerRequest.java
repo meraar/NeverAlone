@@ -72,7 +72,7 @@ public class VolunteerRequest extends Fragment {
                                     databaseReference_Benef.removeValue();
                                 }
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.replace(R.id.root_frame_tutor_volunteer_request, new VolunteerWait()); //Sustiuir con la clase de tutor voluntario
+                                transaction.replace(R.id.root_frame_tutor_volunteer_request, new BlankFragmentTutor()); //Sustiuir con la clase de tutor voluntario
                                 transaction.commit();
 
                             }

@@ -113,7 +113,7 @@ public class TutoriaBenefactor extends Fragment {
                                 databaseReference_Logeado.removeValue();
                                 DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
                                 databaseReference_Comp.removeValue();
-                                transaction.replace(R.id.root_frame_tutoria_benefactor, new BenefactorRequest()); //Sustiuir con la clase de tutor voluntario
+                                transaction.replace(R.id.root_frame_tutoria_benefactor, new BlankFragmentTutor()); //Sustiuir con la clase de tutor voluntario
                                 transaction.commit();
                             }
                         }
@@ -144,19 +144,17 @@ public class TutoriaBenefactor extends Fragment {
                            public void onCancelled(@NonNull DatabaseError error) {
                            }
                        });
-               Bundle b = new Bundle();
-               b.putString("idCurrentUser", idTutor);
-
-               Intent intent = new Intent(v.getContext(), ProfileFragment.class);
-               intent.putExtras(b);
-
-               startActivity(intent);
+               FragmentTransaction transaction = getFragmentManager().beginTransaction();
+               transaction.replace(R.id.root_frame_tutoria_volunteer, new BlankFragmentTutor());
+               transaction.commit();
            }
 
 
         });
 
-        transaction.commit();
         return root;
+    }
+    public static String getIdTutoriaBenefactor (){
+        return idTutor;
     }
 }
