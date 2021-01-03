@@ -108,6 +108,11 @@ public class PeticionDetail extends AppCompatActivity {
             recyclerView.setVisibility(View.GONE);
         }
 
+        if(p.getEstado().equals(Estado.CURSO)) {
+            aceptar.setVisibility(View.GONE);
+            borrar.setVisibility(View.GONE);
+        }
+
         if(!(p.getEstado().equals(Estado.CURSO)) && !checked){ //cuando es pendiente y no viene de pendiente del voluntario
             cancelar.setVisibility(View.GONE);
             dejar.setVisibility(View.GONE);
