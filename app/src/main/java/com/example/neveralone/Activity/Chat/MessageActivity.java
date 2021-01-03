@@ -8,6 +8,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.neveralone.Activity.ListaChat.RelacionChat;
+import com.example.neveralone.Peticion.Peticion;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ServerValue;
 
 import androidx.annotation.NonNull;
@@ -22,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,6 +39,7 @@ public class MessageActivity extends AppCompatActivity {
     private EditText txtMensaje;
     private Button btnEnviar;
     private String idCurrentUser, idFriendUser, idPeticion;
+    private FirebaseUser user;
 
     private AdaptadorMessage adaptador_currentUser, adaptador_friendUser;
 
@@ -56,6 +62,8 @@ public class MessageActivity extends AppCompatActivity {
         rvMensajes.setLayoutManager(l);
         rvMensajes.setAdapter(adaptador_currentUser);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
             idCurrentUser = (String) b.getString("idCurrentUser"); //current
@@ -65,6 +73,13 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         nombre.setText(nameFriendUser);
+
+        if (idPeticion.equals("Tutor")) {
+            DatabaseReference dbContactoTutorCurrentUser = FirebaseDatabase.getInstance().getReference("ChatPeticion/"+ idCurrentUser);
+            DatabaseReference dbContactoTutorFriendUser = FirebaseDatabase.getInstance().getReference("ChatPeticion/"+ idFriendUser);
+            dbContactoTutorCurrentUser.push().setValue(new RelacionChat(idFriendUser, nameFriendUser, "Tutor"));
+            dbContactoTutorFriendUser.push().setValue(new RelacionChat(idCurrentUser, user.getDisplayName(),"Tutor"));
+        }
 
         databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("Chat/" + idCurrentUser + "/" + idFriendUser);
         databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Chat/" + idFriendUser + "/" + idCurrentUser);
@@ -76,8 +91,8 @@ public class MessageActivity extends AppCompatActivity {
                     Toast.makeText(MessageActivity.this, "No hay nada escrito", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                   databaseReference_currentUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), idCurrentUser, "", "1", idPeticion, ServerValue.TIMESTAMP));
-                   databaseReference_friendUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), idCurrentUser, "", "1", idPeticion, ServerValue.TIMESTAMP));
+                   databaseReference_currentUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), idCurrentUser, "", idPeticion, ServerValue.TIMESTAMP));
+                   databaseReference_friendUser.push().setValue(new MessageEnviar(txtMensaje.getText().toString(), idCurrentUser, "", idPeticion, ServerValue.TIMESTAMP));
                    txtMensaje.setText(null);
                 }
             }

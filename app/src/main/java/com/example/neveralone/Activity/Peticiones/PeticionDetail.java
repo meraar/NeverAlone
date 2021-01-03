@@ -121,7 +121,7 @@ public class PeticionDetail extends AppCompatActivity {
                 b.putString("idCurrentUser", idCurrentUser);
                 b.putString("idFriendUser", idFriendUser);
                 b.putString("idPeticion", idPeticion);
-                b.putString("nameFriendUser",p.getUser());
+                b.putString("nameFriendUser", p.getUser());
 
                 Intent intent = new Intent(PeticionDetail.this, MessageActivity.class);
                 intent.putExtras(b);

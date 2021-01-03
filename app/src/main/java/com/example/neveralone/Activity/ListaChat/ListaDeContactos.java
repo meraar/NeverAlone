@@ -41,8 +41,8 @@ public class ListaDeContactos extends AppCompatActivity {
        final Context context= this;
         peticionesList = new ArrayList<String>();
         final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/4IS1tZ6IrGbEqE2h6jXR05EeXCj1");
-        //reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/" + userID);
+        //reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/4IS1tZ6IrGbEqE2h6jXR05EeXCj1");
+        reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/" + userID);
         Log.i("mensaje",reference.toString());
         reference.addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -53,7 +53,8 @@ public class ListaDeContactos extends AppCompatActivity {
                         for (DataSnapshot dsp : snapshot.getChildren()) {
                             String peticion = dsp.getKey();
                             String nombre=dsp.child("nombre2").getValue().toString();
-                            elementos.add(new ElementosDeLista(nombre, peticion));
+                            String id=dsp.child("nombre2").getValue().toString();
+                            elementos.add(new ElementosDeLista(id, nombre, peticion));
                         }
                         ListaAdaptador listaAdaptador =new ListaAdaptador(elementos, context, new ListaAdaptador.OnItemClickListener() {
                             @Override
