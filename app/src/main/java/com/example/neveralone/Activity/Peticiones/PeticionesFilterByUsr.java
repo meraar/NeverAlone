@@ -85,6 +85,7 @@ public class PeticionesFilterByUsr extends AppCompatActivity {
         BtnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO => REDIRIGIR DE ESTA ACTIVITY AL FRAGMENT "MAP" DE LA ACTIVITY PRINCIPAL
                 startActivity(new Intent(PeticionesFilterByUsr.this, LoginActivity.class));
                 finish();
             }

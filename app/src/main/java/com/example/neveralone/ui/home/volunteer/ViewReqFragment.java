@@ -6,12 +6,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Activity.Peticiones.Adaptador;
 import com.example.neveralone.Activity.Peticiones.PeticionDetail;
 import com.example.neveralone.Peticion.Peticion;
+import com.example.neveralone.Peticion.TimePicker;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -60,7 +63,10 @@ public class ViewReqFragment extends Fragment {
         String[] valores = {"Compras", "Asesoramiento", "Acompañamiento", "Otros"};
         spinner.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, valores));
 
-        TipoPeticion = spinner.getSelectedItem().toString();
+        TipoPeticion = null;
+        if(spinner != null && spinner.getSelectedItem() !=null ) {
+            TipoPeticion = (String)spinner.getSelectedItem();
+        }
 
         //titol = root.findViewById(R.id.textView5);
         recyclerView = root.findViewById(R.id.listRecycleView);
@@ -85,7 +91,7 @@ public class ViewReqFragment extends Fragment {
                     elements = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         if (ds.child("estado").getValue().toString().equals("PENDIENTE")) {
-                            if(TipoPeticion != "")  {//o not null
+                            if(TipoPeticion != null)  {//o not null
                                 if(ds.child("categoria").getValue().toString().equals(TipoPeticion)) {
                                     Peticion p = ds.getValue(Peticion.class);
                                     elements.add(p);
@@ -114,7 +120,8 @@ public class ViewReqFragment extends Fragment {
                 }
             });
         }
-        //TODO borrar esta parte que es del beneficiario
+
+       //TODO borrar esta parte que es del beneficiario
         else {
             //titol.setText("Mis Peticiones");
             reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
@@ -145,6 +152,25 @@ public class ViewReqFragment extends Fragment {
                 }
             });
         }
+        //TODO HASTA AQUI
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                //Reload fragment al cambiar Item
+                Fragment currentFragment = getFragmentManager().findFragmentByTag("ViewReqFragment");
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.detach(currentFragment);
+                fragmentTransaction.attach(currentFragment);
+                fragmentTransaction.commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
     }
 
     private void moveToDescription(Peticion p) {
