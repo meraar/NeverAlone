@@ -42,7 +42,7 @@ public class ViewReqFragment extends Fragment {
     private DatabaseReference reference;
     private FirebaseUser user;
     private Context context;
-    private Spinner spinner;
+    private Spinner spinnerfilter;
     //private TextView titol;
     private RecyclerView recyclerView;
     private String TipoPeticion;
@@ -59,14 +59,12 @@ public class ViewReqFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_vol_view_requests, container, false);
         context = getContext();
 
-        Spinner spinner = (Spinner) root.findViewById(R.id.Spinner);
-        String[] valores = {"Compras", "Asesoramiento", "Acompañamiento", "Otros"};
-        spinner.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, valores));
+        spinnerfilter = root.findViewById(R.id.spinnerfilter);
+        String[] valores = {"Todo","Compras", "Asesoramiento", "Acompañamiento", "Otros"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, valores);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerfilter.setAdapter(adapter);
 
-        TipoPeticion = null;
-        if(spinner != null && spinner.getSelectedItem() !=null ) {
-            TipoPeticion = (String)spinner.getSelectedItem();
-        }
 
         //titol = root.findViewById(R.id.textView5);
         recyclerView = root.findViewById(R.id.listRecycleView);
@@ -76,6 +74,10 @@ public class ViewReqFragment extends Fragment {
 
 
     private void init() {
+        TipoPeticion = null;
+        if(spinnerfilter != null && spinnerfilter.getSelectedItem() !=null ) {
+            TipoPeticion = (String)spinnerfilter.getSelectedItem();
+        }
         elements = new ArrayList<>();
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
@@ -92,7 +94,7 @@ public class ViewReqFragment extends Fragment {
                     elements = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         if (ds.child("estado").getValue().toString().equals("PENDIENTE")) {
-                            if(TipoPeticion != null)  {//o not null
+                            if(TipoPeticion != "Todo")  {//o not null
                                 if(ds.child("categoria").getValue().toString().equals(TipoPeticion)) {
                                     Peticion p = ds.getValue(Peticion.class);
                                     elements.add(p);
@@ -155,15 +157,11 @@ public class ViewReqFragment extends Fragment {
         }
         //TODO HASTA AQUI
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerfilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 //Reload fragment al cambiar Item
-                Fragment currentFragment = getFragmentManager().findFragmentByTag("ViewReqFragment");
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.detach(currentFragment);
-                fragmentTransaction.attach(currentFragment);
-                fragmentTransaction.commit();
+                init();
             }
 
             @Override
