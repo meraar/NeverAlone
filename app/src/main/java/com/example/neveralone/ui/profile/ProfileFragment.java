@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.neveralone.Activity.ListaChat.ElementosDeLista;
 import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.Activity.MainActivity;
 import com.example.neveralone.Activity.RecoverPasswordActivity;
@@ -45,6 +47,8 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
@@ -324,41 +328,35 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         String user_id = firebaseAuth.getCurrentUser().getUid();
 
+                        firebaseAuth.getCurrentUser().delete();
                         reference.child("Usuarios").child(user_id).removeValue();
-                        reference.child("ChatPeticion").child(user_id).removeValue();
-                        reference.child("Chat").child(user_id).removeValue();
-                        reference.child("ChatTutor").child(user_id).removeValue();
-                        reference.child("ContactoTutoria").child(user_id).removeValue();
                         reference.child("Interacciones").child(user_id).removeValue();
                         reference.child("Pendientes").child(user_id).removeValue();
                         reference.child("Peticiones").child(user_id).removeValue();
                         reference.child("User-Peticiones").child(user_id).removeValue();
                         reference.child("Tutoria").child(user_id).removeValue();
+                        //eliminar_chat(user_id);
+                        //Here       .....
+
+                        reference.child("ChatPeticion").child(user_id).removeValue();
+                        reference.child("Chat").child(user_id).removeValue();
+                        reference.child("ChatTutor").child(user_id).removeValue();
+                        reference.child("ContactoTutoria").child(user_id).removeValue();
+
+
+                        //ChatPeticion, Chat, ChatTutor, ContactoTutoria
+
 
                         String foto_name = user_id + ".jpg";
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
                         storageReference.delete();
 
-                        firebaseAuth.getCurrentUser().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getActivity(), MainActivity.class));
-                                System.out.println("Successfully deleted user.");
-                            }
-                        });
 
+                        Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+
+                        FirebaseAuth.getInstance().signOut();
                         dialog.dismiss();
-
-
-                        /** reference.child("Interacciones").child(p.getPeticionID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-
-                            }
-                        });
-
-                         */
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -368,6 +366,30 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 });
         AlertDialog alert = builder.create();
         alert.show();
+
+    }
+
+    private void eliminar_chat(final String user_id) {
+        reference.child("Chat").child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    List<String> elementos = new ArrayList<>();
+                    //System.out.println("hola!! antes del for");
+                    for (DataSnapshot dsp : snapshot.getChildren()) {
+                        String nombre = dsp.getValue().toString();
+                        System.out.println("nombre " + nombre);
+                        //reference.child("Chat").child(nombre).child(user_id).removeValue();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 

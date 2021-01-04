@@ -47,7 +47,9 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:hint="@string/user_name"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/Nombre"
@@ -61,7 +63,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:hint="@string/user_surname">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/Apellido"
@@ -75,7 +78,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:hint="@string/user_email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email"
@@ -89,7 +93,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:hint="@string/user_dni">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/dni"
@@ -106,7 +111,8 @@
                     android:layout_marginBottom="10dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="5"
-                    app:errorEnabled="true">
+                    app:errorEnabled="true"
+                    android:hint="@string/user_postalcode">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/codigo_postal"
@@ -144,6 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:visibility="gone"
+                    android:hint="@string/user_direction"
 
                     >
 
@@ -154,7 +161,8 @@
                         android:autofillHints=""
                         android:inputType="text"
                         android:padding="10dp"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        >
 
                     </EditText>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -164,7 +172,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:hint="@string/user_direction">
 
                     <EditText
                         android:id="@+id/piso_puerta"
@@ -173,7 +182,8 @@
                         android:inputType="text"
                         android:padding="10dp"
                         android:visibility="gone"
-                        android:autofillHints="">
+                        android:autofillHints=""
+                        >
 
                     </EditText>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +192,10 @@
                     android:id="@+id/firstmotivo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    android:hint="@string/user_motivo"
+                    >
 
                     <EditText
                         android:id="@+id/motivo"
