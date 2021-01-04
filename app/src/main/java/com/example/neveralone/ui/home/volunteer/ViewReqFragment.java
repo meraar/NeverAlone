@@ -84,6 +84,7 @@ public class ViewReqFragment extends Fragment {
         //Si es Voluntario desplegamos peticiones existentes
         if (LoginActivity.getUserType()) {
 
+
            //titol.setText("Peticiones");
             reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
                 @Override
