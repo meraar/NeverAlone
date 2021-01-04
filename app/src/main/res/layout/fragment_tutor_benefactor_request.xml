@@ -21,7 +21,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:shadowColor="#000000"
-        android:text="Estas a punto de solicitar un tutor "
+        android:text="@string/estas_a_punto_de_solicitar_un_tutor"
         android:textSize="26sp"
         android:textStyle="bold" />
 
@@ -33,7 +33,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Un tutor es una persona que se hará responsable de ti durante tu estancia en NeverAlone"
+        android:text="@string/un_tutor_es_una_persona_que_se_har_responsable_de_ti_durante_tu_estancia_en_neveralone"
         android:textSize="20sp" />
 
     <Button
@@ -42,8 +42,7 @@
         android:layout_height="76dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:background="@color/colorAccent"
-        android:hapticFeedbackEnabled="false"
-        android:text="Solicitar tutor"
+        android:text="@string/solicitar_tutor"
         android:textSize="30sp" />
 
 </FrameLayout>

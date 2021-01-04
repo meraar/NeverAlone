@@ -22,8 +22,10 @@
         android:layout_marginRight="5dp"
         android:gravity="center_horizontal|center_vertical"
         android:shadowColor="#000000"
-        android:text="Estamos buscando un tutor para usted"
+        android:text="@string/estamos_buscando_un_tutor_para_usted"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp" />
 
 </FrameLayout>

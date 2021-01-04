@@ -1,6 +1,9 @@
 package com.example.neveralone.Activity.Chat;
 
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.neveralone.Activity.ListaChat.RelacionChat;
+import com.example.neveralone.Activity.ListaChat.RelacionChatTutor;
+import com.example.neveralone.Activity.OtherUserProfileActivity;
 import com.example.neveralone.Peticion.Peticion;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ServerValue;
@@ -27,6 +33,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,16 +53,19 @@ public class MessageActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference_currentUser, databaseReference_friendUser;
 
+    private StorageReference storageReference;
+    private Bitmap bitmap = null;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        fotoPerfil = (CircleImageView) findViewById(R.id.fotoPerfil);
-        nombre = (TextView) findViewById(R.id.nombre);
+        fotoPerfil = findViewById(R.id.fotoPerfil);
+        nombre = findViewById(R.id.nombre);
 
-        rvMensajes = (RecyclerView) findViewById(R.id.rvMensajes);
-        txtMensaje = (EditText) findViewById(R.id.txtMensaje);
-        btnEnviar = (Button) findViewById(R.id.btnEnviar);
+        rvMensajes = findViewById(R.id.rvMensajes);
+        txtMensaje = findViewById(R.id.txtMensaje);
+        btnEnviar = findViewById(R.id.btnEnviar);
 
         adaptador_currentUser = new AdaptadorMessage(this);
         adaptador_friendUser = new AdaptadorMessage(this);
@@ -64,25 +75,57 @@ public class MessageActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+
         Bundle b = this.getIntent().getExtras();
         if (b != null) {
-            idCurrentUser = (String) b.getString("idCurrentUser"); //current
-            idFriendUser = (String) b.getString("idFriendUser");
-            idPeticion = (String) b.getString("idPeticion");
-            nameFriendUser = (String) b.getString("nameFriendUser");
+            idCurrentUser =  b.getString("idCurrentUser"); //current
+            idFriendUser = b.getString("idFriendUser");
+            idPeticion = b.getString("idPeticion");
+            nameFriendUser = b.getString("nameFriendUser");
         }
 
         nombre.setText(nameFriendUser);
 
+        //initialize_photo();
+
+        nombre.setText(nameFriendUser);
+
         if (idPeticion.equals("Tutor")) {
-            DatabaseReference dbContactoTutorCurrentUser = FirebaseDatabase.getInstance().getReference("ChatPeticion/"+ idCurrentUser);
-            DatabaseReference dbContactoTutorFriendUser = FirebaseDatabase.getInstance().getReference("ChatPeticion/"+ idFriendUser);
-            dbContactoTutorCurrentUser.push().setValue(new RelacionChat(idFriendUser, nameFriendUser, "Tutor"));
-            dbContactoTutorFriendUser.push().setValue(new RelacionChat(idCurrentUser, user.getDisplayName(),"Tutor"));
+            databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idCurrentUser + "/" + idFriendUser);
+            databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idFriendUser + "/" + idCurrentUser);
+            final DatabaseReference dbContactoTutorCurrentUser = FirebaseDatabase.getInstance().getReference("ContactoTutoria/"+ idCurrentUser);
+            dbContactoTutorCurrentUser.addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (!snapshot.exists()) {
+                                DatabaseReference dbContactoTutorFriendUser = FirebaseDatabase.getInstance().getReference("ContactoTutoria/"+ idFriendUser);
+                                dbContactoTutorCurrentUser.push().setValue(new RelacionChatTutor(idFriendUser, nameFriendUser));
+                                dbContactoTutorFriendUser.push().setValue(new RelacionChatTutor(idCurrentUser, user.getDisplayName()));
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    }
+            );
         }
 
-        databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("Chat/" + idCurrentUser + "/" + idFriendUser);
-        databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Chat/" + idFriendUser + "/" + idCurrentUser);
+        else {
+            databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("Chat/" + idCurrentUser + "/" + idFriendUser);
+            databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Chat/" + idFriendUser + "/" + idCurrentUser);
+        }
+
+        nombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MessageActivity.this, OtherUserProfileActivity.class);
+                intent.putExtra("uid", idFriendUser);
+                startActivity(intent);
+            }
+        });
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
 
@@ -167,6 +210,19 @@ public class MessageActivity extends AppCompatActivity {
     // Hace que el scroll sea automático al enviar muchos mensajes
     private void setScrollbar() {
         rvMensajes.scrollToPosition(adaptador_currentUser.getItemCount()-1);
+    }
+
+    private void initialize_photo() {
+        fotoPerfil = findViewById(R.id.profile_image);
+        String foto_name = idFriendUser + ".jpg";
+        storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
+        storageReference.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                fotoPerfil.setImageBitmap(bitmap);
+            }
+        });
     }
 }
 

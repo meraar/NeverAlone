@@ -41,6 +41,7 @@ public class ListaDeContactosFragment extends Fragment {
     private RecyclerView recyclerView;
     private Context context;
     private ListaAdaptador listaAdaptador;
+    private static List<ElementosDeLista> elementos;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,37 +56,59 @@ public class ListaDeContactosFragment extends Fragment {
 
     public void init() {
         final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/" + userID);
+        reference = FirebaseDatabase.getInstance().getReference().child("ContactoTutoria/" + userID);
+        elementos = new ArrayList<>();
         reference.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //Get map of peticiones in datasnapshot
-                        List<ElementosDeLista> elementos = new ArrayList<>();
+                        if (snapshot.exists()) {
                         for (DataSnapshot dsp : snapshot.getChildren()) {
-
-                            String peticion = dsp.getKey();
-                            String nombre = dsp.child("friendName").getValue().toString();
-                            String id = dsp.child("idFriendUser").getValue().toString();
-                            elementos.add(new ElementosDeLista(id, nombre, peticion));
+                                String nombre = dsp.child("friendName").getValue().toString();
+                                String id = dsp.child("idFriendUser").getValue().toString();
+                                elementos.add(new ElementosDeLista(id, nombre, "Tutor"));
+                            }
                         }
 
-                        listaAdaptador = new ListaAdaptador(elementos, context, new ListaAdaptador.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(ElementosDeLista item) {
-                                Intent i = new Intent(context, MessageActivity.class);
-                                //info que se pasa a chat de mensajes
-                                i.putExtra("idCurrentUser", userID);
-                                i.putExtra("idFriendUser", item.getId());
-                                i.putExtra("idPeticion", item.getIdPeticion());
-                                i.putExtra("nameFriendUser", item.getNombre());
-                                startActivity(i);
-                            }});
+                        reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/" + userID);
+                        reference.addListenerForSingleValueEvent(
+                                new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        //Get map of peticiones in datasnapshot
+                                        if (snapshot.exists()) {
+                                            for (DataSnapshot dsp : snapshot.getChildren()) {
+                                                String peticion = dsp.child("idPeticion").getValue().toString();
+                                                String nombre = dsp.child("friendName").getValue().toString();
+                                                String id = dsp.child("idFriendUser").getValue().toString();
+                                                elementos.add(new ElementosDeLista(id, nombre, peticion));
+                                            }
+                                        }
 
-                        recyclerView.setHasFixedSize(true);
-                        //recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                        recyclerView.setAdapter(listaAdaptador);
+                                        listaAdaptador = new ListaAdaptador(elementos, context, new ListaAdaptador.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(ElementosDeLista item) {
+                                                Intent i = new Intent(context, MessageActivity.class);
+                                                //info que se pasa a chat de mensajes
+                                                i.putExtra("idCurrentUser", userID);
+                                                i.putExtra("idFriendUser", item.getId());
+                                                i.putExtra("idPeticion", item.getIdPeticion());
+                                                i.putExtra("nameFriendUser", item.getNombre());
+                                                startActivity(i);
+                                            }});
+
+                                        recyclerView.setHasFixedSize(true);
+                                        //recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                        recyclerView.setAdapter(listaAdaptador);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                }
+                        );
                     }
 
                     @Override

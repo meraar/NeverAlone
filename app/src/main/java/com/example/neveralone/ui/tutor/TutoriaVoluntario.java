@@ -43,7 +43,6 @@ public class TutoriaVoluntario extends Fragment {
         btnEnviarMensaje = root.findViewById(R.id.btnEnviarMensajeTutorBen);
         btnDejarSerTutot = root.findViewById(R.id.DejarSerTutot);
         VerPerfilBeneficiario=root.findViewById(R.id.VerPerfilBeneficiario);
-        System.out.println("Yep");
         context = this.getContext();
 
         btnEnviarMensaje.setOnClickListener(new View.OnClickListener() {
