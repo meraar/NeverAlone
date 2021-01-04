@@ -1,5 +1,6 @@
 package com.example.neveralone.ui.autotest;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.example.neveralone.R;
 import java.util.ArrayList;
 
 public class AutotestFragment extends Fragment {
+
     private ArrayList al = new ArrayList();
     private ArrayList subal = new ArrayList();
     private CardView card2, card3, card4, card5, card6, card7, card13;
@@ -32,7 +34,6 @@ public class AutotestFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_autotest, container, false);
         txtinicio = root.findViewById(R.id.txtinicio);
         btnRT = root.findViewById(R.id.btnRT);
-        txtinicio.setText("Este auto-test le permitirá orientarse con respecto a los síntomas de la COVID-19, pero debe saber que nunca sustituirá una consulta médica. Si presenta algún síntoma que indique gravedad deberá consultar con el servicio de emergencias sanitarias en el 061.");
         defbtn = new Button(getContext());
         btnconf = root.findViewById(R.id.btnconf);
 
@@ -99,6 +100,7 @@ public class AutotestFragment extends Fragment {
         card13 = root.findViewById(R.id.card13);
         title13 = root.findViewById(R.id.title13);
         q13 = root.findViewById(R.id.q13);
+
 
         xGone(1);
 
