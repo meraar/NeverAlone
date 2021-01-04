@@ -19,6 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.neveralone.Activity.LoginActivity;
+import com.example.neveralone.Activity.MainActivity;
+import com.example.neveralone.Activity.RecoverPasswordActivity;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -317,16 +320,44 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 .setCancelable(false)
                 .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //reference = FirebaseDatabase.getInstance().getReference();
-                        //reference.child("Peticiones").child(p.getPeticionID()).removeValue();
-                        //reference.child("User-Peticiones").child(user.getUid()).child(p.getPeticionID()).removeValue();
+                        reference = FirebaseDatabase.getInstance().getReference();
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                        String user_id = firebaseAuth.getCurrentUser().getUid();
+
+                        reference.child("Usuarios").child(user_id).removeValue();
+                        reference.child("ChatPeticion").child(user_id).removeValue();
+                        reference.child("Chat").child(user_id).removeValue();
+                        reference.child("ChatTutor").child(user_id).removeValue();
+                        reference.child("ContactoTutoria").child(user_id).removeValue();
+                        reference.child("Interacciones").child(user_id).removeValue();
+                        reference.child("Pendientes").child(user_id).removeValue();
+                        reference.child("Peticiones").child(user_id).removeValue();
+                        reference.child("User-Peticiones").child(user_id).removeValue();
+                        reference.child("Tutoria").child(user_id).removeValue();
+
+                        String foto_name = user_id + ".jpg";
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
+                        storageReference.delete();
+
+                        firebaseAuth.getCurrentUser().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                System.out.println("Successfully deleted user.");
+                            }
+                        });
+
+                        dialog.dismiss();
+
+
                         /** reference.child("Interacciones").child(p.getPeticionID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
 
                             }
                         });
-                        dialog.dismiss();
+
                          */
                     }
                 })
