@@ -12,7 +12,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.navigation.NavController;
-import androidx.navigation.NavInflater;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -40,14 +39,8 @@ public class MenuActivity extends AppCompatActivity {
                 R.id.blankFragment, R.id.nav_myprofile, R.id.nav_autotest, R.id.nav_contacts, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
+        //TODO crear nuevos groups del menú lateral en el activity_main_drawer.xml
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
-        /*
-        if (LoginActivity.getUserType()) {
-            navController.navigate(R.id.action_blankFragment_to_nav_homev);
-        } else {
-            navController.navigate(R.id.action_blankFragment_to_nav_homeb);
-        }*/
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -56,6 +49,7 @@ public class MenuActivity extends AppCompatActivity {
         logoutIt.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                System.out.println(FirebaseAuth.getInstance());
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MenuActivity.this, LoginActivity.class));
                 finish();
@@ -65,8 +59,8 @@ public class MenuActivity extends AppCompatActivity {
 
         TextView name = findViewById(R.id.navHeaderName);
         TextView email = findViewById(R.id.navHeaderEmail);
-       /* try {
-            ValueEventListenerAdapter.getSemaphore().acquire();
+        /*
+        try {
             name.setText(ValueEventListenerAdapter.getUser().getNombre());
             email.setText(ValueEventListenerAdapter.getUser().getEmail());
         } catch (InterruptedException e) {

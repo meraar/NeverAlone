@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/blankFragment"
-        android:name="com.example.neveralone.ui.BlankFragment"
+        android:name="com.example.neveralone.ui.home.BlankFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_blank" />
 </navigation>
