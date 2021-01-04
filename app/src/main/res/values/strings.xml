@@ -80,7 +80,22 @@
 
     <string name="contrasena">Recuperar Contraseña</string>
     <string name="contrasena_button">Aceptar</string>
-    <string name="menu_noticias">Noticias</string>
+    <string name="peticiones_aceptadas">Peticiones Aceptadas</string>
+    <string name="tutor">Tutor</string>
+
+    <string name="user_piso">Piso, Puerta</string>
+    <string name="user_motivo">Motivo</string>
+    <string name="user_puntuation">Puntuación</string>
+    <string name="user_direction">Dirección</string>
+
+    <string name="estas_a_punto_de_solicitar_un_tutor">Estás a punto de solicitar un tutor</string>
+    <string name="un_tutor_es_una_persona_que_se_har_responsable_de_ti_durante_tu_estancia_en_neveralone">Un tutor es una persona que se hará responsable de ti durante tu estancia en NeverAlone</string>
+    <string name="solicitar_tutor">Solicitar tutor</string>
+    <string name="escribe_un_mensaje">Escribe un mensaje</string>
+    <string name="enviar">Enviar</string>
+    <string name="estamos_buscando_un_tutor_para_usted">Estamos buscando un tutor para usted</string>
+    <string name="ya_has_solicitado_ser_un_tutor">Ya has solicitado ser un tutor</string>
+    <string name="estas_a_punto_de_solicitar_ser_un_tutor">"Estas a punto de solicitar ser un tutor"</string>
 
 
 </resources>
