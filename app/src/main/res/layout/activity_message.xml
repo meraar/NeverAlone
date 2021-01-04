@@ -53,8 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/escribe_un_mensaje"
-            android:layout_weight="1"
-            android:inputType="TODO" />
+            android:layout_weight="1"/>
         <Button
             android:id="@+id/btnEnviar"
             android:layout_width="wrap_content"
