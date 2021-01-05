@@ -36,10 +36,14 @@ public class MainActivity extends AppCompatActivity {
                     sharedPreferencesSingleton.write("LoggedIn", true);
                     System.out.println("estas logueado??" + sharedPreferencesSingleton.read("LoggedIn", false));
                     System.out.println("eres voluntario??" + sharedPreferencesSingleton.read("voluntario", false));
+                    System.out.println("Inicio con Google???" + sharedPreferencesSingleton.read("LoggedInGoogle", false));
+
                     mainIntent = new Intent(MainActivity.this,MenuActivity.class);
                 }else{
+                    sharedPreferencesSingleton.write("LoggedInGoogle", false);
                     sharedPreferencesSingleton.write("LoggedIn", false);
                     System.out.println("estas logueado??" + sharedPreferencesSingleton.read("LoggedIn", false));
+                    System.out.println("current user null Inicio con Google???" + sharedPreferencesSingleton.read("LoggedInGoogle", false));
                     mainIntent = new Intent(MainActivity.this,LoginActivity.class);
                 }
                 MainActivity.this.startActivity(mainIntent);

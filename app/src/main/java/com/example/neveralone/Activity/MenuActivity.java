@@ -1,6 +1,5 @@
 package com.example.neveralone.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,9 +9,15 @@ import android.widget.TextView;
 
 import com.example.neveralone.R;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,7 +30,10 @@ public class MenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
-   //private String PREFS_KEY = "mispreferencias";
+    private SharedPreferencesSingleton sharedPreferencesSingleton;
+    private GoogleSignInClient mGoogleSignInClient;
+
+    //private String PREFS_KEY = "mispreferencias";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +60,26 @@ public class MenuActivity extends AppCompatActivity {
         logoutIt.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                System.out.println(FirebaseAuth.getInstance());
+                /*if(sharedPreferencesSingleton.read("LoggedInGoogle", false)) { //si esto es true hay que cerrar sesion con google
+                    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestEmail()
+                            .build();
+                    // Build a GoogleSignInClient with the options specified by gso.
+                    mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                    mGoogleSignInClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            sharedPreferencesSingleton.write("LoggedInGoogle", false);
+                            startActivity(new Intent(MenuActivity.this, LoginActivity.class));
+                            finish();
+                        }
+                    });
+                } else {  //cerrar sesion de firebase
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MenuActivity.this, LoginActivity.class));
+                finish();
+                }
+                 */
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MenuActivity.this, LoginActivity.class));
                 finish();
