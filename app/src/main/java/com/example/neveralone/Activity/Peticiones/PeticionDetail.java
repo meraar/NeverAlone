@@ -52,6 +52,8 @@ public class PeticionDetail extends AppCompatActivity {
     private DatabaseReference database2;
     private DatabaseReference database3;
     private Boolean checked;
+    private Boolean noExiste = true;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peticiondetail);
@@ -161,26 +163,6 @@ public class PeticionDetail extends AppCompatActivity {
             cancelar.setVisibility(View.GONE);
         }
 
-
-
-/*
-        if(p.getEstado().equals(Estado.PENDIENTE) && !checked){ //cuando es pendiente y no viene de pendiente del voluntario
-            cancelar.setVisibility(View.GONE);
-            dejar.setVisibility(View.GONE);
-            finalizar.setVisibility(View.GONE);
-        }else if((p.getEstado().equals(Estado.PENDIENTE)) && checked){ // es para ver el switch de pendientes
-            aceptar.setVisibility(View.GONE);
-            aceptar.setEnabled(false);
-            cancelar.setVisibility(View.GONE);
-            finalizar.setVisibility(View.GONE);
-        }else{ //esta en curso y viene de beneficiario
-            if(LoginActivity.getUserType()) {
-                dejar.setVisibility(View.GONE);
-                editar.setVisibility(View.GONE);
-                finalizar.setVisibility(View.GONE);
-            }
-        }
-*/
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -348,14 +330,40 @@ public class PeticionDetail extends AppCompatActivity {
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String idCurrentUser = user.getUid();
-                String idFriendUser = p.getUid();
-                String idPeticion = p.getPeticionID();
+                final String idCurrentUser = user.getUid();
+                final String idFriendUser = p.getUid();
+                final String idPeticion = p.getPeticionID();
 
-                DatabaseReference databaseReference_3 = database.getInstance().getReference("ChatPeticion/"+idCurrentUser);
-                DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/"+idFriendUser);
-                databaseReference_3.push().setValue(new RelacionChat(idFriendUser,p.getUser(),idPeticion));
-                databaseReference_4.push().setValue(new RelacionChat(idCurrentUser,user.getDisplayName(),idPeticion));
+                final DatabaseReference databaseReference_3 = database.getInstance().getReference("ChatPeticion");
+                databaseReference_3.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.child(idCurrentUser).exists()) {
+                            for (DataSnapshot xats : snapshot.child(idCurrentUser).getChildren()) {
+                                if (xats.child("idPeticion").exists()) {
+                                    String peticion = xats.child("idPeticion").getValue().toString();
+                                    if (peticion.equals(p.getPeticionID())) {
+                                        noExiste = false;
+                                    }
+                                }
+                            }
+                            if(noExiste){
+                                DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/" + idFriendUser);
+                                database.getInstance().getReference("ChatPeticion/" + idCurrentUser).push().setValue(new RelacionChat(idFriendUser, p.getUser(), idPeticion));
+                                databaseReference_4.push().setValue(new RelacionChat(idCurrentUser, user.getDisplayName(), idPeticion));
+                            }
+                        }else{
+                            DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/" + idFriendUser);
+                            database.getInstance().getReference("ChatPeticion/" + idCurrentUser).push().setValue(new RelacionChat(idFriendUser, p.getUser(), idPeticion));
+                            databaseReference_4.push().setValue(new RelacionChat(idCurrentUser, user.getDisplayName(), idPeticion));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
                 Bundle b = new Bundle();
                 b.putString("idCurrentUser", idCurrentUser);
