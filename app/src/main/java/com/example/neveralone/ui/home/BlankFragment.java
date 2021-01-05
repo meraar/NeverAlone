@@ -1,4 +1,4 @@
-package com.example.neveralone.ui;
+package com.example.neveralone.ui.home;
 
 import android.os.Bundle;
 

@@ -1,6 +1,8 @@
 package com.example.neveralone.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
+   //private String PREFS_KEY = "mispreferencias";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public class MenuActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.blankFragment, R.id.nav_myprofile, R.id.nav_autotest, R.id.nav_contacts, R.id.nav_logout)
+                R.id.blankFragment, R.id.nav_myprofile, R.id.nav_autotest, R.id.nav_contacts, R.id.blankFragmentTutor, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -47,7 +50,8 @@ public class MenuActivity extends AppCompatActivity {
             navController.navigate(R.id.action_blankFragment_to_nav_homev);
         } else {
             navController.navigate(R.id.action_blankFragment_to_nav_homeb);
-        }*/
+        }
+        */
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -88,4 +92,14 @@ public class MenuActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
+    /*
+    public void guardaValorSesion(Context context, Boolean valorsesion) {
+        SharedPreferences settings = getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = settings.edit();
+        editor.putBoolean("sesion", valorsesion);
+        editor.commit();
+    }*/
 }

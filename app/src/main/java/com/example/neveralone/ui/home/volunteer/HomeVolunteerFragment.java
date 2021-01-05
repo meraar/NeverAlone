@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class HomeVolunteerFragment extends Fragment {
     private TabLayout tabLayout;
-    private TabItem maps_tab, list_tab;
+    private TabItem maps_tab, list_tab, accepted;
     private ViewPager viewPager;
     public PagerAdapter pagerAdapter;
 
@@ -28,7 +28,7 @@ public class HomeVolunteerFragment extends Fragment {
         viewPager = root.findViewById(R.id.viewpager);
         tabLayout = root.findViewById(R.id.tabLayout);
         maps_tab = root.findViewById(R.id.maps_tab);
-        list_tab = root.findViewById(R.id.list_tab);
+        list_tab = root.findViewById(R.id.list_accepted_tab);
 
         pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
@@ -40,6 +40,8 @@ public class HomeVolunteerFragment extends Fragment {
                 if (tab.getPosition() == 0) {
                     pagerAdapter.notifyDataSetChanged();
                 } else if (tab.getPosition() == 1) {
+                    pagerAdapter.notifyDataSetChanged();
+                } else if (tab.getPosition() == 2) {
                     pagerAdapter.notifyDataSetChanged();
                 }
             }

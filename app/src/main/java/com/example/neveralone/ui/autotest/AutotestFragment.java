@@ -1,5 +1,6 @@
 package com.example.neveralone.ui.autotest;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.example.neveralone.R;
 import java.util.ArrayList;
 
 public class AutotestFragment extends Fragment {
+
     private ArrayList al = new ArrayList();
     private ArrayList subal = new ArrayList();
     private CardView card2, card3, card4, card5, card6, card7, card13;
@@ -32,44 +34,43 @@ public class AutotestFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_autotest, container, false);
         txtinicio = root.findViewById(R.id.txtinicio);
         btnRT = root.findViewById(R.id.btnRT);
-        txtinicio.setText("Este auto-test le permitirá orientarse con respecto a los síntomas de la COVID-19, pero debe saber que nunca sustituirá una consulta médica. Si presenta algún síntoma que indique gravedad deberá consultar con el servicio de emergencias sanitarias en el 061.");
         defbtn = new Button(getContext());
         btnconf = root.findViewById(R.id.btnconf);
 
         btntest1Si = root.findViewById(R.id.btntest1Si);
         btntest1No = root.findViewById(R.id.btntest1No);
 
-        card2 = (CardView) root.findViewById(R.id.card2);
+        card2 = root.findViewById(R.id.card2);
         btntest2Si = root.findViewById(R.id.btntest2Si);
         btntest2No = root.findViewById(R.id.btntest2No);
         title2 = root.findViewById(R.id.title2);
         q2 = root.findViewById(R.id.q2);
 
-        card3 = (CardView) root.findViewById(R.id.card3);
+        card3 = root.findViewById(R.id.card3);
         btntest3Si = root.findViewById(R.id.btntest3Si);
         btntest3No = root.findViewById(R.id.btntest3No);
         title3 = root.findViewById(R.id.title3);
         q3 = root.findViewById(R.id.q3);
 
-        card4 = (CardView) root.findViewById(R.id.card4);
+        card4 = root.findViewById(R.id.card4);
         btntest4Si = root.findViewById(R.id.btntest4Si);
         btntest4No = root.findViewById(R.id.btntest4No);
         title4 = root.findViewById(R.id.title4);
         q4 = root.findViewById(R.id.q4);
 
-        card5 = (CardView) root.findViewById(R.id.card5);
+        card5 = root.findViewById(R.id.card5);
         btntest5Si = root.findViewById(R.id.btntest5Si);
         btntest5No = root.findViewById(R.id.btntest5No);
         title5 = root.findViewById(R.id.title5);
         q5 = root.findViewById(R.id.q5);
 
-        card6 = (CardView) root.findViewById(R.id.card6);
+        card6 = root.findViewById(R.id.card6);
         btntest6Si = root.findViewById(R.id.btntest6Si);
         btntest6No = root.findViewById(R.id.btntest6No);
         title6 = root.findViewById(R.id.title6);
         q6 = root.findViewById(R.id.q6);
 
-        card7 = (CardView) root.findViewById(R.id.card7);
+        card7 = root.findViewById(R.id.card7);
         btntest7Si = root.findViewById(R.id.btntest7Si);
         btntest7No = root.findViewById(R.id.btntest7No);
         title7 = root.findViewById(R.id.title7);
@@ -96,9 +97,10 @@ public class AutotestFragment extends Fragment {
         btntest12No = root.findViewById(R.id.btntest12No);
         q12 = root.findViewById(R.id.q12);
 
-        card13 = (CardView) root.findViewById(R.id.card13);
+        card13 = root.findViewById(R.id.card13);
         title13 = root.findViewById(R.id.title13);
         q13 = root.findViewById(R.id.q13);
+
 
         xGone(1);
 
