@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.LogPrinter;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,7 +22,6 @@ import com.example.neveralone.Peticion.Estado;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ import java.util.Map;
 public class PeticionDetail extends AppCompatActivity {
 
     private TextView categoria, fecha, hora, descripcion, estado, autor,voluntarios;
-    private Button borrar,editar,aceptar, chat, cancelar, dejar;
+    private Button borrar,editar,aceptar, chat, cancelar, dejar, finalizar;
     private Context context;
     private DatabaseReference reference;
     private Peticion p; //peticion que ens arriba desde lista de peticions al intent
@@ -53,6 +52,8 @@ public class PeticionDetail extends AppCompatActivity {
     private DatabaseReference database2;
     private DatabaseReference database3;
     private Boolean checked;
+    private Boolean noExiste = true;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peticiondetail);
@@ -86,6 +87,7 @@ public class PeticionDetail extends AppCompatActivity {
         voluntarios      = findViewById(R.id.tituloVoluntarios);
         cancelar         = findViewById(R.id.dejar);
         dejar            = findViewById(R.id.dejarP);
+        finalizar            = findViewById(R.id.finalizar);
 
         chat = findViewById(R.id.chat);
 
@@ -99,30 +101,66 @@ public class PeticionDetail extends AppCompatActivity {
         if(!LoginActivity.getUserType()){ //beneficiario
             editar.setText("Editar");
             borrar.setText("Borrar");
+
             aceptar.setVisibility(View.GONE);
+
             chat.setVisibility(View.GONE);
-        }else{
+
+            dejar.setVisibility(View.GONE);
+
+            if(p.getEstado().equals(Estado.CURSO)){
+                aceptar.setEnabled(false);
+                borrar.setEnabled(false);
+                editar.setEnabled(false);
+                dejar.setEnabled(false);
+            }else{
+                finalizar.setEnabled(false);
+                cancelar.setEnabled(false);
+                FirebaseDatabase.getInstance().getReference().child("Interacciones").child(p.getPeticionID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.hasChildren()){
+                            editar.setEnabled(false);
+                            borrar.setEnabled(false);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }else {
+            if (p.getEstado().equals(Estado.PENDIENTE)) {
+                if (!checked) {
+                    dejar.setEnabled(false);
+                    FirebaseDatabase.getInstance().getReference().child("Interacciones").child(p.getPeticionID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.child(user.getUid()).exists()) {
+                                aceptar.setEnabled(false);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                } else {
+                    aceptar.setEnabled(false);
+                }
+
+            }else{
+                aceptar.setEnabled(false);
+            }
             borrar.setVisibility(View.GONE);
             editar.setVisibility(View.GONE);
             voluntarios.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
-        }
-
-        if(p.getEstado().equals(Estado.CURSO)) {
-            aceptar.setVisibility(View.GONE);
-            borrar.setVisibility(View.GONE);
-        }
-
-        if(!(p.getEstado().equals(Estado.CURSO)) && !checked){ //cuando es pendiente y no viene de pendiente del voluntario
+            finalizar.setVisibility(View.GONE);
             cancelar.setVisibility(View.GONE);
-            dejar.setVisibility(View.GONE);
-        }else if((p.getEstado().equals(Estado.PENDIENTE)) && checked){ // es para ver el switch de pendientes
-            aceptar.setVisibility(View.GONE);
-            aceptar.setEnabled(false);
-            cancelar.setVisibility(View.GONE);
-        }else{ //esta en curso y viene de beneficiario
-            dejar.setVisibility(View.GONE);
-            editar.setVisibility(View.GONE);
         }
 
         cancelar.setOnClickListener(new View.OnClickListener() {
@@ -177,11 +215,114 @@ public class PeticionDetail extends AppCompatActivity {
 
         });
 
+        finalizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("¿Está seguro que quiere finalizar la petición?")
+                        .setCancelable(false)
+                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                final String volunt = elements.get(0).getUid();
+                                reference = FirebaseDatabase.getInstance().getReference();
+                                reference.child("Peticiones").child(p.getPeticionID()).removeValue();
+                                reference.child("User-Peticiones").child(p.getUid()).child(p.getPeticionID()).removeValue();
+
+                                String a = reference.child("PeticionesAceptadas").child(p.getUid()).getKey();
+                                String a2 = reference.child("PeticionesAceptadas").child(p.getUid()).child(p.getPeticionID()).getKey();
+
+                                reference.child("PeticionesAceptadas").child(p.getUid()).child(p.getPeticionID()).removeValue();
+                                reference.child("PeticionesAceptadas").child(volunt).child(p.getPeticionID()).removeValue();
+
+
+                                //TODO: CHATPETICION - OJO INTERACCIONES QUE INTERFEREIX AMB AIXO D'AQUI ABAIX
+                                reference.child("Chat").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for(DataSnapshot users:snapshot.getChildren()) {
+                                            String useer = users.getKey();
+                                            if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
+                                                for (DataSnapshot ds : users.getChildren()) {
+                                                    String ass = ds.getKey();
+                                                    String idd = p.getPeticionID();
+                                                    if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
+                                                        for(DataSnapshot peti: ds.getChildren()){
+
+                                                            if(peti.child("idPeticion").getValue().equals(p.getPeticionID())){
+                                                                peti.getRef().removeValue();
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                                reference.child("ChatPeticion").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for(DataSnapshot users:snapshot.getChildren()) {
+                                            String useer = users.getKey();
+                                            if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
+                                                for (DataSnapshot ds : users.getChildren()) { //Missatges amb clau inventada
+                                                    String ass=ds.getKey();
+                                                    String idd = p.getPeticionID();
+
+                                                    if(ds.child("idPeticion").getValue().equals(p.getPeticionID())){
+                                                        ds.getRef().removeValue();
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+                                reference.child("Interacciones").child(p.getPeticionID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        listAdapter.notifyDataSetChanged();
+                                    }
+                                });
+
+
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
+        });
+
         dejar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 reference = FirebaseDatabase.getInstance().getReference();
                 reference.child("Pendientes").child(user.getUid()).removeValue();
+                reference.child("Interacciones").child(p.getPeticionID()).child(user.getUid()).removeValue();
                 finish();
             }
         });
@@ -189,14 +330,40 @@ public class PeticionDetail extends AppCompatActivity {
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String idCurrentUser = user.getUid();
-                String idFriendUser = p.getUid();
-                String idPeticion = p.getPeticionID();
+                final String idCurrentUser = user.getUid();
+                final String idFriendUser = p.getUid();
+                final String idPeticion = p.getPeticionID();
 
-                DatabaseReference databaseReference_3 = database.getInstance().getReference("ChatPeticion/"+idCurrentUser);
-                DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/"+idFriendUser);
-                databaseReference_3.push().setValue(new RelacionChat(idFriendUser,p.getUser(),idPeticion));
-                databaseReference_4.push().setValue(new RelacionChat(idCurrentUser,user.getDisplayName(),idPeticion));
+                final DatabaseReference databaseReference_3 = database.getInstance().getReference("ChatPeticion");
+                databaseReference_3.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.child(idCurrentUser).exists()) {
+                            for (DataSnapshot xats : snapshot.child(idCurrentUser).getChildren()) {
+                                if (xats.child("idPeticion").exists()) {
+                                    String peticion = xats.child("idPeticion").getValue().toString();
+                                    if (peticion.equals(p.getPeticionID())) {
+                                        noExiste = false;
+                                    }
+                                }
+                            }
+                            if(noExiste){
+                                DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/" + idFriendUser);
+                                database.getInstance().getReference("ChatPeticion/" + idCurrentUser).push().setValue(new RelacionChat(idFriendUser, p.getUser(), idPeticion));
+                                databaseReference_4.push().setValue(new RelacionChat(idCurrentUser, user.getDisplayName(), idPeticion));
+                            }
+                        }else{
+                            DatabaseReference databaseReference_4 = database.getInstance().getReference("ChatPeticion/" + idFriendUser);
+                            database.getInstance().getReference("ChatPeticion/" + idCurrentUser).push().setValue(new RelacionChat(idFriendUser, p.getUser(), idPeticion));
+                            databaseReference_4.push().setValue(new RelacionChat(idCurrentUser, user.getDisplayName(), idPeticion));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
                 Bundle b = new Bundle();
                 b.putString("idCurrentUser", idCurrentUser);
@@ -308,7 +475,33 @@ public class PeticionDetail extends AppCompatActivity {
                     elements.add(p);
                 }
 
-                listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
+                listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListenerBorrar() {
+
+                    @Override
+                    public void onItemClickborrar(final int adapterPosition) {
+                        //Ir al voluntario y borrarle de pendientes
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setMessage("¿Está seguro que quiere aceptar a este voluntario?")
+                                .setCancelable(false)
+                                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        String a = p.getPeticionID();
+                                        FirebaseDatabase.getInstance().getReference().child("Pendientes").child(elements.get(adapterPosition).getUid()).child(p.getPeticionID()).removeValue();
+                                        FirebaseDatabase.getInstance().getReference().child("Interacciones").child(p.getPeticionID()).child(elements.get(adapterPosition).getUid()).removeValue();
+
+
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+
+                    }
+                }, new AdaptadorUsers.OnItemClickListener() {
                     @Override
                     public void onItemClick(final int pos) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -331,7 +524,7 @@ public class PeticionDetail extends AppCompatActivity {
                                         reference.child(p.getPeticionID()).addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if(snapshot.hasChildren()) {
+                                                if (snapshot.hasChildren()) {
                                                     for (DataSnapshot ds : snapshot.getChildren()) {
                                                         //TODO Borrar tots menys l'usuari al qui has acceptat
                                                         //TODO Necessito que l'usuari guari el seu UID de firebase
@@ -360,8 +553,8 @@ public class PeticionDetail extends AppCompatActivity {
 
                                         String uid = elements.get(pos).getUid();
                                         Map<String, Object> childUpdates = new HashMap<>();
-                                        childUpdates.put("/PeticionesAceptadas/" + "/" + uid + "/" + key, postValues);
-                                        childUpdates.put("/PeticionesAceptadas/" + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + key, postValues);
+                                        childUpdates.put("/PeticionesAceptadas/" + "/" + uid + "/" + p.getPeticionID(), postValues);
+                                        childUpdates.put("/PeticionesAceptadas/" + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + p.getPeticionID(), postValues);
                                         reference.updateChildren(childUpdates);
 
                                         //Borrar pendientes
@@ -371,10 +564,10 @@ public class PeticionDetail extends AppCompatActivity {
                                         reference.child("Pendientes").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if(snapshot.hasChildren()) {
+                                                if (snapshot.hasChildren()) {
                                                     for (DataSnapshot ds : snapshot.getChildren()) {
 
-                                                            ds.child(p.getPeticionID()).getRef().removeValue();
+                                                        ds.child(p.getPeticionID()).getRef().removeValue();
 
                                                     }
                                                 }
@@ -386,6 +579,11 @@ public class PeticionDetail extends AppCompatActivity {
                                             }
                                         });
 
+                                        finalizar.setVisibility(View.VISIBLE);
+                                        cancelar.setVisibility(View.VISIBLE);
+                                        finalizar.setEnabled(true);
+                                        cancelar.setEnabled(true);
+
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -395,7 +593,8 @@ public class PeticionDetail extends AppCompatActivity {
                                 });
                         AlertDialog alert = builder.create();
                         alert.show();
-                    }}, p);
+                    }
+                }, p);
 
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
