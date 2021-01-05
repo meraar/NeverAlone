@@ -86,7 +86,8 @@ public class MessageActivity extends AppCompatActivity {
 
         nombre.setText(nameFriendUser);
 
-        //initialize_photo();
+        initialize_photo();
+
 
         nombre.setText(nameFriendUser);
 
@@ -213,7 +214,6 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void initialize_photo() {
-        fotoPerfil = findViewById(R.id.profile_image);
         String foto_name = idFriendUser + ".jpg";
         storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
         storageReference.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {

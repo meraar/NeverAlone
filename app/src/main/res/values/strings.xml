@@ -125,6 +125,12 @@
     <string name="confirmar">Confirmar</string>
     <string name="title13" />
     <string name="text13" />
+    <string name="ver_perfil">Ver perfil</string>
+    <string name="enviar_mensaje_tutor">Enviar mensaje</string>
+    <string name="dejar_de_ser_tutor">Dejar de ser tutor</string>
+    <string name="ya_eres_tutor">Ya eres tutor</string>
+    <string name="dejar_de_tener_tutor">Dejar de tener tutor</string>
+    <string name="ya_tienes_tutor">Ya tienes tutor</string>
 
 
 </resources>
