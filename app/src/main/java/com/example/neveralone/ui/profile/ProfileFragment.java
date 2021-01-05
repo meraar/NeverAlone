@@ -330,18 +330,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
                         firebaseAuth.getCurrentUser().delete();
                         reference.child("Usuarios").child(user_id).removeValue();
+                        reference.child("User-Peticiones").child(user_id).removeValue();
+                        reference.child("Tutoria").child(user_id).removeValue();
+
+                        //Hasta aqui done...
+
                         reference.child("Interacciones").child(user_id).removeValue();
                         reference.child("Pendientes").child(user_id).removeValue();
                         reference.child("Peticiones").child(user_id).removeValue();
-                        reference.child("User-Peticiones").child(user_id).removeValue();
-                        reference.child("Tutoria").child(user_id).removeValue();
+
+
                         //eliminar_chat(user_id);
                         //Here       .....
 
                         reference.child("ChatPeticion").child(user_id).removeValue();
                         reference.child("Chat").child(user_id).removeValue();
-                        reference.child("ChatTutor").child(user_id).removeValue();
-                        reference.child("ContactoTutoria").child(user_id).removeValue();
+                        reference.child("ChatTutor").child(user_id).removeValue(); //ERic
+                        reference.child("ContactoTutoria").child(user_id).removeValue(); //Eric
 
 
                         //ChatPeticion, Chat, ChatTutor, ContactoTutoria
