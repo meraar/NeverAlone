@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 public class SharedPreferencesSingleton {
 
     private static SharedPreferences mSharedPref;
-    public static final String NAME = "NAME";
-    public static final String AGE = "AGE";
-    public static final String IS_SELECT = "IS_SELECT";
 
     private SharedPreferencesSingleton(){
     }
@@ -28,7 +25,7 @@ public class SharedPreferencesSingleton {
     public static void write(String key, String value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.putString(key, value);
-        prefsEditor.commit();
+        prefsEditor.apply();
     }
 
     public static boolean read(String key, boolean defValue) {
@@ -38,7 +35,7 @@ public class SharedPreferencesSingleton {
     public static void write(String key, boolean value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.putBoolean(key, value);
-        prefsEditor.commit();
+        prefsEditor.apply();
     }
 
     public static Integer read(String key, int defValue) {
@@ -47,6 +44,6 @@ public class SharedPreferencesSingleton {
 
     public static void write(String key, Integer value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
-        prefsEditor.putInt(key, value).commit();
+        prefsEditor.putInt(key, value).apply();
     }
 }

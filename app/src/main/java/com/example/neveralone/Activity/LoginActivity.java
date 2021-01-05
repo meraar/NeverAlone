@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity{
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1;
     DatabaseReference reference;
+    private SharedPreferencesSingleton sharedPreferencesSingleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 voluntario = (boolean) dataSnapshot.getValue();
+                sharedPreferencesSingleton.write("voluntario", voluntario);
                 startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             }
             @Override
@@ -111,12 +113,18 @@ public class LoginActivity extends AppCompatActivity{
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     voluntario = (boolean) dataSnapshot.getValue();
+                                    sharedPreferencesSingleton.write("voluntario", voluntario);
+                                    System.out.println("eres voluntario??" + sharedPreferencesSingleton.read("voluntario", false));
+
                                     startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError error) {
                                 }
                             });
+
+
+
                         }
                     } else {
                         Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
@@ -198,7 +206,6 @@ public class LoginActivity extends AppCompatActivity{
                             //updateUI(null);
                         }
 
-                        // ...
                     }
                 });
     }
