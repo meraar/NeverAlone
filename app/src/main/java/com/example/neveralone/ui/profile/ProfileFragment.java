@@ -329,7 +329,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                     public void onClick(DialogInterface dialog, int id) {
                         reference = FirebaseDatabase.getInstance().getReference();
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                        final String user_id = firebaseAuth.getCurrentUser().getUid();
+                        String user_id = firebaseAuth.getCurrentUser().getUid();
 
 
                         reference.child("Usuarios").child(user_id).removeValue();
@@ -357,6 +357,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         reference.child("Peticiones").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                                String user_id = firebaseAuth.getCurrentUser().getUid();
+                                System.out.println("MERAAAAAAAAAAAAAAAAAJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
                                 for(DataSnapshot petitions : snapshot.getChildren()) {
                                     String p_key = petitions.getKey();
                                     String user = petitions.child("uid").getValue().toString();
@@ -388,17 +391,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
                         storageReference.delete();
 
-                        firebaseAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    FirebaseAuth.getInstance().signOut();
-                                    Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
+                        firebaseAuth.getCurrentUser().delete();
+                        FirebaseAuth.getInstance().signOut();
+                        Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
 
-                                    startActivity(new Intent(getActivity(), MainActivity.class));
-                                }
-                            }
-                        });
+                        //startActivity(new Intent(getActivity(), MainActivity.class));
+
 
 
 
