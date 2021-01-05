@@ -73,8 +73,10 @@ public class LoginActivity extends AppCompatActivity{
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                voluntario = (boolean) dataSnapshot.getValue();
-                startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+                if (dataSnapshot.exists()) {
+                    voluntario = (boolean) dataSnapshot.getValue();
+                    startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+                }
             }
             @Override
             public void onCancelled(DatabaseError error) {
