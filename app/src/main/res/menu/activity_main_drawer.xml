@@ -17,22 +17,30 @@
                     android:icon="@drawable/ic_account_circle_24"
                     android:title="@string/menu_view_profile" />
                 <item
+                    android:id="@+id/nav_contacts"
+                    android:icon="@drawable/ic_baseline_supervised_user_circle_24"
+                    android:title="@string/contacts" />
+                <item
+                    android:id="@+id/blankFragmentTutor"
+                    android:icon="@drawable/ic_baseline_emoji_people_24"
+                    android:title="@string/tutor" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="@string/covid_19">
+            <menu>
+                <item
                     android:id="@+id/nav_autotest"
                     android:icon="@android:drawable/ic_menu_edit"
                     android:title="@string/menu_autotest" />
-                <item
-                    android:id="@+id/nav_contacts"
-                    android:icon="?attr/actionModePasteDrawable"
-                    android:title="@string/contacts" />
-                <item
-                    android:id="@+id/nav_logout"
-                    android:icon="@drawable/ic_baseline_power_settings_new_24"
-                    android:title="@string/logout" />
-
             </menu>
-
-
         </item>
-
     </group>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_baseline_power_settings_new_24"
+        android:title="@string/logout" />
 </menu>

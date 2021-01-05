@@ -1,15 +1,23 @@
-package com.example.neveralone.Activity.Peticiones;
+package com.example.neveralone.ui.home.volunteer;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.neveralone.Activity.Peticiones.Adaptador;
+import com.example.neveralone.Activity.Peticiones.PeticionAceptadaDetail;
+import com.example.neveralone.Activity.Peticiones.PeticionDetail;
 import com.example.neveralone.Peticion.Peticion;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,79 +31,69 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VerMisPeticiones extends AppCompatActivity {
-
+public class ViewAcceptedFragment extends Fragment {
     private List<Peticion> elements;
     private String uid;
     private DatabaseReference reference;
     private FirebaseUser user;
     private Context context;
-    private String tusuari;
-    private TextView titol;
+    private Switch pSwitch;
+    private TextView titolSwitch;
+    private RecyclerView recyclerView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vermispeticiones);
-
-        context = this;
-
-        init();
     }
 
-    private void init() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_vol_view_requests, container, false);
+        context = getContext();
+        titolSwitch = root.findViewById(R.id.titleSwitch);
+        recyclerView = root.findViewById(R.id.listRecycleView);
+        pSwitch      = root.findViewById(R.id.switchPeticiones);
+
+        pSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    init("pendientes");
+                    titolSwitch.setText("Ver peticiones aceptadas");
+                } else {
+                    // The toggle is disabled
+                    init("aceptados");
+                    titolSwitch.setText("Ver peticiones pendientes");
+                }
+            }
+        });
+
+        init("aceptados");
+        return root;
+    }
+
+    private void init(String tipo) {
         elements = new ArrayList<>();
-        titol = findViewById(R.id.textView5);
+
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
         reference = FirebaseDatabase.getInstance().getReference();
 
-        //Ver si es voluntario o beneficiario
-        Intent i = getIntent();
-        tusuari = (String) i.getSerializableExtra("Tipus");
-
         //Si es Voluntario desplegamos peticiones existentes
-        if (tusuari.equals("Voluntario")) {
 
-            titol.setText("Peticiones");
-            reference.child("Peticiones").addValueEventListener(new ValueEventListener() {
+        if (tipo.equals("aceptados")){
+            reference.child("PeticionesAceptadas").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     elements = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        Peticion p = ds.getValue(Peticion.class);
-                        elements.add(p);
-                    }
-                    Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Peticion p) {
-                            moveToDescription(p);
-                        }
-                    });
-                    RecyclerView recyclerView = findViewById(R.id.listRecycleView);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    recyclerView.setAdapter(listAdapter);
-                }
+                        String nodo = ds.getKey();
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        //Si es beneficiario desplegamos todas las peticiones hechas por el
-        else {
-            titol.setText("Mis Peticiones");
-            reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    elements = new ArrayList<>();
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        if (ds.getKey().equals(uid)){
-                            for(DataSnapshot ds2:ds.getChildren()){
-                                Peticion p = ds2.getValue(Peticion.class);
+                        if (nodo.equals(user.getUid())) {
+                            for (DataSnapshot users : ds.getChildren()) {
+                                Peticion p = users.getValue(Peticion.class);
                                 elements.add(p);
                             }
                         }
@@ -106,11 +104,42 @@ public class VerMisPeticiones extends AppCompatActivity {
                             moveToDescription(p);
                         }
                     });
-                    RecyclerView recyclerView = findViewById(R.id.listRecycleView);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(context));
                     recyclerView.setAdapter(listAdapter);
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }else{
+            reference.child("Pendientes").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    elements = new ArrayList<>();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String nodo = ds.getKey();
+
+                        if (nodo.equals(user.getUid())) {
+                            for (DataSnapshot users : ds.getChildren()) {
+                                Peticion p = users.getValue(Peticion.class);
+                                elements.add(p);
+                            }
+                        }
+                    }
+                    Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Peticion p) {
+                            moveToDescription(p);
+                        }
+                    });
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setAdapter(listAdapter);
+                }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -120,9 +149,10 @@ public class VerMisPeticiones extends AppCompatActivity {
     }
 
     private void moveToDescription(Peticion p) {
-        Intent i = new Intent(context,PeticionDetail.class);
+        Intent i = new Intent(context, PeticionDetail.class);
         i.putExtra("Peticion",p);
-        i.putExtra("Tipus", tusuari);
+        i.putExtra("switch", pSwitch.isChecked());
         startActivity(i);
     }
+
 }
