@@ -5,30 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.UserProfileActivity"
+    tools:context=".Activity.OtherUserProfileActivity"
     android:background="@color/colorWhiteCian">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorCian"
-        android:text="MI Perfil">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="Perfil"
-            android:textColor="@color/colorBlack"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-    </FrameLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/cardview_light_background"
+        android:layout_height="161dp"
         android:gravity="center"
         android:padding="20dp">
 
@@ -39,10 +21,9 @@
             android:clickable="false"
             android:gravity="center"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_account_circle_24"
-            app:civ_border_color="@color/colorCian"
-            app:civ_border_width="4dp"
-            tools:ignore="MissingClass" />
+            android:src="@drawable/ic_baseline_face_24"
+            app:civ_border_color="@color/colorBlack"
+            app:civ_border_width="2dp" />
     </RelativeLayout>
 
     <ScrollView
@@ -62,7 +43,7 @@
 
                 <TextView
                     android:id="@+id/Nombre4"
-                    android:layout_width="120dp"
+                    android:layout_width="123dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
@@ -71,10 +52,10 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/user_name"
                     android:padding="10dp"
+                    android:text="@string/user_name"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/user_name"/>
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -88,7 +69,8 @@
                     android:padding="10dp"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    android:layout_marginLeft="16dp" />
+                    android:layout_marginLeft="16dp"
+                    android:layout_toEndOf="@+id/Nombre4" />
 
             </RelativeLayout>
 
@@ -98,29 +80,30 @@
 
                 <TextView
                     android:id="@+id/Apellido2"
-                    android:layout_width="120dp"
+                    android:layout_width="123dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:text="@string/user_surname"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/user_surname"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/Apellido"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:hint="Apellido"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/Apellido2"
+                    android:hint="@string/user_surname"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    android:layout_toRightOf="@+id/Apellido2" />
+                    android:layout_toEndOf="@+id/Apellido2" />
 
             </RelativeLayout>
 
@@ -132,16 +115,16 @@
 
                 <TextView
                     android:id="@+id/email2"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
+                    android:layout_width="123dp"
+                    android:layout_height="58dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:text="@string/user_email"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/user_email"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/email"
@@ -155,7 +138,8 @@
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_toRightOf="@+id/email2">
+                    android:layout_toRightOf="@+id/email2"
+                    android:layout_toEndOf="@+id/email2">
 
                 </TextView>
 
@@ -168,17 +152,17 @@
 
                 <TextView
                     android:id="@+id/dni2"
-                    android:layout_width="120dp"
+                    android:layout_width="123dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_dni"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
+                    android:hint="@string/hint_dni"
+                    android:padding="10dp"
+                    android:text="@string/user_dni"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="@string/user_dni"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dni"
@@ -191,7 +175,8 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
-                    android:layout_toRightOf="@+id/dni2"/>
+                    android:layout_toRightOf="@+id/dni2"
+                    android:layout_toEndOf="@+id/dni2" />
 
 
             </RelativeLayout>
@@ -202,19 +187,18 @@
 
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:id="@+id/codigo_postal2"
-                    android:hint="@string/hint_codigopostal_EditText"
-                    android:inputType="number"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
+                    android:layout_width="123dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
+                    android:hint="@string/hint_codigopostal_EditText"
+                    android:padding="10dp"
+                    android:text="@string/user_postalcode"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_width="120dp"
-                    android:text="@string/user_postalcode"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_height="wrap_content"
@@ -227,7 +211,8 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
-                    android:layout_toRightOf="@+id/codigo_postal2"/>
+                    android:layout_toRightOf="@+id/codigo_postal2"
+                    android:layout_toEndOf="@+id/codigo_postal2" />
 
             </RelativeLayout>
 
@@ -260,7 +245,8 @@
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
                     android:visibility="gone"
-                    android:layout_toRightOf="@+id/puntuacion_media2"/>
+                    android:layout_toRightOf="@+id/puntuacion_media2"
+                    android:layout_toEndOf="@+id/puntuacion_media2" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -295,7 +281,7 @@
                 android:visibility="gone"
                 android:layout_toRightOf="@+id/direccion2"
 
-                />
+                android:layout_toEndOf="@+id/direccion2" />
 
 
 
@@ -331,7 +317,8 @@
                 android:layout_marginTop="10dp"
                 android:textSize="16sp"
                 android:layout_toRightOf="@+id/piso_puerta2"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:layout_toEndOf="@+id/piso_puerta2">
 
             </TextView>
 
@@ -370,7 +357,8 @@
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
                     android:layout_toRightOf="@+id/motivo2"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    android:layout_toEndOf="@+id/motivo2" />
 
             </RelativeLayout>
 
