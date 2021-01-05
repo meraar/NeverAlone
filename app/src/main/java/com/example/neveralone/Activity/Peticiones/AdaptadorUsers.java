@@ -23,21 +23,23 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
     private Context context;
 
     final AdaptadorUsers.OnItemClickListener listener;
+    final AdaptadorUsers.OnItemClickListenerBorrar listenerB;
 
     public interface OnItemClickListener {
         void onItemClick(int pos);
     }
 
-    public AdaptadorUsers(List<Usuario> mData, Context context, AdaptadorUsers.OnItemClickListener listener, Peticion peticion) {
+    public interface OnItemClickListenerBorrar {
+        void onItemClickborrar(int adapterPosition);
+    }
+
+    public AdaptadorUsers(List<Usuario> mData, Context context, AdaptadorUsers.OnItemClickListenerBorrar listenerB,AdaptadorUsers.OnItemClickListener listener, Peticion peticion) {
         this.mData      = mData;
         this.mInflater  = LayoutInflater.from(context);
         this.context    = context;
         this.listener   = listener;
-        this.peticion = peticion;
-    }
-
-    public void setItemViewNotClickable(){
-
+        this.peticion   = peticion;
+        this.listenerB  = listenerB;
     }
 
     @NonNull
@@ -45,7 +47,7 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
     public AdaptadorUsers.MyViewHolderUser onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_usuario, null);
 
-        return new AdaptadorUsers.MyViewHolderUser(view, listener);
+        return new AdaptadorUsers.MyViewHolderUser(view, listener, listenerB);
     }
 
     @Override
@@ -64,32 +66,36 @@ public class AdaptadorUsers extends RecyclerView.Adapter<AdaptadorUsers.MyViewHo
 
     public class MyViewHolderUser extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        ImageView iconImage,xat;
+        ImageView iconImage, borrar;
         TextView name, titulo;
         OnItemClickListener onClickListener;
+        OnItemClickListenerBorrar onClickListenerB;
 
-        public MyViewHolderUser(@NonNull View itemView, OnItemClickListener onClickListener) {
+        public MyViewHolderUser(@NonNull View itemView, OnItemClickListener onClickListener, OnItemClickListenerBorrar listenerB) {
             super(itemView);
             iconImage = itemView.findViewById(R.id.fotoTipoPeticion);
             name      = itemView.findViewById(R.id.usuarioPeticion);
             titulo    = itemView.findViewById(R.id.tituloPeticion);
-            xat       = itemView.findViewById(R.id.enviarMensaje);
+            borrar    = itemView.findViewById(R.id.enviarMensaje);
             this.onClickListener = onClickListener;
+            onClickListenerB     = listenerB;
         }
 
         void bindData(final Usuario item){
 
             name.setText(item.getApellidos());
             titulo.setText(item.getNombre());
-            iconImage.setImageResource(R.drawable.otros);
+            iconImage.setImageResource(R.drawable.user);
             itemView.setOnClickListener(this);
-            xat.setOnClickListener(new View.OnClickListener() {
+            borrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Abrir chat
+                    onClickListenerB.onItemClickborrar(getAdapterPosition());
                 }
             });
         }
+
+
 
         @Override
         public void onClick(View v) {

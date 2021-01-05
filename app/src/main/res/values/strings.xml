@@ -81,6 +81,8 @@
     <string name="contrasena">Recuperar Contraseña</string>
     <string name="contrasena_button">Aceptar</string>
     <string name="peticiones_aceptadas">Peticiones Aceptadas</string>
+    <string name="editar">Editar</string>
+    <string name="borrar">borrar</string>
 
 
 </resources>
