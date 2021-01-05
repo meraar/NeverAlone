@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,10 @@ import com.example.neveralone.Activity.MainActivity;
 import com.example.neveralone.Activity.RecoverPasswordActivity;
 import com.example.neveralone.R;
 import com.example.neveralone.Usuario.Usuario;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -326,31 +329,58 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                     public void onClick(DialogInterface dialog, int id) {
                         reference = FirebaseDatabase.getInstance().getReference();
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                        String user_id = firebaseAuth.getCurrentUser().getUid();
+                        final String user_id = firebaseAuth.getCurrentUser().getUid();
 
-                        firebaseAuth.getCurrentUser().delete();
+
                         reference.child("Usuarios").child(user_id).removeValue();
                         reference.child("User-Peticiones").child(user_id).removeValue();
 
 
                         //Hasta aqui done...
 
-                        reference.child("Interacciones").child(user_id).removeValue();
-                        reference.child("Pendientes").child(user_id).removeValue();
-                        reference.child("Peticiones").child(user_id).removeValue();
+                        //reference.child("Interacciones").child(user_id).removeValue();
+
+                        //reference.child("Peticiones").child(user_id).removeValue();
 
 
                         //eliminar_chat(user_id);
-                        //Here       .....
+                        //Todo: Falta esto:
 
-                        reference.child("ChatPeticion").child(user_id).removeValue();
-                        reference.child("Chat").child(user_id).removeValue();
+                        //reference.child("ChatPeticion").child(user_id).removeValue();
+                        //reference.child("Chat").child(user_id).removeValue();
+
+
+
                         //reference.child("ChatTutor").child(user_id).removeValue(); //ERic
                         //reference.child("ContactoTutoria").child(user_id).removeValue(); //Eric
 
+                        reference.child("Peticiones").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot petitions : snapshot.getChildren()) {
+                                    String p_key = petitions.getKey();
+                                    String user = petitions.child("uid").getValue().toString();
+                                    System.out.println("p_key = " + p_key + "uid = "+ user);
+                                    if (user_id.equals(user)){
+                                        reference.child("Peticiones").child(p_key).removeValue();
+                                        reference.child("Interacciones").child(p_key).removeValue();
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        reference.child("Pendientes").child(user_id).removeValue(); // Elimino las peticiones Pendientes
+                        reference.child("PeticionesAceptadas").child(user_id).removeValue(); // Elimino las peticiones Pendientes
+
+
                         eliminar_Tutoria_i_ChatTutoria(user_id);
-
-
+                        //eliminar_Peticiones(user_id);
                         //ChatPeticion, Chat, ChatTutor, ContactoTutoria
 
 
@@ -358,11 +388,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
                         storageReference.delete();
 
+                        firebaseAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    FirebaseAuth.getInstance().signOut();
+                                    Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
 
-                        Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), MainActivity.class));
+                                    startActivity(new Intent(getActivity(), MainActivity.class));
+                                }
+                            }
+                        });
 
-                        FirebaseAuth.getInstance().signOut();
+
+
+
                         dialog.dismiss();
                     }
                 })
@@ -374,6 +414,112 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    private void eliminar_Peticiones(final String user_id) {
+        System.out.println("HELLO WORLD " + user_id);
+        //final String volunt = elements.get(0).getUid();
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Peticiones").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot petitions : snapshot.getChildren()) {
+                    String p_key = petitions.getKey();
+                    String user = petitions.child("uid").getValue().toString();
+                    System.out.println("p_key = " + p_key + "uid = "+ user);
+                    if (user_id.equals(user)){
+                        reference.child("Peticiones").child(p_key).removeValue();
+                        reference.child("Interacciones").child(p_key).removeValue();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.child("Pendientes").child(user_id).removeValue(); // Elimino las peticiones Pendientes
+        reference.child("PeticionesAceptadas").child(user_id).removeValue(); // Elimino las peticiones Pendientes
+
+        /**
+        reference.child("User-Peticiones").child(p.getUid()).child(p.getPeticionID()).removeValue();
+
+        String a = reference.child("PeticionesAceptadas").child(p.getUid()).getKey();
+        String a2 = reference.child("PeticionesAceptadas").child(p.getUid()).child(p.getPeticionID()).getKey();
+
+        reference.child("PeticionesAceptadas").child(p.getUid()).child(p.getPeticionID()).removeValue();
+        reference.child("PeticionesAceptadas").child(volunt).child(p.getPeticionID()).removeValue();
+
+
+        //TODO: CHATPETICION - OJO INTERACCIONES QUE INTERFEREIX AMB AIXO D'AQUI ABAIX
+        reference.child("Chat").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot users:snapshot.getChildren()) {
+                    String useer = users.getKey();
+                    if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
+                        for (DataSnapshot ds : users.getChildren()) {
+                            String ass = ds.getKey();
+                            String idd = p.getPeticionID();
+                            if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
+                                for(DataSnapshot peti: ds.getChildren()){
+
+                                    if(peti.child("idPeticion").getValue().equals(p.getPeticionID())){
+                                        peti.getRef().removeValue();
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.child("ChatPeticion").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot users:snapshot.getChildren()) {
+                    String useer = users.getKey();
+                    if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
+                        for (DataSnapshot ds : users.getChildren()) { //Missatges amb clau inventada
+                            String ass=ds.getKey();
+                            String idd = p.getPeticionID();
+
+                            if(ds.child("idPeticion").getValue().equals(p.getPeticionID())){
+                                ds.getRef().removeValue();
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        reference.child("Interacciones").child(p.getPeticionID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                listAdapter.notifyDataSetChanged();
+            }
+        });*/
     }
 
     private void eliminar_Tutoria_i_ChatTutoria(final String user_id) {
@@ -403,29 +549,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    private void eliminar_chat(final String user_id) {
-        reference.child("Chat").child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    List<String> elementos = new ArrayList<>();
-                    //System.out.println("hola!! antes del for");
-                    for (DataSnapshot dsp : snapshot.getChildren()) {
-                        String nombre = dsp.getValue().toString();
-                        System.out.println("nombre " + nombre);
-                        //reference.child("Chat").child(nombre).child(user_id).removeValue();
-                    }
 
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
     @Override
     public void onClick(View v) {
