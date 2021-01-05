@@ -331,7 +331,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         firebaseAuth.getCurrentUser().delete();
                         reference.child("Usuarios").child(user_id).removeValue();
                         reference.child("User-Peticiones").child(user_id).removeValue();
-                        reference.child("Tutoria").child(user_id).removeValue();
+
 
                         //Hasta aqui done...
 
@@ -345,8 +345,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
                         reference.child("ChatPeticion").child(user_id).removeValue();
                         reference.child("Chat").child(user_id).removeValue();
-                        reference.child("ChatTutor").child(user_id).removeValue(); //ERic
-                        reference.child("ContactoTutoria").child(user_id).removeValue(); //Eric
+                        //reference.child("ChatTutor").child(user_id).removeValue(); //ERic
+                        //reference.child("ContactoTutoria").child(user_id).removeValue(); //Eric
+
+                        eliminar_Tutoria_i_ChatTutoria(user_id);
 
 
                         //ChatPeticion, Chat, ChatTutor, ContactoTutoria
@@ -371,6 +373,33 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 });
         AlertDialog alert = builder.create();
         alert.show();
+
+    }
+
+    private void eliminar_Tutoria_i_ChatTutoria(final String user_id) {
+        reference.child("Tutoria").child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String idComp= (String) snapshot.child("compañeroID").getValue();
+                DatabaseReference databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("Tutoria/" + user_id);
+                databaseReference_Logeado.removeValue();
+                DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
+                databaseReference_Comp.removeValue();
+                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ChatTutor/" + user_id + "/" + idComp);
+                databaseReference_Logeado.removeValue();
+                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + user_id);
+                databaseReference_Logeado.removeValue();
+                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idComp + "/" + user_id);
+                databaseReference_Comp.removeValue();
+                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + idComp);
+                databaseReference_Comp.removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
