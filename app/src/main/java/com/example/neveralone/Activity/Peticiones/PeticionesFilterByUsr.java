@@ -96,7 +96,7 @@ public class PeticionesFilterByUsr extends AppCompatActivity {
     private void moveToDescription(Peticion p) {
         Intent i = new Intent(context,PeticionDetail.class);
         i.putExtra("Peticion",p);
-        i.putExtra("Tipus", "Voluntario");
+        i.putExtra("Tipus", true);
         startActivity(i);
     }
 }
