@@ -56,6 +56,6 @@
             android:layout_height="46dp"
             android:layout_marginLeft="75dp"
             android:layout_marginRight="75dp"
-            android:background="@color/colorCian"
+            android:background="#96B8FD"
             android:layout_marginTop="8dp" />
 </FrameLayout>
