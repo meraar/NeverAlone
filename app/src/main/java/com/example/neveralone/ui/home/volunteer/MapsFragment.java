@@ -13,9 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.neveralone.Activity.MenuActivity;
 import com.example.neveralone.Activity.Peticiones.PeticionesFilterByUsr;
-import com.example.neveralone.Activity.Peticiones.VerMisPeticiones;
+
 import com.example.neveralone.R;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -89,7 +88,7 @@ public class MapsFragment extends Fragment implements
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
- /*
+
             googleM = googleMap;
             x= new Geocoder(getContext());
             obtenerAdresaUsuario();
@@ -177,7 +176,7 @@ public class MapsFragment extends Fragment implements
                    i.putExtra("UserId",marker.getTag().toString());
                    startActivity(i);
                }
-           });*/
+           });
         }
     };
 
