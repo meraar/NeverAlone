@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.neveralone.Activity.LoginActivity;
@@ -46,6 +47,10 @@ public class ViewReqFragment extends Fragment {
     //private TextView titol;
     private RecyclerView recyclerView;
     private String TipoPeticion;
+    private Switch pSwitch;
+    private TextView titolSwitch;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +71,11 @@ public class ViewReqFragment extends Fragment {
         spinnerfilter.setAdapter(adapter);
 
 
-        //titol = root.findViewById(R.id.textView5);
+        titolSwitch = root.findViewById(R.id.titleSwitch);
         recyclerView = root.findViewById(R.id.listRecycleView);
+        pSwitch      = root.findViewById(R.id.switchPeticiones);
+        pSwitch.setVisibility(View.GONE);
+        titolSwitch.setVisibility(View.GONE);
         init();
         return root;
     }
@@ -124,39 +132,7 @@ public class ViewReqFragment extends Fragment {
             });
         }
 
-       //TODO borrar esta parte que es del beneficiario
-        else {
-            //titol.setText("Mis Peticiones");
-            reference.child("User-Peticiones").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    elements = new ArrayList<>();
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        if (ds.getKey().equals(uid)){
-                            for(DataSnapshot ds2:ds.getChildren()){
-                                Peticion p = ds2.getValue(Peticion.class);
-                                elements.add(p);
-                            }
-                        }
-                    }
-                    Adaptador listAdapter = new Adaptador(elements, context, new Adaptador.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Peticion p) {
-                            moveToDescription(p);
-                        }
-                    });
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    recyclerView.setAdapter(listAdapter);
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        //TODO HASTA AQUI
-
+//TODO MIO
         spinnerfilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -170,11 +146,12 @@ public class ViewReqFragment extends Fragment {
             }
 
         });
-    }
+    }//TODO
 
     private void moveToDescription(Peticion p) {
         Intent i = new Intent(context, PeticionDetail.class);
         i.putExtra("Peticion",p);
+        i.putExtra("switch", false);
         startActivity(i);
     }
 
