@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#5672AAE3"
     tools:context=".ui.contactos.ListaDeContactosFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ListaRecycleView"
-        android:layout_width="411dp"
-        android:layout_height="445dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginTop="8dp"

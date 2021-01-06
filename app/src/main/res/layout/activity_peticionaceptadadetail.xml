@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
     >
 
-
-    <Button
-        android:id="@+id/Refuse_but"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="204dp"
-        android:text="Button"
-        android:background="#F40C0C"
-        tools:text="rechazar" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,9 +15,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Compras"
+        android:text="Acompañamiento"
         android:textColor="@android:color/black"
-        android:textSize="50sp"
+        android:textSize="35sp"
         android:textStyle="bold"
         />
 
@@ -41,12 +28,14 @@
         android:paddingLeft="14dp"
         android:paddingRight="14dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="14dp"
         android:layout_toRightOf="@+id/CategoriaPeticion"
         android:layout_toEndOf="@+id/CategoriaPeticion"
         android:src="@drawable/otros"/>
+
+
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -156,16 +145,44 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/contenidoDescripción" />
 
-    <Button
-        android:id="@+id/Accept_but"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="264dp"
-        android:text="Button"
-        android:background="#7EFF33"
-        tools:text="aceptar" />
+        android:layout_below="@id/estado"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:id="@+id/Botons"
+        >
 
+        <Button
+            android:id="@+id/dejar"
+            android:layout_height="match_parent"
+            android:layout_width="124dip"
+            android:layout_below="@+id/contenidoDescripción"
+            android:text="Cancelar Ayuda"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voluntarios"
+        android:layout_below="@+id/Botons"
+        android:id="@+id/tituloVoluntarios"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tituloVoluntarios"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/recycleViewUsers">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

@@ -5,17 +5,15 @@ public class Message {
     private String mensaje;
     private String userID;
     private String fotoPerfil;
-    private String type_mensaje;
     private String idPeticion;
 
     public Message() {
     }
 
-    public Message(String mensaje, String userID, String fotoPerfil, String type_mensaje, String idPeticion) {
+    public Message(String mensaje, String userID, String fotoPerfil, String idPeticion) {
         this.mensaje = mensaje;
         this.userID = userID;
         this.fotoPerfil = fotoPerfil;
-        this.type_mensaje = type_mensaje;
         this.idPeticion = idPeticion;
     }
 
@@ -41,14 +39,6 @@ public class Message {
 
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
-    }
-
-    public String getType_mensaje() {
-        return type_mensaje;
-    }
-
-    public void setType_mensaje(String type_mensaje) {
-        this.type_mensaje = type_mensaje;
     }
 
     public String getIdPeticion() {

@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan|adjustResize">
-        <activity android:name=".Activity.Peticiones.PeticionesFilterByUsr"></activity>
+        <activity android:name=".Activity.OtherUserProfileActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,11 +37,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.Peticiones.VerMisPeticiones" />
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.RegisterVolunteerActivity" />
         <activity android:name=".Activity.RegisterBenefactorActivity" />
         <activity android:name=".Activity.Peticiones.PeticionDetail" />
+        <activity android:name=".Activity.Peticiones.PeticionAceptadaDetail" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Peticiones.CrearPeticionActivity" />
         <activity android:name=".Activity.RecoverPasswordActivity" />
@@ -49,7 +49,6 @@
             android:name=".Activity.MenuActivity"
             android:label="@string/title_activity_first_home" />
         <activity android:name=".Activity.Chat.MessageActivity" />
-        <activity android:name=".Activity.ListaChat.ListaDeContactos" />
 
         <meta-data
             android:name="preloaded_fonts"
