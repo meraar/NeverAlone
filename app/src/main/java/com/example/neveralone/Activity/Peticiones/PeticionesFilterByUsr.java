@@ -39,7 +39,6 @@ public class PeticionesFilterByUsr extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peticiones_filter_by_usr);
-        BtnAtras = findViewById(R.id.BtnAtras);
         context = this;
 
         init();
@@ -82,6 +81,7 @@ public class PeticionesFilterByUsr extends AppCompatActivity {
 
             }
         });
+        /*
         BtnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +89,8 @@ public class PeticionesFilterByUsr extends AppCompatActivity {
                 startActivity(new Intent(PeticionesFilterByUsr.this, LoginActivity.class));
                 finish();
             }
-        });    }
+        });   */
+    }
 
     private void moveToDescription(Peticion p) {
         Intent i = new Intent(context,PeticionDetail.class);
