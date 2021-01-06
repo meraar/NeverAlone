@@ -51,6 +51,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,6 +69,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private String id;
     private StorageReference storageReference;
     private Bitmap bitmap = null;
+    private static String user_id;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -329,7 +331,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                     public void onClick(DialogInterface dialog, int id) {
                         reference = FirebaseDatabase.getInstance().getReference();
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                        String user_id = firebaseAuth.getCurrentUser().getUid();
+                        user_id = firebaseAuth.getCurrentUser().getUid();
 
 
                         reference.child("Usuarios").child(user_id).removeValue();
@@ -346,24 +348,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         //eliminar_chat(user_id);
                         //Todo: Falta esto:
 
-                        //reference.child("ChatPeticion").child(user_id).removeValue();
-                        //reference.child("Chat").child(user_id).removeValue();
+                        reference.child("ChatPeticion").child(user_id).removeValue();
+                        reference.child("Chat").child(user_id).removeValue();
 
 
-
-                        //reference.child("ChatTutor").child(user_id).removeValue(); //ERic
-                        //reference.child("ContactoTutoria").child(user_id).removeValue(); //Eric
+                        reference.child("SolicitudVoluntario").child(user_id).removeValue();
 
                         reference.child("Peticiones").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                                String user_id = firebaseAuth.getCurrentUser().getUid();
-                                System.out.println("MERAAAAAAAAAAAAAAAAAJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+                            public void onDataChange(@NonNull DataSnapshot snapshot){
                                 for(DataSnapshot petitions : snapshot.getChildren()) {
                                     String p_key = petitions.getKey();
                                     String user = petitions.child("uid").getValue().toString();
                                     System.out.println("p_key = " + p_key + "uid = "+ user);
+
                                     if (user_id.equals(user)){
                                         reference.child("Peticiones").child(p_key).removeValue();
                                         reference.child("Interacciones").child(p_key).removeValue();
@@ -379,10 +377,96 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         });
 
                         reference.child("Pendientes").child(user_id).removeValue(); // Elimino las peticiones Pendientes
-                        reference.child("PeticionesAceptadas").child(user_id).removeValue(); // Elimino las peticiones Pendientes
+                        reference.child("PeticionesAceptadas").child(user_id).removeValue(); // Elimino las peticiones Aceptadas
+
+                        reference.child("Tutoria").child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String idComp= (String) snapshot.child("compañeroID").getValue();
+                                DatabaseReference databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("Tutoria/" + user_id);
+                                databaseReference_Logeado.removeValue();
+                                DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
+                                databaseReference_Comp.removeValue();
+                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ChatTutor/" + user_id + "/" + idComp);
+                                databaseReference_Logeado.removeValue();
+                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + user_id);
+                                databaseReference_Logeado.removeValue();
+                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idComp + "/" + user_id);
+                                databaseReference_Comp.removeValue();
+                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + idComp);
+                                databaseReference_Comp.removeValue();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        reference.child("Chat").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot users:snapshot.getChildren()) {
+                                    String user = users.getKey();
+                                    if(user.equals(user_id)){
+                                        reference.child("Chat").child(user_id).removeValue();
+                                    }
+                                    else{
+                                        for (DataSnapshot ds : users.getChildren()){
+                                            String user_me = ds.getKey();
+                                            if (user_me.equals(user_id)){
+                                                    reference.child("Chat").child(user_me).child(user_id).removeValue();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        reference.child("ChatPeticion").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                HashSet<String> friends = new HashSet<>();
+                                for(DataSnapshot users:snapshot.getChildren()) {
+                                    String user = users.getKey();
+                                    if(user.equals(user_id)){
+                                        for (DataSnapshot ds : users.getChildren()) {
+                                            friends.add((String) ds.child("idFriendUser").getValue());
+                                            System.out.println("Añado A este usuario: "+ ds.child("idFriendUser").getValue());
+                                        }
+                                        reference.child("ChatPeticion").child(user_id).removeValue();
+                                    }
+                                }
+
+                                for(DataSnapshot users:snapshot.getChildren()) {
+                                    String user = users.getKey();
+                                    System.out.println("SIZE  " + friends.size());
+                                    System.out.println("Tengo a este usuario: "+ user);
+                                    if(friends.contains(user)){
+                                        System.out.println("BYYYYYYYYYYYYYYYYYYYEEEEEEEEEEEEEEE");
+                                        for (DataSnapshot ds : users.getChildren()) {
+                                            String id_FriendUser = (String) ds.child("idFriendUser").getValue();
+                                            System.out.println("Friend es: "+ id_FriendUser+" , Mi amigo : "+ user);
+                                            if (id_FriendUser.equals(user)){
+                                                ds.getRef().removeValue();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
 
-                        eliminar_Tutoria_i_ChatTutoria(user_id);
                         //eliminar_Peticiones(user_id);
                         //ChatPeticion, Chat, ChatTutor, ContactoTutoria
 
@@ -395,7 +479,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
 
-                        //startActivity(new Intent(getActivity(), MainActivity.class));
+                        startActivity(new Intent(getActivity(), MainActivity.class));
 
 
 
@@ -520,32 +604,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         });*/
     }
 
-    private void eliminar_Tutoria_i_ChatTutoria(final String user_id) {
-        reference.child("Tutoria").child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String idComp= (String) snapshot.child("compañeroID").getValue();
-                DatabaseReference databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("Tutoria/" + user_id);
-                databaseReference_Logeado.removeValue();
-                DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
-                databaseReference_Comp.removeValue();
-                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ChatTutor/" + user_id + "/" + idComp);
-                databaseReference_Logeado.removeValue();
-                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + user_id);
-                databaseReference_Logeado.removeValue();
-                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idComp + "/" + user_id);
-                databaseReference_Comp.removeValue();
-                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + idComp);
-                databaseReference_Comp.removeValue();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
 
 
