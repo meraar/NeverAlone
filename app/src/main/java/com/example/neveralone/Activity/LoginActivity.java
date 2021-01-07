@@ -1,9 +1,8 @@
 package com.example.neveralone.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,17 +13,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.neveralone.R;
+
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +44,7 @@ public class LoginActivity extends AppCompatActivity{
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1;
     DatabaseReference reference;
+    private static SharedPreferencesSingleton sharedPreferencesSingleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,26 +52,9 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        System.out.println(FirebaseAuth.getInstance());
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            /*Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();*/
-            nextActivity();
-        }
-    }
 
     private void nextActivity(){
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -74,6 +63,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 voluntario = (boolean) dataSnapshot.getValue();
+                sharedPreferencesSingleton.write("voluntario", voluntario);
                 startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             }
             @Override
@@ -115,12 +105,20 @@ public class LoginActivity extends AppCompatActivity{
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     voluntario = (boolean) dataSnapshot.getValue();
+                                    System.out.println("Voluntario: " + voluntario);
+                                    sharedPreferencesSingleton.write("voluntario", voluntario);
+                                    sharedPreferencesSingleton.write("LoggedInGoogle", false);
+                                    System.out.println("eres voluntario??" + sharedPreferencesSingleton.read("voluntario", false));
+
                                     startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                                 }
                                 @Override
                                 public void onCancelled(DatabaseError error) {
                                 }
                             });
+
+
+
                         }
                     } else {
                         Toast.makeText(LoginActivity.this, "El email i/o la contraseña son incorrectos.", Toast.LENGTH_SHORT).show();
@@ -136,6 +134,15 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     public void registerWithGoogle(View view) {
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        System.out.println("GSO: " + gso.toString());
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        System.out.println("mGoogleSignInClient: " + mGoogleSignInClient.toString());
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -145,30 +152,37 @@ public class LoginActivity extends AppCompatActivity{
         finish();
     }
 
-    /*
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            //System.out.println("Data: " + result.getSignInAccount().getDisplayName());
             if (result.isSuccess()) {
-                nextActivity();
+                //FirebaseUser user = mAuth.getCurrentUser();
+                //updateUI(user);
+                System.out.println("Yep, si que entra");
+                System.out.println("User name: " + result.getSignInAccount().getDisplayName());
+                System.out.println("User email: " + result.getSignInAccount().getEmail());
+                System.out.println("User uid: " + result.getSignInAccount().getId());
+
+                startActivity(new Intent(LoginActivity.this, RegisterGoogleActivity.class));
             } else {
                 Toast.makeText(this, "Login Failed!" ,Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    private void updateUI(FirebaseUser user) {
+        String personName = user.getDisplayName();
+        String personFamilyName = user.getUid();
+        String personEmail = user.getEmail();
+
+    }
+
     public static boolean getUserType() {
-        return voluntario;
+        if (sharedPreferencesSingleton.read("voluntario", false)) return true;
+        return false;
+        //return voluntario;
     }
 }

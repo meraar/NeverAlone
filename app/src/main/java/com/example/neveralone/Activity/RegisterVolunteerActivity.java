@@ -51,7 +51,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
             password = (String)b.getString("password");
             voluntario = (Boolean)b.getBoolean("voluntario");
         }
-        System.out.println("VOlunrrio =  "+ voluntario );
+        System.out.println("Volunrrio =  "+ voluntario );
         if (voluntario){
             setContentView(R.layout.activity_registervolunteer); // FUnciona
             btnAtras = findViewById(R.id.idVolverAtras);
@@ -105,7 +105,7 @@ public class RegisterVolunteerActivity extends AppCompatActivity {
 
                                             // verficar el mail
                                             currentUser.sendEmailVerification();
-                                            startActivity(new Intent(RegisterVolunteerActivity.this,LoginActivity.class));
+                                            startActivity(new Intent(RegisterVolunteerActivity.this, LoginActivity.class));
                                             finish();
                                         } else {
                                             System.out.println("Debug5: No se ha registrado");
