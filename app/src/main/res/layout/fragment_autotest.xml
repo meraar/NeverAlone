@@ -24,15 +24,16 @@
                 android:id="@+id/txtinicio"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:text="Intro"
-                android:textColor="@color/cardview_light_background" />
+                android:text="@string/intro_autotest"
+                android:textColor="@color/cardview_light_background"
+                tools:ignore="PrivateResource" />
 
             <Button
                 android:id="@+id/btnRT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
-                android:text="Reiniciar auto-test"
+                android:text="@string/reiniciar_auto_test"
                 android:textColor="@android:color/black"
                 app:backgroundTint="#DEF4FF" />
         </RelativeLayout>
@@ -48,9 +49,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
@@ -67,7 +66,7 @@
                             android:id="@+id/title1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="1. CONTACTO ESTRECHO"
+                            android:text="@string/_1_contacto_estrecho"
                             android:textStyle="bold"
                             android:textColor="#818181"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +79,7 @@
                             android:id="@+id/q1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="¿Tuvo usted algún contacto a menos de 2 metros durante un mínimo de 15 minutos o convive/cuida a alguna persoa con COVID-19 sin medidas de protección?"
+                            android:text="@string/tuvo_usted_alg_n_contacto_a_menos_de_2_metros_durante_un_m_nimo_de_15_minutos_o_convive_cuida_a_alguna_persoa_con_covid_19_sin_medidas_de_protecci_n"
                             android:textStyle="bold"
                             android:textColor="#818181"
                             android:layout_marginBottom="10dp" />
@@ -94,27 +93,25 @@
                                 android:id="@+id/btntest1Si"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
                                 android:layout_marginRight="200dp"
-                                android:text="Si"
-                                android:textColor="@android:color/white"/>
+                                android:text="@string/si"
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest1No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card2"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
@@ -132,7 +129,7 @@
                             android:id="@+id/title2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="2. PRESENCIA DE SÍNTOMAS"
+                            android:text="@string/_2_presencia_de_s_ntomas"
                             android:textStyle="bold"
                             android:textColor="#818181"/>
 
@@ -140,7 +137,7 @@
                             android:id="@+id/q2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="¿Presenta usted algún síntoma?"
+                            android:text="@string/presenta_usted_alg_n_s_ntoma"
                             android:textStyle="bold"
                             android:textColor="#818181"
                             android:layout_marginBottom="10dp"/>
@@ -155,24 +152,25 @@
                                 android:id="@+id/btntest2Si"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Si"
+                                android:text="@string/si"
                                 android:layout_marginRight="200dp"
-                                android:textColor="@android:color/white"/>
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest2No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
 
                         </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -190,14 +188,14 @@
                             android:id="@+id/title3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Title"
+                            android:text="@string/title3"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/q3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Text"
+                            android:text="@string/text3"
                             android:textStyle="bold"
                             android:layout_marginBottom="10dp"/>
 
@@ -210,17 +208,19 @@
                                 android:id="@+id/btntest3Si"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Si"
+                                android:text="@string/si"
                                 android:layout_marginRight="200dp"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest3No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
 
                         </RelativeLayout>
                     </LinearLayout>
@@ -228,8 +228,6 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card4"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
@@ -247,14 +245,14 @@
                             android:id="@+id/title4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Title"
+                            android:text="@string/title4"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/q4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Text"
+                            android:text="@string/text4"
                             android:textStyle="bold"
                             android:layout_marginBottom="10dp"/>
                         <RelativeLayout
@@ -267,17 +265,19 @@
                                 android:id="@+id/btntest4Si"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Si"
+                                android:text="@string/si"
                                 android:textColor="@android:color/white"
-                                android:layout_marginRight="200dp"/>
+                                android:layout_marginRight="200dp"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest4No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
 
                         </RelativeLayout>
                     </LinearLayout>
@@ -285,8 +285,6 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card5"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
@@ -303,14 +301,14 @@
                             android:id="@+id/title5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Title"
+                            android:text="@string/title5"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/q5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Text"
+                            android:text="@string/text5"
                             android:textStyle="bold"
                             android:layout_marginBottom="5dp"/>
                         <RelativeLayout
@@ -322,25 +320,25 @@
                                 android:id="@+id/btntest5Si"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Si"
+                                android:text="@string/si"
                                 android:textColor="@android:color/white"
-                                android:layout_marginRight="200dp"/>
+                                android:layout_marginRight="200dp"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest5No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card6"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
@@ -356,14 +354,14 @@
                             android:id="@+id/title6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Title"
+                            android:text="@string/title6"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/q6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Text"
+                            android:text="@string/text6"
                             android:textStyle="bold"
                             android:layout_marginBottom="5dp"/>
                         <RelativeLayout
@@ -376,17 +374,19 @@
                                 android:id="@+id/btntest6Si"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Si"
+                                android:text="@string/si"
                                 android:textColor="@android:color/white"
-                                android:layout_marginRight="200dp"/>
+                                android:layout_marginRight="200dp"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest6No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -408,21 +408,21 @@
                             android:id="@+id/title7"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Title"
+                            android:text="@string/title7"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/q7"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Text"
+                            android:text="@string/text7"
                             android:textStyle="bold"
                             android:layout_marginBottom="5dp"/>
                         <TextView
                             android:id="@+id/q71"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="· ¿Tiene recientemente tos persistente?"/>
+                            android:text="@string/text71"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -435,22 +435,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="200dp"
-                                android:text="Si"
-                                android:textColor="@android:color/white" />
+                                android:text="@string/si"
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest7No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                         <TextView
                             android:id="@+id/q8"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="· ¿Percibe pérdida o alteración repentina del gusto u olfato?"/>
+                            android:text="@string/text8"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -463,22 +465,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="200dp"
-                                android:text="Si"
-                                android:textColor="@android:color/white" />
+                                android:text="@string/si"
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest8No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                         <TextView
                             android:id="@+id/q9"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="· ¿Nota malestar general, cansancio excesivo o dolor muscular/articular importante sin justificación aparente?"/>
+                            android:text="@string/text9"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -491,22 +495,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="200dp"
-                                android:text="Si"
-                                android:textColor="@android:color/white" />
+                                android:text="@string/si"
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest9No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                         <TextView
                             android:id="@+id/q10"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="· ¿Presenta dolor de garganta, congestión nasal?"/>
+                            android:text="@string/text10"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -519,22 +525,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="200dp"
-                                android:text="Si"
-                                android:textColor="@android:color/white" />
+                                android:text="@string/si"
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest10No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                         <TextView
                             android:id="@+id/q11"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="· ¿Nota dolor de cabeza importante?"/>
+                            android:text="@string/text11"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -547,22 +555,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="200dp"
-                                android:text="Si"
-                                android:textColor="@android:color/white" />
+                                android:text="@string/si"
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest11No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                         <TextView
                             android:id="@+id/q12"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="· ¿Nota dolor abdominal importante?"/>
+                            android:text="@string/text12"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -574,22 +584,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="200dp"
-                                android:text="Si"
-                                android:textColor="@android:color/white" />
+                                android:text="@string/si"
+                                android:textColor="@android:color/white"
+                                android:layout_marginEnd="200dp" />
 
                             <Button
                                 android:id="@+id/btntest12No"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No"
+                                android:text="@string/no"
                                 android:textColor="@android:color/white"
-                                android:layout_marginLeft="200dp"/>
+                                android:layout_marginLeft="200dp"
+                                android:layout_marginStart="200dp" />
                         </RelativeLayout>
                         <Button
                             android:id="@+id/btnconf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Confirmar"
+                            android:text="@string/confirmar"
                             android:textColor="@android:color/black"
                             android:layout_marginTop="25dp"
                             android:background="#DEF4FF"/>
@@ -597,8 +609,7 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card13"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
@@ -614,14 +625,14 @@
                             android:id="@+id/title13"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Title"
+                            android:text="@string/title13"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/q13"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Text"
+                            android:text="@string/text13"
                             android:textStyle="bold"
                             android:layout_marginBottom="5dp"/>
                     </LinearLayout>

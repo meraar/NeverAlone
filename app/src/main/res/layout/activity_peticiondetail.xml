@@ -165,6 +165,7 @@
             android:layout_height="match_parent"
             android:layout_width="124dip"
             android:layout_below="@+id/contenidoDescripción"
+            android:text="@string/editar"
             />
 
         <Button
@@ -174,9 +175,20 @@
             android:layout_marginStart="5dp"
             android:layout_below="@+id/contenidoDescripción"
             android:layout_toRightOf="@id/editar"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:text="@string/borrar"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/finalizar"
+        android:layout_width="124dip"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_centerHorizontal="true"
+        android:text="finalizar"
+        android:layout_below="@+id/Botons"
+        android:layout_marginLeft="50dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -201,21 +213,20 @@
 
 
     <LinearLayout
+        android:id="@+id/botones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
 
-        >
+        android:layout_alignParentBottom="true"
+
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:text="@string/enviar_mensaje"
-            android:layout_marginLeft="50dp" />
+
+            android:text="@string/enviar_mensaje" />
 
         <Button
             android:id="@+id/ofrecer"
@@ -223,12 +234,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:text="Ofrecer Ayuda" />
+
         <Button
             android:id="@+id/dejarP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:text="Abandonar" />
+
     </LinearLayout>
 
 

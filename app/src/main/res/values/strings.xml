@@ -98,4 +98,42 @@
     <string name="estas_a_punto_de_solicitar_ser_un_tutor">"Estas a punto de solicitar ser un tutor"</string>
 
 
+    <string name="intro_autotest">Este auto-test le permitirá orientarse con respecto a los síntomas de la COVID-19, pero debe saber que nunca sustituirá una consulta médica. Si presenta algún síntoma que indique gravedad deberá consultar con el servicio de emergencias sanitarias en el 061.</string>
+    <string name="reiniciar_auto_test">Reiniciar auto-test</string>
+    <string name="_1_contacto_estrecho">1. CONTACTO ESTRECHO</string>
+    <string name="tuvo_usted_alg_n_contacto_a_menos_de_2_metros_durante_un_m_nimo_de_15_minutos_o_convive_cuida_a_alguna_persoa_con_covid_19_sin_medidas_de_protecci_n">¿Tuvo usted algún contacto a menos de 2 metros durante un mínimo de 15 minutos o convive/cuida a alguna persoa con COVID-19 sin medidas de protección?</string>
+    <string name="si">SI</string>
+    <string name="no">No</string>
+    <string name="_2_presencia_de_s_ntomas">2. PRESENCIA DE SÍNTOMAS</string>
+    <string name="presenta_usted_alg_n_s_ntoma">¿Presenta usted algún síntoma?</string>
+    <string name="title3" />
+    <string name="text3" />
+    <string name="title4" />
+    <string name="text4" />
+    <string name="title5" />
+    <string name="text5" />
+    <string name="title6" />
+    <string name="text6" />
+    <string name="title7" />
+    <string name="text7" />
+    <string name="text71">· ¿Tiene recientemente tos persistente?</string>
+    <string name="text8">· ¿Percibe pérdida o alteración repentina del gusto u olfato?</string>
+    <string name="text9">· ¿Nota malestar general, cansancio excesivo o dolor muscular/articular importante sin justificación aparente?</string>
+    <string name="text10">· ¿Presenta dolor de garganta, congestión nasal?</string>
+    <string name="text11">· ¿Nota dolor de cabeza importante?</string>
+    <string name="text12">· ¿Nota dolor abdominal importante?</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="title13" />
+    <string name="text13" />
+    <string name="ver_perfil">Ver perfil</string>
+    <string name="enviar_mensaje_tutor">Enviar mensaje</string>
+    <string name="dejar_de_ser_tutor">Dejar de ser tutor</string>
+    <string name="ya_eres_tutor">Ya eres tutor</string>
+    <string name="dejar_de_tener_tutor">Dejar de tener tutor</string>
+    <string name="ya_tienes_tutor">Ya tienes tutor</string>
+    <string name="covid_19">COVID-19</string>
+    <string name="editar">Editar</string>
+    <string name="borrar">borrar</string>
+
+
 </resources>

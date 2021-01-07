@@ -1,6 +1,5 @@
 package com.example.neveralone.Activity.Peticiones;
 
-import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,9 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PeticionAceptadaDetail extends AppCompatActivity {
 
@@ -147,11 +144,17 @@ public class PeticionAceptadaDetail extends AppCompatActivity {
                     elements.add(p);
                 }
 
-                listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListener() {
+                listAdapter = new AdaptadorUsers(elements, context, new AdaptadorUsers.OnItemClickListenerBorrar() {
+                    @Override
+                    public void onItemClickborrar(int adapterPosition) {
+
+                    }
+                }, new AdaptadorUsers.OnItemClickListener() {
                     @Override
                     public void onItemClick(final int pos) {
 
-                    }}, p);
+                    }
+                }, p);
 
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));

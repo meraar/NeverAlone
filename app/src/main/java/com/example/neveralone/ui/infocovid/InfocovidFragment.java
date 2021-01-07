@@ -52,9 +52,10 @@ public class InfocovidFragment extends DialogFragment{
     private TextView confirmados_espana, muertos_espana, recuperados_espana;
     private TextView confirmados_mundial, muertos_mundial, recuperados_mundial;
     private Button datepicker;
+    private boolean internet;
     private ImageButton button_cerca;
     private String fecha, id_comunitat;
-    private LinearLayout contenido;
+    private LinearLayout contenido, imagencarga, imagensininternet, fechamal;
     private ArrayList<String> comunitats = new ArrayList<String>();
     private ArrayList<String> comunitats_id = new ArrayList<String>();
     private int mYearIni, mMonthIni, mDayIni, sYearIni, sMonthIni, sDayIni;
@@ -66,7 +67,11 @@ public class InfocovidFragment extends DialogFragment{
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_infocovid, container, false);
         super.onCreate(savedInstanceState);
+        internet = true;
         contenido = (LinearLayout) root.findViewById(R.id.contenido);
+        imagencarga = (LinearLayout) root.findViewById(R.id.imagencarga);
+        fechamal = (LinearLayout) root.findViewById(R.id.fechamal);
+        imagensininternet = (LinearLayout) root.findViewById(R.id.imagensininternet);
         datepicker = (Button) root.findViewById(R.id.datepicker);
         button_cerca = (ImageButton) root.findViewById(R.id.button_cerca);
         confirmados  = (TextView) root.findViewById(R.id.confirmados);
@@ -97,8 +102,40 @@ public class InfocovidFragment extends DialogFragment{
             @Override
             public void onClick(View view) {
                 Log.d("busqueda", fecha + " " + id_comunitat);
-                contenido.setVisibility(View.VISIBLE);
                 getDataFinal();
+                int mes = mMonthIni + 1;
+                Log.d("fecha exemple",  mYearIni + " " + mes + " " + mDayIni);
+                Log.d("fecha hoy",  sYearIni + " " + sMonthIni+1 + " " + sDayIni);
+
+                if(mYearIni < Integer.parseInt("2020")
+                        ||
+                        (mYearIni == Integer.parseInt("2020")
+                                && mes == Integer.parseInt("01")
+                                && mDayIni < Integer.parseInt("23"))
+                        ||
+                        (sYearIni < mYearIni)
+                        ||
+                        ((sYearIni == mYearIni) && (sMonthIni < mMonthIni))
+                        ||
+                        ((sYearIni == mYearIni) && (sMonthIni == mMonthIni) && (sDayIni < mDayIni))){
+                    Log.d("fechamal", "fechamal");
+                    imagencarga.setVisibility(View.VISIBLE);
+                    fechamal.setVisibility(View.VISIBLE);
+                    contenido.setVisibility(View.INVISIBLE);
+                    imagensininternet.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    fechamal.setVisibility(View.INVISIBLE);
+                    if (internet) {
+                        contenido.setVisibility(View.VISIBLE);
+                        imagencarga.setVisibility(View.INVISIBLE);
+                        imagensininternet.setVisibility(View.INVISIBLE);
+                    } else {
+                        contenido.setVisibility(View.INVISIBLE);
+                        imagensininternet.setVisibility(View.VISIBLE);
+                        imagencarga.setVisibility(View.INVISIBLE);
+                    }
+                }
             }
         });
         // Inflate the layout for this fragment
@@ -182,12 +219,14 @@ public class InfocovidFragment extends DialogFragment{
             muertos_mundial.setText(string_muertos_mundial);
             string_recuperados_mundial = jsontotal.getString("today_recovered");
             recuperados_mundial.setText(string_recuperados_mundial);
+            internet = true;
 
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            internet = false;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -252,17 +291,13 @@ public class InfocovidFragment extends DialogFragment{
                     // TODO Auto-generated method stub
                 }
             });
+            internet = true;
 
-            //JSONObject jsonObject = jsonObj.getJSONObject("dates").getJSONObject("2020-03-17").getJSONObject("countries").getJSONObject("Spain");
-            //Log.d("noms","Noms" + jsonObject.names());
-            //mensaje += "PAIS: "+jsonObject.optString("name_es")+"\n";
-            //mensaje += "Dia: "+jsonObject.optString("date")+"\n";
-            //mensaje += "Confirmats totals: "+jsonObject.optString("today_confirmed")+"\n";
-            //sal.setText(mensaje);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            internet = false;
         } catch (JSONException e) {
             e.printStackTrace();
         }
