@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,7 +50,6 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
     private Button crear;
     private Spinner categorias;
     private EditText fechaEt, horaEt, descripcionEt;
-    private TextView result;
     private String origen;
 
     private String peticionID;
@@ -118,7 +118,6 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
         horaEt = findViewById(R.id.hora_peticion);
         crear = findViewById(R.id.idCrearPeticion);
         descripcionEt = findViewById(R.id.descripcion);
-        result = findViewById(R.id.result);
         String[] valores = {"Compras", "Asesoramiento", "Acompañamiento", "Otros"};
         categorias.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
         fechaEt.setInputType(InputType.TYPE_NULL);
@@ -163,9 +162,6 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
             public void onClick(View v) {
                 try {
                     if (compruebaFecha()) {
-
-                        result.setText("SUCCES");
-
                         rootNode = FirebaseDatabase.getInstance();
                         reference = rootNode.getReference();
 
@@ -202,7 +198,7 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                                     reference.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            result.setText("SUCCES");
+                                            Toast.makeText(CrearPeticionActivity.this, "Se ha creado la petición con éxito", Toast.LENGTH_SHORT).show();
                                             try {
                                                 Thread.sleep(4);
                                             } catch (InterruptedException e) {
@@ -227,7 +223,7 @@ public class CrearPeticionActivity extends AppCompatActivity implements DatePick
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {}
                         });
-                    } else result.setText("Something went wrong");
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
