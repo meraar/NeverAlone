@@ -47,6 +47,7 @@
         <activity android:name=".Activity.RecoverPasswordActivity" />
         <activity android:name=".Activity.Peticiones.PeticionesFilterByUsr"></activity>
         <activity android:name=".Activity.RegisterGoogleActivity" />
+
         <activity
             android:name=".Activity.MenuActivity"
             android:label="@string/title_activity_first_home" />
