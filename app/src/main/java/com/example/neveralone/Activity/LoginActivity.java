@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -157,21 +158,55 @@ public class LoginActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            //System.out.println("Data: " + result.getSignInAccount().getDisplayName());
             if (result.isSuccess()) {
-                //FirebaseUser user = mAuth.getCurrentUser();
-                //updateUI(user);
-                System.out.println("Yep, si que entra");
-                System.out.println("User name: " + result.getSignInAccount().getDisplayName());
-                System.out.println("User email: " + result.getSignInAccount().getEmail());
-                System.out.println("User uid: " + result.getSignInAccount().getId());
 
+                sharedPreferencesSingleton.write("nameGoogle", result.getSignInAccount().getDisplayName());
+                /*GoogleSignInAccount account = result.getSignInAccount();
+                System.out.println("firebaseAuthWithGoogle:" + account.getId());
+                mAuth.signInWithEmailLink(result.getSignInAccount().getEmail(), "")
+                mAuth.fetchSignInMethodsForEmail(result.getSignInAccount().getEmail()).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<SignInMethodQueryResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            System.out.println("User in the fetchSignInMethodsForEmail: " + user);
+                            startActivity(new Intent(LoginActivity.this, RegisterGoogleActivity.class));
+                        }
+                    }
+                });*/
+
+                    //}
+                //System.out.println("firebaseAuthWithGoogle Token:" + account.getIdToken());
+                //firebaseAuthWithGoogle(account.getIdToken());
                 startActivity(new Intent(LoginActivity.this, RegisterGoogleActivity.class));
             } else {
                 Toast.makeText(this, "Login Failed!" ,Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    /*private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                           System.out.println("signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(LoginActivity.this, "Authentication Failed!", Toast.LENGTH_LONG).show();
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+    }*/
 
     private void updateUI(FirebaseUser user) {
         String personName = user.getDisplayName();

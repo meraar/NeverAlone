@@ -3,6 +3,7 @@ package com.example.neveralone.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,19 +19,23 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RegisterGoogleActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private SharedPreferencesSingleton sharedPreferencesSingleton;
+    private TextView userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registerwithgoogle);
+        userName = findViewById(R.id.holaUser);
+
         sharedPreferencesSingleton.write("LoggedInGoogle", true);
+        String nameGoogle = sharedPreferencesSingleton.read("nameGoogle", "");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        System.out.println(FirebaseAuth.getInstance());
+        userName.setText("Hola " + nameGoogle + ", aún estamos trabajando en esto. ¡Próximamente estará disponible!");
+        //System.out.println(FirebaseAuth.getInstance());
     }
 
     public void cerrarSesion(View view) {

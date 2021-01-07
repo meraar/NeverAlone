@@ -46,4 +46,10 @@
         android:name="com.example.neveralone.ui.tutor.BlankFragmentTutor"
         android:label="Tutoria"
         tools:layout="@layout/fragment_tutor_benefactor_request" />
+
+    <fragment
+        android:id="@+id/nav_news"
+        android:name="com.example.neveralone.ui.noticias.InfocovidFragment"
+        android:label="Notícias"
+        tools:layout="@layout/fragment_infocovid" />
 </navigation>
