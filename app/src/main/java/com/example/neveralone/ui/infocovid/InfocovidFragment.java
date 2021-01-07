@@ -107,6 +107,7 @@ public class InfocovidFragment extends DialogFragment{
                 Log.d("fecha exemple",  mYearIni + " " + mes + " " + mDayIni);
                 Log.d("fecha hoy",  sYearIni + " " + sMonthIni+1 + " " + sDayIni);
 
+                //new
                 if(mYearIni < Integer.parseInt("2020")
                         ||
                         (mYearIni == Integer.parseInt("2020")
