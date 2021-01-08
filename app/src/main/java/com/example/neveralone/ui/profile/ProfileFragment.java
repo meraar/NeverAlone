@@ -338,20 +338,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         reference.child("User-Peticiones").child(user_id).removeValue();
 
 
-                        //Hasta aqui done...
-
-                        //reference.child("Interacciones").child(user_id).removeValue();
-
-                        //reference.child("Peticiones").child(user_id).removeValue();
-
-
-                        //eliminar_chat(user_id);
-                        //Todo: Falta esto:
-
-                        reference.child("ChatPeticion").child(user_id).removeValue();
-                        reference.child("Chat").child(user_id).removeValue();
-
-
                         reference.child("SolicitudVoluntario").child(user_id).removeValue();
 
                         reference.child("Peticiones").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -360,7 +346,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                                 for(DataSnapshot petitions : snapshot.getChildren()) {
                                     String p_key = petitions.getKey();
                                     String user = petitions.child("uid").getValue().toString();
-                                    System.out.println("p_key = " + p_key + "uid = "+ user);
+                                    //System.out.println("p_key = " + p_key + "uid = "+ user);
 
                                     if (user_id.equals(user)){
                                         reference.child("Peticiones").child(p_key).removeValue();
@@ -431,13 +417,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         reference.child("ChatPeticion").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                HashSet<String> friends = new HashSet<>();
+                                ArrayList<String> friends = new ArrayList<>();
                                 for(DataSnapshot users:snapshot.getChildren()) {
                                     String user = users.getKey();
                                     if(user.equals(user_id)){
                                         for (DataSnapshot ds : users.getChildren()) {
-                                            friends.add((String) ds.child("idFriendUser").getValue());
-                                            System.out.println("Añado A este usuario: "+ ds.child("idFriendUser").getValue());
+                                            friends.add((String) ds.child("idFriendUser").getValue()); // NO ENTRA AQUI
+                                            //System.out.println("Añado A este usuario: "+ ds.child("idFriendUser").getValue());
                                         }
                                         reference.child("ChatPeticion").child(user_id).removeValue();
                                     }
@@ -445,13 +431,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
                                 for(DataSnapshot users:snapshot.getChildren()) {
                                     String user = users.getKey();
-                                    System.out.println("SIZE  " + friends.size());
-                                    System.out.println("Tengo a este usuario: "+ user);
+                                    //System.out.println("SIZE  " + friends.size()); // ESTO ME SALE 0
+                                    //System.out.println("Tengo a este usuario: "+ user);
                                     if(friends.contains(user)){
-                                        System.out.println("BYYYYYYYYYYYYYYYYYYYEEEEEEEEEEEEEEE");
+                                        //System.out.println("BYYYYYYYYYYYYYYYYYYYEEEEEEEEEEEEEEE");
                                         for (DataSnapshot ds : users.getChildren()) {
                                             String id_FriendUser = (String) ds.child("idFriendUser").getValue();
-                                            System.out.println("Friend es: "+ id_FriendUser+" , Mi amigo : "+ user);
+                                            //System.out.println("Friend es: "+ id_FriendUser+" , Mi amigo : "+ user);
                                             if (id_FriendUser.equals(user)){
                                                 ds.getRef().removeValue();
                                             }
@@ -466,11 +452,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                             }
                         });
 
-
-                        //eliminar_Peticiones(user_id);
-                        //ChatPeticion, Chat, ChatTutor, ContactoTutoria
-
-
                         String foto_name = user_id + ".jpg";
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profilesImages").child(foto_name);
                         storageReference.delete();
@@ -480,9 +461,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
 
                         startActivity(new Intent(getActivity(), MainActivity.class));
-
-
-
 
 
                         dialog.dismiss();
@@ -496,112 +474,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         AlertDialog alert = builder.create();
         alert.show();
 
-    }
-
-    private void eliminar_Peticiones(final String user_id) {
-        System.out.println("HELLO WORLD " + user_id);
-        //final String volunt = elements.get(0).getUid();
-        reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("Peticiones").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot petitions : snapshot.getChildren()) {
-                    String p_key = petitions.getKey();
-                    String user = petitions.child("uid").getValue().toString();
-                    System.out.println("p_key = " + p_key + "uid = "+ user);
-                    if (user_id.equals(user)){
-                        reference.child("Peticiones").child(p_key).removeValue();
-                        reference.child("Interacciones").child(p_key).removeValue();
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        reference.child("Pendientes").child(user_id).removeValue(); // Elimino las peticiones Pendientes
-        reference.child("PeticionesAceptadas").child(user_id).removeValue(); // Elimino las peticiones Pendientes
-
-        /**
-        reference.child("User-Peticiones").child(p.getUid()).child(p.getPeticionID()).removeValue();
-
-        String a = reference.child("PeticionesAceptadas").child(p.getUid()).getKey();
-        String a2 = reference.child("PeticionesAceptadas").child(p.getUid()).child(p.getPeticionID()).getKey();
-
-        reference.child("PeticionesAceptadas").child(p.getUid()).child(p.getPeticionID()).removeValue();
-        reference.child("PeticionesAceptadas").child(volunt).child(p.getPeticionID()).removeValue();
-
-
-        //TODO: CHATPETICION - OJO INTERACCIONES QUE INTERFEREIX AMB AIXO D'AQUI ABAIX
-        reference.child("Chat").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot users:snapshot.getChildren()) {
-                    String useer = users.getKey();
-                    if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
-                        for (DataSnapshot ds : users.getChildren()) {
-                            String ass = ds.getKey();
-                            String idd = p.getPeticionID();
-                            if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
-                                for(DataSnapshot peti: ds.getChildren()){
-
-                                    if(peti.child("idPeticion").getValue().equals(p.getPeticionID())){
-                                        peti.getRef().removeValue();
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-                }
-            }
-
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        reference.child("ChatPeticion").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot users:snapshot.getChildren()) {
-                    String useer = users.getKey();
-                    if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
-                        for (DataSnapshot ds : users.getChildren()) { //Missatges amb clau inventada
-                            String ass=ds.getKey();
-                            String idd = p.getPeticionID();
-
-                            if(ds.child("idPeticion").getValue().equals(p.getPeticionID())){
-                                ds.getRef().removeValue();
-                            }
-
-                        }
-                    }
-                }
-            }
-
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        reference.child("Interacciones").child(p.getPeticionID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                listAdapter.notifyDataSetChanged();
-            }
-        });*/
     }
 
 
