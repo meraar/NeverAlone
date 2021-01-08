@@ -459,7 +459,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         firebaseAuth.getCurrentUser().delete();
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(getActivity(), "Se ha eliminado el usuario correctamente", Toast.LENGTH_SHORT).show();
-
+                        System.out.println("Usuario eliminado");
                         startActivity(new Intent(getActivity(), MainActivity.class));
 
 

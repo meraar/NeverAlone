@@ -173,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:visibility="gone"
-                    android:hint="@string/user_direction">
+                    android:hint="@string/user_piso">
 
                     <EditText
                         android:id="@+id/piso_puerta"
