@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.neveralone.Activity.LoginActivity;
 import com.example.neveralone.R;
 import com.google.firebase.auth.FirebaseAuth;

@@ -4,28 +4,33 @@
     android:id="@+id/root_frame_tutor_benefactor_wait"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".ui.tutor.BlankFragmentTutor"
     tools:ignore="MissingDefaultResource">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables,UselessParent">
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="275dp"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
         android:gravity="center_horizontal|center_vertical"
         android:shadowColor="#000000"
         android:text="@string/estamos_buscando_un_tutor_para_usted"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="5dp" />
+        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/gifLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </FrameLayout>

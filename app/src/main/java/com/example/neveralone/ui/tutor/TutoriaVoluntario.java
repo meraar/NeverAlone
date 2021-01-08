@@ -104,19 +104,27 @@ public class TutoriaVoluntario extends Fragment {
                                 final SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
                                 final SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
                                 final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
-                                /*if(snapshot.child("day").getValue().equals(dayFormat.format(currentDate)) && snapshot.child("month").getValue().equals(monthFormat.format(currentDate)) && snapshot.child("year").getValue().equals(yearFormat.format(currentDate))) {
+                                if(snapshot.child("day").getValue().equals(dayFormat.format(currentDate)) && snapshot.child("month").getValue().equals(monthFormat.format(currentDate)) && snapshot.child("year").getValue().equals(yearFormat.format(currentDate))) {
                                     Toast.makeText(context, "No puedes dejar ser tutor, intenta mañana.", Toast.LENGTH_SHORT).show();
                                 }
-                                else {*/
+                                else {
                                     String idComp = (String) snapshot.child("compañeroID").getValue();
                                     DatabaseReference databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("Tutoria/" + userID);
                                     databaseReference_Logeado.removeValue();
                                     DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
                                     databaseReference_Comp.removeValue();
+                                    databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ChatTutor/" + userID + "/" + idComp);
+                                    databaseReference_Logeado.removeValue();
+                                    databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + userID);
+                                    databaseReference_Logeado.removeValue();
+                                    databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idComp + "/" + userID);
+                                    databaseReference_Comp.removeValue();
+                                    databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + idComp);
+                                    databaseReference_Comp.removeValue();
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                     transaction.replace(R.id.root_frame_tutoria_volunteer, new BlankFragmentTutor());
                                     transaction.commit();
-                                //}
+                                }
                             }
 
                             @Override

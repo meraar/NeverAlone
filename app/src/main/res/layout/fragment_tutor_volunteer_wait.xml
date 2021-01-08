@@ -2,31 +2,37 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_frame_tutor_volunteer_wait"
+    android:background="#FFFFFF"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.tutor.BlankFragmentTutor"
     tools:ignore="MissingDefaultResource">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables,UselessParent">
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="275dp"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
         android:gravity="center_horizontal|center_vertical"
         android:shadowColor="#000000"
         android:text="@string/ya_has_solicitado_ser_un_tutor"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="5dp" />
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/gifLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </FrameLayout>
