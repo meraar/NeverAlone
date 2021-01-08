@@ -8,6 +8,7 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -110,18 +111,26 @@ public class PeticionDetail extends AppCompatActivity {
 
             if(p.getEstado().equals(Estado.CURSO)){
                 aceptar.setEnabled(false);
+                aceptar.setAlpha(.5f);
                 borrar.setEnabled(false);
+                borrar.setAlpha(.5f);
                 editar.setEnabled(false);
+                editar.setAlpha(.5f);
                 dejar.setEnabled(false);
+                dejar.setAlpha(.5f);
             }else{
                 finalizar.setEnabled(false);
+                finalizar.setAlpha(.5f);
                 cancelar.setEnabled(false);
+                cancelar.setAlpha(.5f);
                 FirebaseDatabase.getInstance().getReference().child("Interacciones").child(p.getPeticionID()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.hasChildren()){
                             editar.setEnabled(false);
+                            editar.setAlpha(.5f);
                             borrar.setEnabled(false);
+                            borrar.setAlpha(.5f);
                         }
                     }
 
@@ -135,11 +144,13 @@ public class PeticionDetail extends AppCompatActivity {
             if (p.getEstado().equals(Estado.PENDIENTE)) {
                 if (!checked) {
                     dejar.setEnabled(false);
+                    dejar.setAlpha(.5f);
                     FirebaseDatabase.getInstance().getReference().child("Interacciones").child(p.getPeticionID()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.child(user.getUid()).exists()) {
                                 aceptar.setEnabled(false);
+                                aceptar.setAlpha(.5f);
                             }
                         }
 
@@ -150,10 +161,12 @@ public class PeticionDetail extends AppCompatActivity {
                     });
                 } else {
                     aceptar.setEnabled(false);
+                    aceptar.setAlpha(.5f);
                 }
 
             }else{
                 aceptar.setEnabled(false);
+                aceptar.setAlpha(.5f);
             }
             borrar.setVisibility(View.GONE);
             editar.setVisibility(View.GONE);
@@ -201,7 +214,7 @@ public class PeticionDetail extends AppCompatActivity {
                                     reference = FirebaseDatabase.getInstance().getReference().child("PeticionesAceptadas");
                                     reference.child(elements.get(0).getUid()).removeValue(); //el jambo voluntari
                                 }
-
+                                Toast.makeText(context, "Se ha cancelado la ayuda con éxito", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -274,7 +287,7 @@ public class PeticionDetail extends AppCompatActivity {
                                             String useer = users.getKey();
                                             if(users.getKey().equals(p.getUid()) || users.getKey().equals(volunt)){
                                                 for (DataSnapshot ds : users.getChildren()) { //Missatges amb clau inventada
-                                                    String ass=ds.getKey();
+                                                    String ass = ds.getKey();
                                                     String idd = p.getPeticionID();
 
                                                     if(ds.child("idPeticion").getValue().equals(p.getPeticionID())){
@@ -302,7 +315,7 @@ public class PeticionDetail extends AppCompatActivity {
                                     }
                                 });
 
-
+                                Toast.makeText(context, "Se ha finalizado la petición con éxito", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         })
@@ -323,6 +336,7 @@ public class PeticionDetail extends AppCompatActivity {
                 reference = FirebaseDatabase.getInstance().getReference();
                 reference.child("Pendientes").child(user.getUid()).removeValue();
                 reference.child("Interacciones").child(p.getPeticionID()).child(user.getUid()).removeValue();
+                Toast.makeText(context, "Has abandonado la petición", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -405,7 +419,9 @@ public class PeticionDetail extends AppCompatActivity {
                                         listAdapter.notifyDataSetChanged();
                                     }
                                 });
+                                Toast.makeText(context, "Se ha borrado la petición", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
+
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -448,6 +464,7 @@ public class PeticionDetail extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 listAdapter.notifyDataSetChanged();
+                                Toast.makeText(context, "Has aceptado la peticion de " + p.getUser(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -579,10 +596,7 @@ public class PeticionDetail extends AppCompatActivity {
                                             }
                                         });
 
-                                        finalizar.setVisibility(View.VISIBLE);
-                                        cancelar.setVisibility(View.VISIBLE);
-                                        finalizar.setEnabled(true);
-                                        cancelar.setEnabled(true);
+                                        Toast.makeText(context, "Se ha aceptado la ayuda con éxito", Toast.LENGTH_SHORT).show();
 
                                     }
                                 })

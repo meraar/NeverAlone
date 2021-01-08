@@ -13,7 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.neveralone.Activity.MenuActivity;
+import com.example.neveralone.Activity.Peticiones.PeticionesFilterByUsr;
+
 import com.example.neveralone.R;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -76,18 +77,10 @@ public class MapsFragment extends Fragment implements
     }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
- /*
+
             googleM = googleMap;
             x= new Geocoder(getContext());
             obtenerAdresaUsuario();
@@ -154,6 +147,7 @@ public class MapsFragment extends Fragment implements
 
                                     MarkerEjemplo1.setTag(codigo_usuario_con_pet);
 
+
                                 }
                                 //  MarkerEjemplo1.setSnippet(codigo_usuario_con_pet);
 
@@ -170,11 +164,11 @@ public class MapsFragment extends Fragment implements
            googleM.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                @Override
                public void onInfoWindowClick(Marker marker) {
-                   //Intent i = new Intent(this, VerMisPeticiones.class); //TODO esta clase ya no se utiliza
-                   //i.putExtra("UserId",marker.getTag().toString());
-                   //startActivity(i);
+                   Intent i = new Intent(getContext(), PeticionesFilterByUsr.class); //TODO esta clase ya no se utiliza
+                   i.putExtra("UserId",marker.getTag().toString());
+                   startActivity(i);
                }
-           });*/
+           });
         }
     };
 
