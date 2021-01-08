@@ -92,15 +92,15 @@ public class MessageActivity extends AppCompatActivity {
         nombre.setText(nameFriendUser);
 
         if (idPeticion.equals("Tutor")) {
-            databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idCurrentUser + "/" + idFriendUser);
-            databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idFriendUser + "/" + idCurrentUser);
-            final DatabaseReference dbContactoTutorCurrentUser = FirebaseDatabase.getInstance().getReference("ContactoTutoria/"+ idCurrentUser);
+            databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("MensajeTutoría/" + idCurrentUser + "/" + idFriendUser);
+            databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("MensajeTutoría/" + idFriendUser + "/" + idCurrentUser);
+            final DatabaseReference dbContactoTutorCurrentUser = FirebaseDatabase.getInstance().getReference("ContactoTutoría/"+ idCurrentUser);
             dbContactoTutorCurrentUser.addListenerForSingleValueEvent(
                     new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (!snapshot.exists()) {
-                                DatabaseReference dbContactoTutorFriendUser = FirebaseDatabase.getInstance().getReference("ContactoTutoria/"+ idFriendUser);
+                                DatabaseReference dbContactoTutorFriendUser = FirebaseDatabase.getInstance().getReference("ContactoTutoría/"+ idFriendUser);
                                 dbContactoTutorCurrentUser.push().setValue(new RelacionChatTutor(idFriendUser, nameFriendUser));
                                 dbContactoTutorFriendUser.push().setValue(new RelacionChatTutor(idCurrentUser, user.getDisplayName()));
                             }
@@ -115,8 +115,8 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         else {
-            databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("Chat/" + idCurrentUser + "/" + idFriendUser);
-            databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("Chat/" + idFriendUser + "/" + idCurrentUser);
+            databaseReference_currentUser = FirebaseDatabase.getInstance().getReference("MensajePetición/" + idCurrentUser + "/" + idFriendUser);
+            databaseReference_friendUser = FirebaseDatabase.getInstance().getReference("MensajePetición/" + idFriendUser + "/" + idCurrentUser);
         }
 
         nombre.setOnClickListener(new View.OnClickListener() {

@@ -373,13 +373,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                                 databaseReference_Logeado.removeValue();
                                 DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
                                 databaseReference_Comp.removeValue();
-                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ChatTutor/" + user_id + "/" + idComp);
+                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("MensajeTutoría/" + user_id + "/" + idComp);
                                 databaseReference_Logeado.removeValue();
-                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + user_id);
+                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ContactoTutoría/" + user_id);
                                 databaseReference_Logeado.removeValue();
-                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idComp + "/" + user_id);
+                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("MensajeTutoría/" + idComp + "/" + user_id);
                                 databaseReference_Comp.removeValue();
-                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + idComp);
+                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ContactoTutoría/" + idComp);
                                 databaseReference_Comp.removeValue();
                             }
 
@@ -389,19 +389,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                             }
                         });
 
-                        reference.child("Chat").addListenerForSingleValueEvent(new ValueEventListener() {
+                        reference.child("MensajePetición").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for(DataSnapshot users:snapshot.getChildren()) {
                                     String user = users.getKey();
                                     if(user.equals(user_id)){
-                                        reference.child("Chat").child(user_id).removeValue();
+                                        reference.child("MensajePetición").child(user_id).removeValue();
                                     }
                                     else{
                                         for (DataSnapshot ds : users.getChildren()){
                                             String user_me = ds.getKey();
                                             if (user_me.equals(user_id)){
-                                                    reference.child("Chat").child(user_me).child(user_id).removeValue();
+                                                    reference.child("MensajePetición").child(user_me).child(user_id).removeValue();
                                             }
                                         }
                                     }
@@ -414,7 +414,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                             }
                         });
 
-                        reference.child("ChatPeticion").addListenerForSingleValueEvent(new ValueEventListener() {
+                        reference.child("ContactoPetición").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 ArrayList<String> friends = new ArrayList<>();
@@ -425,7 +425,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                                             friends.add((String) ds.child("idFriendUser").getValue()); // NO ENTRA AQUI
                                             //System.out.println("Añado A este usuario: "+ ds.child("idFriendUser").getValue());
                                         }
-                                        reference.child("ChatPeticion").child(user_id).removeValue();
+                                        reference.child("ContactoPetición").child(user_id).removeValue();
                                     }
                                 }
 

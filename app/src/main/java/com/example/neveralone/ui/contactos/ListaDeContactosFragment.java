@@ -56,7 +56,7 @@ public class ListaDeContactosFragment extends Fragment {
 
     public void init() {
         final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("ContactoTutoria/" + userID);
+        reference = FirebaseDatabase.getInstance().getReference().child("ContactoTutoría/" + userID);
         elementos = new ArrayList<>();
         reference.addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -70,7 +70,7 @@ public class ListaDeContactosFragment extends Fragment {
                             }
                         }
 
-                        reference = FirebaseDatabase.getInstance().getReference().child("ChatPeticion/" + userID);
+                        reference = FirebaseDatabase.getInstance().getReference().child("ContactoPetición/" + userID);
                         reference.addListenerForSingleValueEvent(
                                 new ValueEventListener() {
                                     @Override

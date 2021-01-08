@@ -115,13 +115,13 @@ public class TutoriaBenefactor extends Fragment {
                                 databaseReference_Logeado.removeValue();
                                 DatabaseReference databaseReference_Comp = FirebaseDatabase.getInstance().getReference("Tutoria/" + idComp);
                                 databaseReference_Comp.removeValue();
-                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ChatTutor/" + userID + "/" + idComp);
+                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("MensajeTutoría/" + userID + "/" + idComp);
                                 databaseReference_Logeado.removeValue();
-                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + userID);
+                                databaseReference_Logeado = FirebaseDatabase.getInstance().getReference("ContactoTutoría/" + userID);
                                 databaseReference_Logeado.removeValue();
-                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ChatTutor/" + idComp + "/" + userID);
+                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("MensajeTutoría/" + idComp + "/" + userID);
                                 databaseReference_Comp.removeValue();
-                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ContactoTutoria/" + idComp);
+                                databaseReference_Comp = FirebaseDatabase.getInstance().getReference("ContactoTutoría/" + idComp);
                                 databaseReference_Comp.removeValue();
                                 transaction.replace(R.id.root_frame_tutoria_benefactor, new BlankFragmentTutor()); //Sustiuir con la clase de tutor voluntario
                                 transaction.commit();
