@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RecoverPasswordActivity extends AppCompatActivity {
     private EditText mail;
     private Button recover_button;
-    private String correo;
+    private String correo = "";
     private FirebaseAuth auth;
     private ProgressDialog Progressdialog;
     @Override
